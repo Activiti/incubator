@@ -48,17 +48,17 @@ and activiti-clouds-apps/default-app.json
             {
                 "name": "rb-my-app",
                 "version": "1.0",
-                "serviceType": "RUNTIME_BUNDLE"
+                "serviceType": "runtime-bundle"
             },
             {
                 "name": "activiti-cloud-query",
                 "version": "1.0",
-                "serviceType": "QUERY"
+                "serviceType": "query"
             },
             {
                 "name": "activiti-cloud-audit",
                 "version": "1.0",
-                "serviceType": "AUDIT"
+                "serviceType": "audit"
             }
         ]
 }
