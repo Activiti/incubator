@@ -80,9 +80,9 @@ Then you can start the infrastructure plus an application.
 ```$xslt
 cd docker/
 docker-compose up
-cd ..
-mvn spring-boot:run
 ```
+
+Then start the application from src/test/resources
 
 ## Testing Deployed Applications
 

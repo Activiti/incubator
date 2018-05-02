@@ -3,9 +3,16 @@ package org.activiti.cloud.app.services;
 import org.activiti.cloud.app.model.deployments.ApplicationDeploymentDescriptor;
 import org.activiti.cloud.app.model.deployments.ApplicationDeploymentDirectory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class DeploymentsService {
@@ -18,20 +25,31 @@ public class DeploymentsService {
     private final String activitiCloudAppsNamespace = "/activiti-cloud-apps/dev/master/";
 
     public ApplicationDeploymentDescriptor getDeploymentDescriptorByAppName(String app) {
-        ResponseEntity<ApplicationDeploymentDescriptor> appDeploymentDescr = restTemplate.getForEntity(configServerURL +
-                                                                                                               activitiCloudAppsNamespace +
-                                                                                                               app +
-                                                                                                               ".json",
-                                                                                                       ApplicationDeploymentDescriptor.class);
-        return appDeploymentDescr.getBody();
+
+        ResponseEntity<ApplicationDeploymentDescriptor> appDeploymentDesc = restTemplate.exchange(configServerURL +
+                activitiCloudAppsNamespace +
+                app +
+                ".json", HttpMethod.GET,getHeaders(),ApplicationDeploymentDescriptor.class);
+        return appDeploymentDesc.getBody();
     }
 
     public ApplicationDeploymentDirectory getDirectory() {
-        ResponseEntity<ApplicationDeploymentDirectory> appDeploymentDirectory = restTemplate.getForEntity(configServerURL +
-                                                                                                                  activitiCloudAppsNamespace +
-                                                                                                                  appsEntryPoint +
-                                                                                                                  ".json",
-                                                                                                          ApplicationDeploymentDirectory.class);
+        ResponseEntity<ApplicationDeploymentDirectory> appDeploymentDirectory = restTemplate.exchange(configServerURL +
+                activitiCloudAppsNamespace +
+                appsEntryPoint +
+                ".json", HttpMethod.GET,getHeaders(),ApplicationDeploymentDirectory.class);
+
+
         return appDeploymentDirectory.getBody();
+    }
+
+    private HttpEntity<?> getHeaders(){
+        HttpHeaders headers = new HttpHeaders();
+        List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
+        acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(acceptableMediaTypes);
+        HttpEntity<?> entity = new HttpEntity<Object>(headers);
+        return entity;
     }
 }
