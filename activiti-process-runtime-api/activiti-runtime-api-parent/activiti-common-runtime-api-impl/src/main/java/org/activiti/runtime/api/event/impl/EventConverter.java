@@ -19,8 +19,8 @@ package org.activiti.runtime.api.event.impl;
 import org.activiti.engine.delegate.event.ActivitiEvent;
 import org.activiti.runtime.api.event.RuntimeEvent;
 
-public interface EventConverter<EVENT_TYPE extends RuntimeEvent<?>> {
+public interface EventConverter<API_EVENT_TYPE extends RuntimeEvent<?, ?>, INTERNAL_API_TYPE extends ActivitiEvent> {
 
-    EVENT_TYPE from(ActivitiEvent activitiEvent);
+    API_EVENT_TYPE from(INTERNAL_API_TYPE internalEvent);
 
 }

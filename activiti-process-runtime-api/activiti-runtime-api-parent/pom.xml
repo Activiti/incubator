@@ -11,11 +11,23 @@
   <name>Activiti :: Runtime API parent</name>
   <packaging>pom</packaging>
   <modules>
+    <module>activiti-common-model-api</module>
+    <module>activiti-common-model-api-impl</module>
     <module>activiti-common-runtime-api</module>
     <module>activiti-common-runtime-api-impl</module>
-    <module>activiti-task-runtime-api</module>
-    <module>activiti-task-runtime-api-impl</module>
+    <module>activiti-cloud-common-model-api</module>
+    <module>activiti-cloud-common-model-api-impl</module>
+    <module>activiti-process-model-api</module>
+    <module>activiti-process-model-api-impl</module>
+    <module>activiti-cloud-process-model-api</module>
+    <module>activiti-cloud-process-model-api-impl</module>
     <module>activiti-process-runtime-api</module>
     <module>activiti-process-runtime-api-impl</module>
+    <module>activiti-task-model-api</module>
+    <module>activiti-task-model-api-impl</module>
+    <module>activiti-task-runtime-api</module>
+    <module>activiti-task-runtime-api-impl</module>
+    <module>activiti-cloud-task-model-api</module>
+    <module>activiti-cloud-task-model-api-impl</module>
   </modules>
 </project>

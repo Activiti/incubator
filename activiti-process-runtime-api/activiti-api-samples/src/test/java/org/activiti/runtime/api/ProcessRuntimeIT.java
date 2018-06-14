@@ -45,8 +45,12 @@ public class ProcessRuntimeIT {
     private static final int MAX_RESULTS = 500;
     private static final String SIMPLE_PROCESS = "SimpleProcess";
     private static final String PROCESS_WITH_VARIABLES = "ProcessWithVariables";
+
     @Autowired
     private ProcessRuntime processRuntime;
+
+    @Autowired
+    private DummyProcessStartedEventListener dummyProcessStartedEventListener;
 
     @Test
     public void shouldReturnRegisteredEventListeners() {
@@ -54,8 +58,7 @@ public class ProcessRuntimeIT {
         List<ProcessRuntimeEventListener> eventListeners = processRuntime.configuration().eventListeners();
 
         //then
-        assertThat(eventListeners).hasSize(1);
-        assertThat(eventListeners.get(0)).isInstanceOf(DummyProcessStartedEventListener.class);
+        assertThat(eventListeners).contains(dummyProcessStartedEventListener);
     }
 
     @Test

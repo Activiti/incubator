@@ -18,29 +18,32 @@ package org.activiti.runtime.api.event.internal;
 
 import java.util.List;
 
+import org.activiti.engine.delegate.event.ActivitiEntityEvent;
 import org.activiti.engine.delegate.event.ActivitiEvent;
 import org.activiti.engine.delegate.event.ActivitiEventListener;
 import org.activiti.runtime.api.event.TaskCreatedEvent;
-import org.activiti.runtime.api.event.impl.APITaskCreatedEventConverter;
+import org.activiti.runtime.api.event.impl.ToAPITaskCreatedEventConverter;
 import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
 
 public class TaskCreatedEventListenerDelegate implements ActivitiEventListener {
 
     private List<TaskRuntimeEventListener> taskRuntimeEventListeners;
 
-    private APITaskCreatedEventConverter taskCreatedEventConverter;
+    private ToAPITaskCreatedEventConverter taskCreatedEventConverter;
 
     public TaskCreatedEventListenerDelegate(List<TaskRuntimeEventListener> taskRuntimeEventListeners,
-                                            APITaskCreatedEventConverter taskCreatedEventConverter) {
+                                            ToAPITaskCreatedEventConverter taskCreatedEventConverter) {
         this.taskRuntimeEventListeners = taskRuntimeEventListeners;
         this.taskCreatedEventConverter = taskCreatedEventConverter;
     }
 
     @Override
     public void onEvent(ActivitiEvent event) {
-        TaskCreatedEvent runtimeEvent = taskCreatedEventConverter.from(event);
-        for (TaskRuntimeEventListener listener : taskRuntimeEventListeners) {
-            listener.onTaskCreated(runtimeEvent);
+        if (event instanceof ActivitiEntityEvent) {
+            TaskCreatedEvent runtimeEvent = taskCreatedEventConverter.from((ActivitiEntityEvent) event);
+            for (TaskRuntimeEventListener listener : taskRuntimeEventListeners) {
+                listener.onTaskCreated(runtimeEvent);
+            }
         }
     }
 

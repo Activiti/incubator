@@ -20,28 +20,30 @@ import java.util.List;
 
 import org.activiti.engine.delegate.event.ActivitiEvent;
 import org.activiti.engine.delegate.event.ActivitiEventListener;
+import org.activiti.engine.delegate.event.ActivitiProcessStartedEvent;
 import org.activiti.runtime.api.event.ProcessStartedEvent;
-import org.activiti.runtime.api.event.impl.APIProcessStartedEventConverter;
+import org.activiti.runtime.api.event.impl.ToAPIProcessStartedEventConverter;
 import org.activiti.runtime.api.event.listener.ProcessRuntimeEventListener;
 
 public class ProcessStartedEventListenerDelegate implements ActivitiEventListener {
 
-
     private List<ProcessRuntimeEventListener> processRuntimeEventListeners;
 
-    private APIProcessStartedEventConverter processInstanceStartedEventConverter;
+    private ToAPIProcessStartedEventConverter processInstanceStartedEventConverter;
 
     public ProcessStartedEventListenerDelegate(List<ProcessRuntimeEventListener> processRuntimeEventListeners,
-                                               APIProcessStartedEventConverter processInstanceStartedEventConverter) {
+                                               ToAPIProcessStartedEventConverter processInstanceStartedEventConverter) {
         this.processRuntimeEventListeners = processRuntimeEventListeners;
         this.processInstanceStartedEventConverter = processInstanceStartedEventConverter;
     }
 
     @Override
     public void onEvent(ActivitiEvent event) {
-        ProcessStartedEvent runtimeEvent = processInstanceStartedEventConverter.from(event);
-        for (ProcessRuntimeEventListener listener : processRuntimeEventListeners) {
-            listener.onProcessStarted(runtimeEvent);
+        if (event instanceof ActivitiProcessStartedEvent) {
+            ProcessStartedEvent runtimeEvent = processInstanceStartedEventConverter.from((ActivitiProcessStartedEvent) event);
+            for (ProcessRuntimeEventListener listener : processRuntimeEventListeners) {
+                listener.onProcessStarted(runtimeEvent);
+            }
         }
     }
 

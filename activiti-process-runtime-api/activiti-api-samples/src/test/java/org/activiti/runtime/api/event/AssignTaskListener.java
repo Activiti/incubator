@@ -54,6 +54,16 @@ public class AssignTaskListener implements TaskRuntimeEventListener {
 
     }
 
+    @Override
+    public void onTaskCandidateUserAdded(TaskCandidateUserAddedEvent event) {
+
+    }
+
+    @Override
+    public void onTaskCandidateGroupAdded(TaskCandidateGroupAddedEvent event) {
+
+    }
+
     public Map<String, String> getAssignedTasks() {
         return assignedTasks;
     }

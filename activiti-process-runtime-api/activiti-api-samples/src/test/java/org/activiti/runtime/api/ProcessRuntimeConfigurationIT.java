@@ -36,14 +36,16 @@ public class ProcessRuntimeConfigurationIT {
     @Autowired
     private ProcessRuntimeConfiguration configuration;
 
+    @Autowired
+    private DummyProcessStartedEventListener dummyProcessStartedEventListener;
+
     @Test
     public void shouldReturnRegisteredEventListeners() {
         //when
         List<ProcessRuntimeEventListener> eventListeners = configuration.eventListeners();
 
         //then
-        assertThat(eventListeners).hasSize(1);
-        assertThat(eventListeners.get(0)).isInstanceOf(DummyProcessStartedEventListener.class);
+        assertThat(eventListeners).contains(dummyProcessStartedEventListener);
     }
 
 }

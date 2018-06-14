@@ -16,6 +16,8 @@
 
 package org.activiti.runtime.api.event;
 
-public interface ProcessStartedEvent extends ProcessRuntimeEvent {
+import org.activiti.runtime.api.model.FluentProcessInstance;
+
+public interface ProcessStartedEvent extends ExtendedProcessRuntimeEvent<FluentProcessInstance> {
 
 }

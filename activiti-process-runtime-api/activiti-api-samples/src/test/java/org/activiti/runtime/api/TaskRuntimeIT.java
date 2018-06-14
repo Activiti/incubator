@@ -47,14 +47,16 @@ public class TaskRuntimeIT {
     @Autowired
     private ProcessRuntime processRuntime;
 
+    @Autowired
+    private AssignTaskListener assignTaskListener;
+
     @Test
     public void shouldReturnRegisteredEventListeners() {
         //when
         List<TaskRuntimeEventListener> eventListeners = taskRuntime.configuration().eventListeners();
 
         //then
-        assertThat(eventListeners).hasSize(1);
-        assertThat(eventListeners.get(0)).isInstanceOf(AssignTaskListener.class);
+        assertThat(eventListeners).contains(assignTaskListener);
     }
 
     @Test

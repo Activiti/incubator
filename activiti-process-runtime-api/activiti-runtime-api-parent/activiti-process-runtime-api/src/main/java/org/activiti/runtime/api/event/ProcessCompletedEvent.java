@@ -16,6 +16,8 @@
 
 package org.activiti.runtime.api.event;
 
-public interface ProcessCompletedEvent extends ProcessRuntimeEvent {
+import org.activiti.runtime.api.model.FluentProcessInstance;
+
+public interface ProcessCompletedEvent extends ProcessRuntimeEvent<FluentProcessInstance> {
 
 }

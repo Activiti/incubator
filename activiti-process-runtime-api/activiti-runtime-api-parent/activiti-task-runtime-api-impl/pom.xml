@@ -23,6 +23,12 @@
       <!-- TODO move version to dependency management-->
     </dependency>
     <dependency>
+      <groupId>org.activiti</groupId>
+      <artifactId>activiti-task-model-api-impl</artifactId>
+      <version>7-201803-EA-SNAPSHOT</version>
+      <!-- TODO move version to dependency management-->
+    </dependency>
+    <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-beans</artifactId>
     </dependency>

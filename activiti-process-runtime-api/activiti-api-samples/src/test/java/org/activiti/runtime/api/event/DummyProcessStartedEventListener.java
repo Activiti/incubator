@@ -36,6 +36,11 @@ public class DummyProcessStartedEventListener implements ProcessRuntimeEventList
     }
 
     @Override
+    public void onProcessCreated(ProcessCreatedEvent event) {
+
+    }
+
+    @Override
     public void onProcessStarted(ProcessStartedEvent event) {
         startedProcesses.add(event.getEntity().getId());
     }

@@ -28,5 +28,11 @@
       <!-- TODO: move version inside a dependency management -->
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.activiti</groupId>
+      <artifactId>activiti-task-model-api</artifactId>
+      <!-- TODO: move version inside a dependency management -->
+      <version>7-201803-EA-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 </project>

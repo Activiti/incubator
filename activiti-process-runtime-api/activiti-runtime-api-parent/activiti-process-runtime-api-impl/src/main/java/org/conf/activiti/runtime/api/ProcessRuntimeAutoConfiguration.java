@@ -19,27 +19,23 @@ package org.conf.activiti.runtime.api;
 import java.util.Collections;
 import java.util.List;
 
-import com.fasterxml.jackson.core.Version;
-import com.fasterxml.jackson.databind.Module;
-import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
+import org.activiti.engine.delegate.event.ActivitiEventType;
 import org.activiti.runtime.api.ProcessRuntime;
 import org.activiti.runtime.api.conf.ProcessRuntimeConfiguration;
 import org.activiti.runtime.api.conf.impl.ProcessRuntimeConfigurationImpl;
-import org.activiti.runtime.api.event.impl.APIProcessStartedEventConverter;
+import org.activiti.runtime.api.event.impl.ToAPIProcessCreatedEventConverter;
+import org.activiti.runtime.api.event.impl.ToAPIProcessStartedEventConverter;
+import org.activiti.runtime.api.event.internal.ProcessCreatedEventListenerDelegate;
 import org.activiti.runtime.api.event.internal.ProcessStartedEventListenerDelegate;
 import org.activiti.runtime.api.event.listener.ProcessRuntimeEventListener;
 import org.activiti.runtime.api.impl.ProcessRuntimeImpl;
-import org.activiti.runtime.api.model.ProcessDefinition;
-import org.activiti.runtime.api.model.ProcessInstance;
 import org.activiti.runtime.api.model.builder.impl.ProcessStarterFactory;
 import org.activiti.runtime.api.model.impl.APIProcessDefinitionConverter;
 import org.activiti.runtime.api.model.impl.APIProcessInstanceConverter;
 import org.activiti.runtime.api.model.impl.APIVariableInstanceConverter;
-import org.activiti.runtime.api.model.impl.ProcessDefinitionImpl;
-import org.activiti.runtime.api.model.impl.ProcessInstanceImpl;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -47,21 +43,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ProcessRuntimeAutoConfiguration {
-
-    //this bean will be automatically injected inside boot's ObjectMapper
-    @Bean
-    public Module customizeProcessRuntimeObjectMapper() {
-        SimpleModule module = new SimpleModule("mapProcessRuntimeInterfaces",
-                                               Version.unknownVersion());
-        SimpleAbstractTypeResolver resolver = new SimpleAbstractTypeResolver();
-        resolver.addMapping(ProcessInstance.class,
-                            ProcessInstanceImpl.class);
-        resolver.addMapping(ProcessDefinition.class,
-                            ProcessDefinitionImpl.class);
-
-        module.setAbstractTypes(resolver);
-        return module;
-    }
 
     @Bean
     @ConditionalOnMissingBean
@@ -101,24 +82,50 @@ public class ProcessRuntimeAutoConfiguration {
     }
 
     @Bean
-    public ProcessRuntimeConfiguration processRuntimeConfiguration(RuntimeService runtimeService,
-                                                                   ProcessStartedEventListenerDelegate processStartedEventListenerDelegate,
-                                                                   @Autowired(required = false) List<ProcessRuntimeEventListener> eventListeners) {
-        return new ProcessRuntimeConfigurationImpl(runtimeService,
-                                                   processStartedEventListenerDelegate,
-                                                   eventListeners != null? eventListeners : Collections.emptyList());
+    public ProcessRuntimeConfiguration processRuntimeConfiguration(@Autowired(required = false) List<ProcessRuntimeEventListener> eventListeners) {
+        return new ProcessRuntimeConfigurationImpl(getInitializedListeners(eventListeners));
     }
 
     @Bean
     public ProcessStartedEventListenerDelegate processStartedEventListenerDelegate(
             @Autowired(required = false) List<ProcessRuntimeEventListener> listeners,
-            APIProcessStartedEventConverter processStartedEventConverter) {
-        return new ProcessStartedEventListenerDelegate(listeners != null ? listeners : Collections.emptyList(),
+            ToAPIProcessStartedEventConverter processStartedEventConverter) {
+        return new ProcessStartedEventListenerDelegate(getInitializedListeners(listeners),
                                                        processStartedEventConverter);
     }
 
     @Bean
-    public APIProcessStartedEventConverter apiProcessStartedEventConverter(APIProcessInstanceConverter processInstanceConverter) {
-        return new APIProcessStartedEventConverter(processInstanceConverter);
+    public ToAPIProcessStartedEventConverter apiProcessStartedEventConverter(APIProcessInstanceConverter processInstanceConverter) {
+        return new ToAPIProcessStartedEventConverter(processInstanceConverter);
+    }
+
+    @Bean
+    public ToAPIProcessCreatedEventConverter apiProcessCreatedEventConverter(APIProcessInstanceConverter processInstanceConverter) {
+        return new ToAPIProcessCreatedEventConverter(processInstanceConverter);
+    }
+
+    @Bean
+    public ProcessCreatedEventListenerDelegate processCreatedEventListenerDelegate(@Autowired(required = false) List<ProcessRuntimeEventListener> eventListeners,
+                                                                                   ToAPIProcessCreatedEventConverter converter) {
+        return new ProcessCreatedEventListenerDelegate(getInitializedListeners(eventListeners),
+                                                       converter);
+    }
+
+    private List<ProcessRuntimeEventListener> getInitializedListeners(List<ProcessRuntimeEventListener> eventListeners) {
+        return eventListeners != null ? eventListeners : Collections.emptyList();
+    }
+
+    @Bean
+    public InitializingBean registerEventListeners(RuntimeService runtimeService,
+                                                   ProcessStartedEventListenerDelegate listener) {
+        return () -> runtimeService.addEventListener(listener,
+                                                     ActivitiEventType.PROCESS_STARTED);
+    }
+
+    @Bean
+    public InitializingBean register(RuntimeService runtimeService,
+                                     ProcessCreatedEventListenerDelegate listener) {
+        return () -> runtimeService.addEventListener(listener,
+                                                     ActivitiEventType.ENTITY_CREATED);
     }
 }

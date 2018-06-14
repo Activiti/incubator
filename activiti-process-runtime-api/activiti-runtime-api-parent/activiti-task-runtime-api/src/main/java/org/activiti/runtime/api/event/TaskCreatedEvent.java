@@ -16,6 +16,8 @@
 
 package org.activiti.runtime.api.event;
 
-public interface TaskCreatedEvent extends  TaskRuntimeEvent {
+import org.activiti.runtime.api.model.FluentTask;
+
+public interface TaskCreatedEvent extends TaskRuntimeEvent<FluentTask> {
 
 }
