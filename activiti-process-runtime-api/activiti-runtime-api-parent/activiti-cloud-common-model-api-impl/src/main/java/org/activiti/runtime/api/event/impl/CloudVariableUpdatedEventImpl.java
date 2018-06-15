@@ -14,42 +14,24 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.model;
+package org.activiti.runtime.api.event.impl;
 
-import java.util.Date;
+import org.activiti.runtime.api.event.CloudVariableUpdatedEvent;
+import org.activiti.runtime.api.event.VariableEvent;
+import org.activiti.runtime.api.model.VariableInstance;
 
-public interface Task {
+public class CloudVariableUpdatedEventImpl extends CloudVariableEventImpl implements CloudVariableUpdatedEvent {
 
-    enum TaskStatus {
-        CREATED,
-        ASSIGNED,
-        SUSPENDED,
-        COMPLETED
+    public CloudVariableUpdatedEventImpl() {
     }
 
-    String getId();
+    public CloudVariableUpdatedEventImpl(VariableInstance entity) {
+        super(entity);
+    }
 
-    String getOwner();
+    @Override
+    public VariableEvent.VariableEvents getEventType() {
+        return VariableEvent.VariableEvents.VARIABLE_UPDATED;
+    }
 
-    String getAssignee();
-
-    String getName();
-
-    String getDescription();
-
-    Date getCreatedDate();
-
-    Date getClaimedDate();
-
-    Date getDueDate();
-
-    int getPriority();
-
-    String getProcessDefinitionId();
-
-    String getProcessInstanceId();
-
-    String getParentTaskId();
-
-    TaskStatus getStatus();
 }

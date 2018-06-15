@@ -14,42 +14,22 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.model;
+package org.activiti.runtime.api.event.impl;
 
-import java.util.Date;
+import org.activiti.runtime.api.event.VariableUpdatedEvent;
+import org.activiti.runtime.api.model.VariableInstance;
 
-public interface Task {
+public class VariableUpdatedEventImpl extends VariableEventImpl implements VariableUpdatedEvent {
 
-    enum TaskStatus {
-        CREATED,
-        ASSIGNED,
-        SUSPENDED,
-        COMPLETED
+    public VariableUpdatedEventImpl() {
     }
 
-    String getId();
+    public VariableUpdatedEventImpl(VariableInstance entity) {
+        super(entity);
+    }
 
-    String getOwner();
-
-    String getAssignee();
-
-    String getName();
-
-    String getDescription();
-
-    Date getCreatedDate();
-
-    Date getClaimedDate();
-
-    Date getDueDate();
-
-    int getPriority();
-
-    String getProcessDefinitionId();
-
-    String getProcessInstanceId();
-
-    String getParentTaskId();
-
-    TaskStatus getStatus();
+    @Override
+    public VariableEvents getEventType() {
+        return VariableEvents.VARIABLE_UPDATED;
+    }
 }

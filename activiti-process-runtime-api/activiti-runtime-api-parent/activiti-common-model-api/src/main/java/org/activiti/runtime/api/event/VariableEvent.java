@@ -14,42 +14,20 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.model;
+package org.activiti.runtime.api.event;
 
-import java.util.Date;
+import org.activiti.runtime.api.model.VariableInstance;
 
-public interface Task {
+public interface VariableEvent extends RuntimeEvent<VariableInstance, VariableEvent.VariableEvents> {
 
-    enum TaskStatus {
-        CREATED,
-        ASSIGNED,
-        SUSPENDED,
-        COMPLETED
+    enum VariableEvents {
+
+        VARIABLE_CREATED,
+
+        VARIABLE_UPDATED,
+
+        VARIABLE_DELETED
+
     }
 
-    String getId();
-
-    String getOwner();
-
-    String getAssignee();
-
-    String getName();
-
-    String getDescription();
-
-    Date getCreatedDate();
-
-    Date getClaimedDate();
-
-    Date getDueDate();
-
-    int getPriority();
-
-    String getProcessDefinitionId();
-
-    String getProcessInstanceId();
-
-    String getParentTaskId();
-
-    TaskStatus getStatus();
 }

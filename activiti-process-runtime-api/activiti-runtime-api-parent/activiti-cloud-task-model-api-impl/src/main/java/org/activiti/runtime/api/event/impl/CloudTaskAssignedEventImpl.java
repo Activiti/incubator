@@ -14,42 +14,24 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.model;
+package org.activiti.runtime.api.event.impl;
 
-import java.util.Date;
+import org.activiti.runtime.api.event.CloudTaskAssignedEvent;
+import org.activiti.runtime.api.event.TaskRuntimeEvent;
+import org.activiti.runtime.api.model.Task;
 
-public interface Task {
+public class CloudTaskAssignedEventImpl extends CloudRuntimeEventImpl<Task, TaskRuntimeEvent.TaskEvents>
+        implements CloudTaskAssignedEvent {
 
-    enum TaskStatus {
-        CREATED,
-        ASSIGNED,
-        SUSPENDED,
-        COMPLETED
+    public CloudTaskAssignedEventImpl() {
     }
 
-    String getId();
+    public CloudTaskAssignedEventImpl(Task entity) {
+        super(entity);
+    }
 
-    String getOwner();
-
-    String getAssignee();
-
-    String getName();
-
-    String getDescription();
-
-    Date getCreatedDate();
-
-    Date getClaimedDate();
-
-    Date getDueDate();
-
-    int getPriority();
-
-    String getProcessDefinitionId();
-
-    String getProcessInstanceId();
-
-    String getParentTaskId();
-
-    TaskStatus getStatus();
+    @Override
+    public TaskEvents getEventType() {
+        return TaskEvents.TASK_ASSIGNED;
+    }
 }

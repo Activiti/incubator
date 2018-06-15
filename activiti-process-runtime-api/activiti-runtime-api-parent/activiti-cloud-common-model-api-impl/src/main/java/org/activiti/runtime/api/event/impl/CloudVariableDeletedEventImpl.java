@@ -14,42 +14,24 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.model;
+package org.activiti.runtime.api.event.impl;
 
-import java.util.Date;
+import org.activiti.runtime.api.event.CloudVariableDeletedEvent;
+import org.activiti.runtime.api.event.VariableEvent;
+import org.activiti.runtime.api.model.VariableInstance;
 
-public interface Task {
+public class CloudVariableDeletedEventImpl extends CloudVariableEventImpl implements CloudVariableDeletedEvent {
 
-    enum TaskStatus {
-        CREATED,
-        ASSIGNED,
-        SUSPENDED,
-        COMPLETED
+    public CloudVariableDeletedEventImpl() {
     }
 
-    String getId();
+    public CloudVariableDeletedEventImpl(VariableInstance entity) {
+        super(entity);
+    }
 
-    String getOwner();
+    @Override
+    public VariableEvent.VariableEvents getEventType() {
+        return VariableEvent.VariableEvents.VARIABLE_DELETED;
+    }
 
-    String getAssignee();
-
-    String getName();
-
-    String getDescription();
-
-    Date getCreatedDate();
-
-    Date getClaimedDate();
-
-    Date getDueDate();
-
-    int getPriority();
-
-    String getProcessDefinitionId();
-
-    String getProcessInstanceId();
-
-    String getParentTaskId();
-
-    TaskStatus getStatus();
 }
