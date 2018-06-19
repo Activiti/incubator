@@ -23,6 +23,7 @@ public interface ProcessInstance {
     enum ProcessInstanceStatus {
         RUNNING,
         SUSPENDED,
+        CANCELLED,
         COMPLETED
     }
 

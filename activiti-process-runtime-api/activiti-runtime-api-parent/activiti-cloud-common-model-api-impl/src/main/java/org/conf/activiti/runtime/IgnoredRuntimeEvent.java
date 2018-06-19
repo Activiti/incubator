@@ -26,8 +26,15 @@ public class IgnoredRuntimeEvent extends CloudRuntimeEventImpl<Void, IgnoredRunt
         IGNORED
     }
 
+    //set by jackson via reflection
+    private String eventType;
+
     @Override
     public IgnoredRuntimeEvents getEventType() {
         return IgnoredRuntimeEvents.IGNORED;
+    }
+
+    public String getIgnoredEventTypeAsString() {
+        return eventType;
     }
 }

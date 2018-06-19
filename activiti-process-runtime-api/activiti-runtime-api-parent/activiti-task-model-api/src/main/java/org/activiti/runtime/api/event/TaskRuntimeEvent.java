@@ -28,7 +28,11 @@ public interface TaskRuntimeEvent<T extends Task> extends RuntimeEvent<T, TaskRu
 
         TASK_CREATED,
 
+        TASK_ACTIVATED,
+
         TASK_SUSPENDED,
+
+        TASK_CANCELLED
 
     }
 

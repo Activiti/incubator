@@ -14,20 +14,11 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.model;
+package org.activiti.runtime.api.event;
 
-public interface VariableInstance {
+import org.activiti.runtime.api.model.ProcessInstance;
 
-    String getName();
-
-    String getType();
-
-    String getProcessInstanceId();
-
-    String getTaskId();
-
-    boolean isTaskVariable();
-
-    <T> T getValue();
+public interface CloudProcessResumedEvent extends CloudProcessRuntimeEvent,
+                                                  ProcessRuntimeEvent<ProcessInstance> {
 
 }

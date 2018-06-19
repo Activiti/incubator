@@ -14,20 +14,8 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.model;
+package org.activiti.runtime.api.event;
 
-public interface VariableInstance {
-
-    String getName();
-
-    String getType();
-
-    String getProcessInstanceId();
-
-    String getTaskId();
-
-    boolean isTaskVariable();
-
-    <T> T getValue();
+public interface CloudTaskCandidateGroupRemovedEvent extends CloudTaskCandidateGroupEvent {
 
 }
