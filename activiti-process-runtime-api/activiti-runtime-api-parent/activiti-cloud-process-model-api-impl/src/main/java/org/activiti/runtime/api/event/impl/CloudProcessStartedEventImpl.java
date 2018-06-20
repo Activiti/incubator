@@ -36,6 +36,10 @@ public class CloudProcessStartedEventImpl extends CloudRuntimeEventImpl<ProcessI
         this.nestedProcessInstanceId = nestedProcessInstanceId;
     }
 
+    public CloudProcessStartedEventImpl(ProcessInstance processInstance) {
+        this(processInstance, null, null);
+    }
+
     @Override
     public String getNestedProcessInstanceId() {
         return nestedProcessInstanceId;

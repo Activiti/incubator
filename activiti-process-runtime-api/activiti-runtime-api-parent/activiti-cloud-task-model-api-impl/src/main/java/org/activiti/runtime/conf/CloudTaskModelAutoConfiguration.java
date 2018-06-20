@@ -23,9 +23,15 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.activiti.runtime.api.event.TaskCandidateGroupEvent;
 import org.activiti.runtime.api.event.TaskCandidateUserEvent;
 import org.activiti.runtime.api.event.TaskRuntimeEvent;
+import org.activiti.runtime.api.event.impl.CloudTaskActivatedEventImpl;
+import org.activiti.runtime.api.event.impl.CloudTaskAssignedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudTaskCandidateGroupAddedEventImpl;
+import org.activiti.runtime.api.event.impl.CloudTaskCandidateGroupRemovedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudTaskCandidateUserAddedEventImpl;
+import org.activiti.runtime.api.event.impl.CloudTaskCandidateUserRemovedEventImpl;
+import org.activiti.runtime.api.event.impl.CloudTaskCompletedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudTaskCreatedEventImpl;
+import org.activiti.runtime.api.event.impl.CloudTaskSuspendedEventImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -38,13 +44,27 @@ public class CloudTaskModelAutoConfiguration {
         SimpleModule module = new SimpleModule("mapCloudTaskModelInterfaces",
                                                Version.unknownVersion());
 
-
         module.registerSubtypes(new NamedType(CloudTaskCreatedEventImpl.class,
                                               TaskRuntimeEvent.TaskEvents.TASK_CREATED.name()));
+        module.registerSubtypes(new NamedType(CloudTaskAssignedEventImpl.class,
+                                              TaskRuntimeEvent.TaskEvents.TASK_ASSIGNED.name()));
+        module.registerSubtypes(new NamedType(CloudTaskCompletedEventImpl.class,
+                                              TaskRuntimeEvent.TaskEvents.TASK_COMPLETED.name()));
+        module.registerSubtypes(new NamedType(CloudTaskSuspendedEventImpl.class,
+                                              TaskRuntimeEvent.TaskEvents.TASK_SUSPENDED.name()));
+        module.registerSubtypes(new NamedType(CloudTaskActivatedEventImpl.class,
+                                              TaskRuntimeEvent.TaskEvents.TASK_ACTIVATED.name()));
+
         module.registerSubtypes(new NamedType(CloudTaskCandidateUserAddedEventImpl.class,
                                               TaskCandidateUserEvent.TaskCandidateUserEvents.TASK_CANDIDATE_USER_ADDED.name()));
+        module.registerSubtypes(new NamedType(CloudTaskCandidateUserRemovedEventImpl.class,
+                                              TaskCandidateUserEvent.TaskCandidateUserEvents.TASK_CANDIDATE_USER_REMOVED.name()));
+
+
         module.registerSubtypes(new NamedType(CloudTaskCandidateGroupAddedEventImpl.class,
                                               TaskCandidateGroupEvent.TaskCandidateGroupEvents.TASK_CANDIDATE_GROUP_ADDED.name()));
+        module.registerSubtypes(new NamedType(CloudTaskCandidateGroupRemovedEventImpl.class,
+                                              TaskCandidateGroupEvent.TaskCandidateGroupEvents.TASK_CANDIDATE_GROUP_REMOVED.name()));
         return module;
     }
 

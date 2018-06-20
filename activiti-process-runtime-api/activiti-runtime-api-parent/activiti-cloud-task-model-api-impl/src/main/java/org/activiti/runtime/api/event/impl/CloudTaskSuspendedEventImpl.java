@@ -14,35 +14,24 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.model;
+package org.activiti.runtime.api.event.impl;
 
-import java.util.Date;
+import org.activiti.runtime.api.event.CloudTaskSuspendedEvent;
+import org.activiti.runtime.api.event.TaskRuntimeEvent;
+import org.activiti.runtime.api.model.Task;
 
-public interface ProcessInstance {
+public class CloudTaskSuspendedEventImpl extends CloudRuntimeEventImpl<Task, TaskRuntimeEvent.TaskEvents>
+        implements CloudTaskSuspendedEvent {
 
-    enum ProcessInstanceStatus {
-        CREATED,
-        RUNNING,
-        SUSPENDED,
-        CANCELLED,
-        COMPLETED
+    public CloudTaskSuspendedEventImpl() {
     }
 
-    String getId();
+    public CloudTaskSuspendedEventImpl(Task entity) {
+        super(entity);
+    }
 
-    String getName();
-
-    String getDescription();
-
-    Date getStartDate();
-
-    String getInitiator();
-
-    String getBusinessKey();
-
-    ProcessInstanceStatus getStatus();
-
-    String getProcessDefinitionId();
-
-    String getProcessDefinitionKey();
+    @Override
+    public TaskEvents getEventType() {
+        return TaskEvents.TASK_SUSPENDED;
+    }
 }
