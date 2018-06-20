@@ -25,6 +25,7 @@ import org.activiti.runtime.api.event.TaskCandidateUserEvent;
 import org.activiti.runtime.api.event.TaskRuntimeEvent;
 import org.activiti.runtime.api.event.impl.CloudTaskActivatedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudTaskAssignedEventImpl;
+import org.activiti.runtime.api.event.impl.CloudTaskCancelledEventImpl;
 import org.activiti.runtime.api.event.impl.CloudTaskCandidateGroupAddedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudTaskCandidateGroupRemovedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudTaskCandidateUserAddedEventImpl;
@@ -54,6 +55,8 @@ public class CloudTaskModelAutoConfiguration {
                                               TaskRuntimeEvent.TaskEvents.TASK_SUSPENDED.name()));
         module.registerSubtypes(new NamedType(CloudTaskActivatedEventImpl.class,
                                               TaskRuntimeEvent.TaskEvents.TASK_ACTIVATED.name()));
+        module.registerSubtypes(new NamedType(CloudTaskCancelledEventImpl.class,
+                                              TaskRuntimeEvent.TaskEvents.TASK_CANCELLED.name()));
 
         module.registerSubtypes(new NamedType(CloudTaskCandidateUserAddedEventImpl.class,
                                               TaskCandidateUserEvent.TaskCandidateUserEvents.TASK_CANDIDATE_USER_ADDED.name()));
