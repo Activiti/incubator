@@ -20,5 +20,5 @@ import org.activiti.runtime.api.model.ProcessInstance;
 
 public interface CloudProcessCancelledEvent extends CloudProcessRuntimeEvent,
                                                     ProcessRuntimeEvent<ProcessInstance> {
-
+    String getCause();
 }
