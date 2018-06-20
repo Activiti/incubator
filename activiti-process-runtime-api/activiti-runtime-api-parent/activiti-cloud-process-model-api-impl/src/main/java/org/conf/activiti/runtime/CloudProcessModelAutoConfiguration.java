@@ -21,10 +21,12 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.jsontype.NamedType;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.activiti.runtime.api.event.ProcessRuntimeEvent;
+import org.activiti.runtime.api.event.impl.CloudProcessCancelledEventImpl;
 import org.activiti.runtime.api.event.impl.CloudProcessCompletedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudProcessCreatedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudProcessResumedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudProcessStartedEventImpl;
+import org.activiti.runtime.api.event.impl.CloudProcessSuspendedEventImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -42,8 +44,12 @@ public class CloudProcessModelAutoConfiguration {
                                               ProcessRuntimeEvent.ProcessEvents.PROCESS_CREATED.name()));
         module.registerSubtypes(new NamedType(CloudProcessCompletedEventImpl.class,
                                               ProcessRuntimeEvent.ProcessEvents.PROCESS_COMPLETED.name()));
+        module.registerSubtypes(new NamedType(CloudProcessSuspendedEventImpl.class,
+                                              ProcessRuntimeEvent.ProcessEvents.PROCESS_SUSPENDED.name()));
         module.registerSubtypes(new NamedType(CloudProcessResumedEventImpl.class,
                                               ProcessRuntimeEvent.ProcessEvents.PROCESS_RESUMED.name()));
+        module.registerSubtypes(new NamedType(CloudProcessCancelledEventImpl.class,
+                                              ProcessRuntimeEvent.ProcessEvents.PROCESS_CANCELLED.name()));
 
         return module;
     }
