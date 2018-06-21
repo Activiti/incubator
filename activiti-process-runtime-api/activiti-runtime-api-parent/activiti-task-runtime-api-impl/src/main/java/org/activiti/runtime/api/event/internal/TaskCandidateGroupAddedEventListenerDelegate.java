@@ -21,7 +21,6 @@ import java.util.List;
 import org.activiti.engine.delegate.event.ActivitiEntityEvent;
 import org.activiti.engine.delegate.event.ActivitiEvent;
 import org.activiti.engine.delegate.event.ActivitiEventListener;
-import org.activiti.runtime.api.event.TaskCandidateGroupAddedEvent;
 import org.activiti.runtime.api.event.impl.ToAPITaskCandidateGroupAddedEventConverter;
 import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
 
@@ -40,12 +39,12 @@ public class TaskCandidateGroupAddedEventListenerDelegate implements ActivitiEve
     @Override
     public void onEvent(ActivitiEvent event) {
         if (event instanceof ActivitiEntityEvent) {
-            TaskCandidateGroupAddedEvent candidateGroupAddedEvent = converter.from((ActivitiEntityEvent) event);
-            if (candidateGroupAddedEvent != null) {
-                for (TaskRuntimeEventListener listener : taskRuntimeEventListeners) {
-                    listener.onTaskCandidateGroupAdded(candidateGroupAddedEvent);
-                }
-            }
+            converter.from((ActivitiEntityEvent) event)
+                    .ifPresent(convertedEvent -> {
+                        for (TaskRuntimeEventListener listener : taskRuntimeEventListeners) {
+                            listener.onTaskCandidateGroupAdded(convertedEvent);
+                        }
+                    });
         }
     }
 

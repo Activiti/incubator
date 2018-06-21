@@ -21,7 +21,6 @@ import java.util.List;
 import org.activiti.engine.delegate.event.ActivitiEntityEvent;
 import org.activiti.engine.delegate.event.ActivitiEvent;
 import org.activiti.engine.delegate.event.ActivitiEventListener;
-import org.activiti.runtime.api.event.TaskCreatedEvent;
 import org.activiti.runtime.api.event.impl.ToAPITaskCreatedEventConverter;
 import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
 
@@ -40,10 +39,12 @@ public class TaskCreatedEventListenerDelegate implements ActivitiEventListener {
     @Override
     public void onEvent(ActivitiEvent event) {
         if (event instanceof ActivitiEntityEvent) {
-            TaskCreatedEvent runtimeEvent = taskCreatedEventConverter.from((ActivitiEntityEvent) event);
-            for (TaskRuntimeEventListener listener : taskRuntimeEventListeners) {
-                listener.onTaskCreated(runtimeEvent);
-            }
+            taskCreatedEventConverter.from((ActivitiEntityEvent) event)
+                    .ifPresent(convertedEvent -> {
+                        for (TaskRuntimeEventListener listener : taskRuntimeEventListeners) {
+                            listener.onTaskCreated(convertedEvent);
+                        }
+                    });
         }
     }
 

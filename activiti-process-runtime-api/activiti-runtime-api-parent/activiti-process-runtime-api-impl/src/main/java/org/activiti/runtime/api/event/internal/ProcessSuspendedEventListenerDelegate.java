@@ -21,28 +21,28 @@ import java.util.List;
 import org.activiti.engine.delegate.event.ActivitiEntityEvent;
 import org.activiti.engine.delegate.event.ActivitiEvent;
 import org.activiti.engine.delegate.event.ActivitiEventListener;
-import org.activiti.runtime.api.event.impl.ToAPITaskAssignedEventConverter;
-import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
+import org.activiti.runtime.api.event.impl.ToProcessSuspendedConverter;
+import org.activiti.runtime.api.event.listener.ProcessRuntimeEventListener;
 
-public class TaskAssignedEventListenerDelegate implements ActivitiEventListener {
+public class ProcessSuspendedEventListenerDelegate implements ActivitiEventListener {
 
-    private final List<TaskRuntimeEventListener> taskRuntimeEventListeners;
+    private List<ProcessRuntimeEventListener> processRuntimeEventListeners;
 
-    private final ToAPITaskAssignedEventConverter taskAssignedEventConverter;
+    private ToProcessSuspendedConverter processSuspendedConverter;
 
-    public TaskAssignedEventListenerDelegate(List<TaskRuntimeEventListener> taskRuntimeEventListeners,
-                                             ToAPITaskAssignedEventConverter taskAssignedEventConverter) {
-        this.taskRuntimeEventListeners = taskRuntimeEventListeners;
-        this.taskAssignedEventConverter = taskAssignedEventConverter;
+    public ProcessSuspendedEventListenerDelegate(List<ProcessRuntimeEventListener> processRuntimeEventListeners,
+                                                 ToProcessSuspendedConverter processSuspendedConverter) {
+        this.processRuntimeEventListeners = processRuntimeEventListeners;
+        this.processSuspendedConverter = processSuspendedConverter;
     }
 
     @Override
     public void onEvent(ActivitiEvent event) {
         if (event instanceof ActivitiEntityEvent) {
-            taskAssignedEventConverter.from((ActivitiEntityEvent) event)
+            processSuspendedConverter.from((ActivitiEntityEvent) event)
                     .ifPresent(convertedEvent -> {
-                        for (TaskRuntimeEventListener listener : taskRuntimeEventListeners) {
-                            listener.onTaskAssigned(convertedEvent);
+                        for (ProcessRuntimeEventListener listener : processRuntimeEventListeners) {
+                            listener.onProcessSuspended(convertedEvent);
                         }
                     });
         }

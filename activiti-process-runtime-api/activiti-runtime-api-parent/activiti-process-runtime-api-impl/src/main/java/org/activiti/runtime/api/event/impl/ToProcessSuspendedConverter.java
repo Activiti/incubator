@@ -20,29 +20,26 @@ import java.util.Optional;
 
 import org.activiti.engine.delegate.event.ActivitiEntityEvent;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
-import org.activiti.runtime.api.event.ProcessCreatedEvent;
+import org.activiti.runtime.api.event.ProcessSuspendedEvent;
 import org.activiti.runtime.api.model.impl.APIProcessInstanceConverter;
 
 import static org.activiti.runtime.api.event.impl.ActivitiEntityEventHelper.isProcessInstanceEntity;
 
-public class ToAPIProcessCreatedEventConverter implements EventConverter<ProcessCreatedEvent, ActivitiEntityEvent> {
+public class ToProcessSuspendedConverter implements EventConverter<ProcessSuspendedEvent, ActivitiEntityEvent> {
 
     private final APIProcessInstanceConverter processInstanceConverter;
 
-    public ToAPIProcessCreatedEventConverter(APIProcessInstanceConverter processInstanceConverter) {
+    public ToProcessSuspendedConverter(APIProcessInstanceConverter processInstanceConverter) {
         this.processInstanceConverter = processInstanceConverter;
     }
 
     @Override
-    public Optional<ProcessCreatedEvent> from(ActivitiEntityEvent internalEvent) {
-        Object entity = internalEvent.getEntity();
-
-        ProcessCreatedEventImpl event = null;
-        if (isProcessInstanceEntity(entity)) {
-            event = new ProcessCreatedEventImpl(processInstanceConverter.from(((ExecutionEntity)
-                                entity).getProcessInstance()));
+    public Optional<ProcessSuspendedEvent> from(ActivitiEntityEvent internalEvent) {
+        ProcessSuspendedEvent event = null;
+        if (isProcessInstanceEntity(internalEvent.getEntity())) {
+            event = new ProcessSuspendedEventImpl(processInstanceConverter.from(((ExecutionEntity)
+                    internalEvent.getEntity()).getProcessInstance()));
         }
         return Optional.ofNullable(event);
     }
-
 }

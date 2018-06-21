@@ -16,6 +16,8 @@
 
 package org.activiti.runtime.api.event.impl;
 
+import java.util.Optional;
+
 import org.activiti.engine.delegate.event.ActivitiEntityEvent;
 import org.activiti.engine.impl.persistence.entity.IdentityLinkEntity;
 import org.activiti.engine.task.IdentityLink;
@@ -33,7 +35,7 @@ public class ToAPITaskCandidateGroupAddedEventConverter implements EventConverte
     }
 
     @Override
-    public TaskCandidateGroupAddedEvent from(ActivitiEntityEvent internalEvent) {
+    public Optional<TaskCandidateGroupAddedEvent> from(ActivitiEntityEvent internalEvent) {
         TaskCandidateGroupAddedEventImpl event = null;
         if (internalEvent.getEntity() instanceof IdentityLinkEntity) {
             IdentityLinkEntity entity = (IdentityLinkEntity) internalEvent.getEntity();
@@ -41,7 +43,7 @@ public class ToAPITaskCandidateGroupAddedEventConverter implements EventConverte
                 event = new TaskCandidateGroupAddedEventImpl(converter.from(entity));
             }
         }
-        return event;
+        return Optional.ofNullable(event);
     }
 
     private boolean isCandidateGroupEntity(IdentityLink identityLinkEntity) {

@@ -16,13 +16,15 @@
 
 package org.activiti.runtime.api.event.impl;
 
-import java.util.Optional;
+import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
+import org.activiti.engine.runtime.ProcessInstance;
 
-import org.activiti.engine.delegate.event.ActivitiEvent;
-import org.activiti.runtime.api.event.RuntimeEvent;
+public class ActivitiEntityEventHelper {
 
-public interface EventConverter<API_EVENT_TYPE extends RuntimeEvent<?, ?>, INTERNAL_API_TYPE extends ActivitiEvent> {
-
-    Optional<API_EVENT_TYPE> from(INTERNAL_API_TYPE internalEvent);
+    public static boolean isProcessInstanceEntity(Object entity) {
+        return entity != null
+                && ProcessInstance.class.isAssignableFrom(entity.getClass())
+                && ((ExecutionEntity) entity).isProcessInstanceType();
+    }
 
 }

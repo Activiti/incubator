@@ -16,13 +16,20 @@
 
 package org.activiti.runtime.api.event.impl;
 
-import java.util.Optional;
+import org.activiti.runtime.api.event.ProcessCancelledEvent;
+import org.activiti.runtime.api.event.ProcessRuntimeEvent;
+import org.activiti.runtime.api.model.FluentProcessInstance;
 
-import org.activiti.engine.delegate.event.ActivitiEvent;
-import org.activiti.runtime.api.event.RuntimeEvent;
+public class ProcessCancelledImpl extends RuntimeEventImpl<FluentProcessInstance, ProcessRuntimeEvent.ProcessEvents>
+        implements ProcessCancelledEvent {
 
-public interface EventConverter<API_EVENT_TYPE extends RuntimeEvent<?, ?>, INTERNAL_API_TYPE extends ActivitiEvent> {
+    public ProcessCancelledImpl(FluentProcessInstance entity) {
+        super(entity);
+    }
 
-    Optional<API_EVENT_TYPE> from(INTERNAL_API_TYPE internalEvent);
+    @Override
+    public ProcessEvents getEventType() {
+        return ProcessEvents.PROCESS_CANCELLED;
+    }
 
 }

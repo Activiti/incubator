@@ -27,8 +27,11 @@ import org.activiti.runtime.api.conf.ProcessRuntimeConfiguration;
 import org.activiti.runtime.api.conf.impl.ProcessRuntimeConfigurationImpl;
 import org.activiti.runtime.api.event.impl.ToAPIProcessCreatedEventConverter;
 import org.activiti.runtime.api.event.impl.ToAPIProcessStartedEventConverter;
+import org.activiti.runtime.api.event.impl.ToProcessResumedConverter;
+import org.activiti.runtime.api.event.impl.ToProcessSuspendedConverter;
 import org.activiti.runtime.api.event.internal.ProcessCreatedEventListenerDelegate;
 import org.activiti.runtime.api.event.internal.ProcessStartedEventListenerDelegate;
+import org.activiti.runtime.api.event.internal.ProcessSuspendedEventListenerDelegate;
 import org.activiti.runtime.api.event.listener.ProcessRuntimeEventListener;
 import org.activiti.runtime.api.impl.ProcessRuntimeImpl;
 import org.activiti.runtime.api.model.builder.impl.ProcessStarterFactory;
@@ -111,21 +114,46 @@ public class ProcessRuntimeAutoConfiguration {
                                                        converter);
     }
 
+    @Bean
+    public ToProcessResumedConverter processResumedConverter(APIProcessInstanceConverter processInstanceConverter) {
+        return new ToProcessResumedConverter(processInstanceConverter);
+    }
+
+    @Bean
+    public ToProcessSuspendedConverter processSuspendedConverter(APIProcessInstanceConverter processInstanceConverter){
+        return new ToProcessSuspendedConverter(processInstanceConverter);
+    }
+
+    @Bean
+    public ProcessSuspendedEventListenerDelegate processSuspendedEventListenerDelegate(@Autowired(required = false) List<ProcessRuntimeEventListener> eventListeners,
+                                                                                     ToProcessSuspendedConverter converter) {
+        return new ProcessSuspendedEventListenerDelegate(getInitializedListeners(eventListeners),
+                                                       converter);
+    }
+
+
     private List<ProcessRuntimeEventListener> getInitializedListeners(List<ProcessRuntimeEventListener> eventListeners) {
         return eventListeners != null ? eventListeners : Collections.emptyList();
     }
 
     @Bean
-    public InitializingBean registerEventListeners(RuntimeService runtimeService,
+    public InitializingBean registerProcessStartedEventListenerDelegate(RuntimeService runtimeService,
                                                    ProcessStartedEventListenerDelegate listener) {
         return () -> runtimeService.addEventListener(listener,
                                                      ActivitiEventType.PROCESS_STARTED);
     }
 
     @Bean
-    public InitializingBean register(RuntimeService runtimeService,
+    public InitializingBean registerProcessCreatedEventListenerDelegate(RuntimeService runtimeService,
                                      ProcessCreatedEventListenerDelegate listener) {
         return () -> runtimeService.addEventListener(listener,
                                                      ActivitiEventType.ENTITY_CREATED);
+    }
+
+    @Bean
+    public InitializingBean registerProcessSuspendedEventListenerDelegate(RuntimeService runtimeService,
+                                     ProcessSuspendedEventListenerDelegate listener) {
+        return () -> runtimeService.addEventListener(listener,
+                                                     ActivitiEventType.ENTITY_SUSPENDED);
     }
 }

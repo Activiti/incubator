@@ -18,22 +18,13 @@ package org.activiti.runtime.api.event.impl;
 
 import java.util.Optional;
 
-import org.activiti.engine.delegate.event.ActivitiEntityEvent;
-import org.activiti.engine.task.Task;
-import org.activiti.runtime.api.event.TaskCreatedEvent;
-import org.activiti.runtime.api.model.impl.APITaskConverter;
+import org.activiti.engine.delegate.event.ActivitiCancelledEvent;
+import org.activiti.runtime.api.event.ProcessCancelledEvent;
 
-public class ToAPITaskCreatedEventConverter implements EventConverter<TaskCreatedEvent, ActivitiEntityEvent> {
-
-    private final APITaskConverter taskConverter;
-
-    public ToAPITaskCreatedEventConverter(APITaskConverter taskConverter) {
-        this.taskConverter = taskConverter;
-    }
+public class ToProcessCancelledConverter implements EventConverter<ProcessCancelledEvent, ActivitiCancelledEvent> {
 
     @Override
-    public Optional<TaskCreatedEvent> from(ActivitiEntityEvent internalEvent) {
-        return Optional.of(new TaskCreatedEventImpl(taskConverter.from((Task) internalEvent.getEntity())));
+    public Optional<ProcessCancelledEvent> from(ActivitiCancelledEvent internalEvent) {
+        return Optional.empty();
     }
-
 }

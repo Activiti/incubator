@@ -20,27 +20,27 @@ import java.util.Optional;
 
 import org.activiti.engine.delegate.event.ActivitiEntityEvent;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
-import org.activiti.runtime.api.event.ProcessCreatedEvent;
+import org.activiti.runtime.api.event.ProcessResumedEvent;
 import org.activiti.runtime.api.model.impl.APIProcessInstanceConverter;
 
 import static org.activiti.runtime.api.event.impl.ActivitiEntityEventHelper.isProcessInstanceEntity;
 
-public class ToAPIProcessCreatedEventConverter implements EventConverter<ProcessCreatedEvent, ActivitiEntityEvent> {
+public class ToProcessResumedConverter implements EventConverter<ProcessResumedEvent, ActivitiEntityEvent>{
 
     private final APIProcessInstanceConverter processInstanceConverter;
 
-    public ToAPIProcessCreatedEventConverter(APIProcessInstanceConverter processInstanceConverter) {
+    public ToProcessResumedConverter(APIProcessInstanceConverter processInstanceConverter) {
         this.processInstanceConverter = processInstanceConverter;
     }
 
     @Override
-    public Optional<ProcessCreatedEvent> from(ActivitiEntityEvent internalEvent) {
+    public Optional<ProcessResumedEvent> from(ActivitiEntityEvent internalEvent) {
         Object entity = internalEvent.getEntity();
 
-        ProcessCreatedEventImpl event = null;
+        ProcessResumedEventImpl event = null;
         if (isProcessInstanceEntity(entity)) {
-            event = new ProcessCreatedEventImpl(processInstanceConverter.from(((ExecutionEntity)
-                                entity).getProcessInstance()));
+            event = new ProcessResumedEventImpl(processInstanceConverter.from(((ExecutionEntity)
+                    entity).getProcessInstance()));
         }
         return Optional.ofNullable(event);
     }

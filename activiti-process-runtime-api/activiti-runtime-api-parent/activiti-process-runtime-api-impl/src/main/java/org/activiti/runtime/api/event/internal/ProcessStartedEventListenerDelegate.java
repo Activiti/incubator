@@ -21,7 +21,6 @@ import java.util.List;
 import org.activiti.engine.delegate.event.ActivitiEvent;
 import org.activiti.engine.delegate.event.ActivitiEventListener;
 import org.activiti.engine.delegate.event.ActivitiProcessStartedEvent;
-import org.activiti.runtime.api.event.ProcessStartedEvent;
 import org.activiti.runtime.api.event.impl.ToAPIProcessStartedEventConverter;
 import org.activiti.runtime.api.event.listener.ProcessRuntimeEventListener;
 
@@ -40,10 +39,12 @@ public class ProcessStartedEventListenerDelegate implements ActivitiEventListene
     @Override
     public void onEvent(ActivitiEvent event) {
         if (event instanceof ActivitiProcessStartedEvent) {
-            ProcessStartedEvent runtimeEvent = processInstanceStartedEventConverter.from((ActivitiProcessStartedEvent) event);
-            for (ProcessRuntimeEventListener listener : processRuntimeEventListeners) {
-                listener.onProcessStarted(runtimeEvent);
-            }
+            processInstanceStartedEventConverter.from((ActivitiProcessStartedEvent) event)
+                    .ifPresent(convertedEvent -> {
+                        for (ProcessRuntimeEventListener listener : processRuntimeEventListeners) {
+                            listener.onProcessStarted(convertedEvent);
+                        }
+                    });
         }
     }
 

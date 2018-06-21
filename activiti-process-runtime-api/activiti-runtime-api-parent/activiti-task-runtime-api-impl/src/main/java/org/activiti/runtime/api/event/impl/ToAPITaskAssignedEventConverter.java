@@ -16,6 +16,8 @@
 
 package org.activiti.runtime.api.event.impl;
 
+import java.util.Optional;
+
 import org.activiti.engine.delegate.event.ActivitiEntityEvent;
 import org.activiti.engine.task.Task;
 import org.activiti.runtime.api.event.TaskAssignedEvent;
@@ -30,8 +32,8 @@ public class ToAPITaskAssignedEventConverter implements EventConverter<TaskAssig
     }
 
     @Override
-    public TaskAssignedEvent from(ActivitiEntityEvent internalEvent) {
-        return new TaskAssignedEventImpl(taskConverter.from((Task) internalEvent.getEntity()));
+    public Optional<TaskAssignedEvent> from(ActivitiEntityEvent internalEvent) {
+        return Optional.of(new TaskAssignedEventImpl(taskConverter.from((Task) internalEvent.getEntity())));
     }
 
 }

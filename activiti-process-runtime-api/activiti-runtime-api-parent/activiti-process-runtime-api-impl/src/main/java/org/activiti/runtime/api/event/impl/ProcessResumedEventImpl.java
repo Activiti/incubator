@@ -16,13 +16,20 @@
 
 package org.activiti.runtime.api.event.impl;
 
-import java.util.Optional;
+import org.activiti.runtime.api.event.ProcessResumedEvent;
+import org.activiti.runtime.api.event.ProcessRuntimeEvent;
+import org.activiti.runtime.api.model.FluentProcessInstance;
 
-import org.activiti.engine.delegate.event.ActivitiEvent;
-import org.activiti.runtime.api.event.RuntimeEvent;
+public class ProcessResumedEventImpl extends RuntimeEventImpl<FluentProcessInstance, ProcessRuntimeEvent.ProcessEvents>
+        implements ProcessResumedEvent {
 
-public interface EventConverter<API_EVENT_TYPE extends RuntimeEvent<?, ?>, INTERNAL_API_TYPE extends ActivitiEvent> {
+    public ProcessResumedEventImpl(FluentProcessInstance entity) {
+        super(entity);
+    }
 
-    Optional<API_EVENT_TYPE> from(INTERNAL_API_TYPE internalEvent);
+    @Override
+    public ProcessEvents getEventType() {
+        return ProcessEvents.PROCESS_RESUMED;
+    }
 
 }
