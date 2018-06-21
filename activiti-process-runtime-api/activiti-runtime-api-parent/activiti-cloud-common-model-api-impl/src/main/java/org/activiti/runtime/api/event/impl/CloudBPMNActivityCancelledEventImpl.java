@@ -16,38 +16,32 @@
 
 package org.activiti.runtime.api.event.impl;
 
-import java.util.UUID;
+import org.activiti.runtime.api.event.BPMNActivityEvent;
+import org.activiti.runtime.api.event.CloudBPMNActivityCancelledEvent;
+import org.activiti.runtime.api.model.BPMNActivity;
 
-import org.activiti.runtime.api.event.RuntimeEvent;
+public class CloudBPMNActivityCancelledEventImpl extends CloudBPMNActivityEventImpl implements CloudBPMNActivityCancelledEvent {
 
-public abstract class RuntimeEventImpl<ENTITY_TYPE, EVENT_TYPE extends Enum<?>> implements RuntimeEvent<ENTITY_TYPE, EVENT_TYPE> {
+    private String cause;
 
-    private String id;
-    private ENTITY_TYPE entity;
-    private Long timestamp;
-
-    public RuntimeEventImpl() {
-        id = UUID.randomUUID().toString();
-        timestamp = System.currentTimeMillis();
+    public CloudBPMNActivityCancelledEventImpl() {
     }
 
-    public RuntimeEventImpl(ENTITY_TYPE entity) {
-        this();
-        this.entity = entity;
+    public CloudBPMNActivityCancelledEventImpl(BPMNActivity entity) {
+        super(entity);
     }
 
     @Override
-    public String getId() {
-        return id;
+    public BPMNActivityEvent.ActivityEvents getEventType() {
+        return BPMNActivityEvent.ActivityEvents.ACTIVITY_CANCELLED;
     }
 
     @Override
-    public ENTITY_TYPE getEntity() {
-        return entity;
+    public String getCause() {
+        return cause;
     }
 
-    @Override
-    public Long getTimestamp() {
-        return timestamp;
+    public void setCause(String cause) {
+        this.cause = cause;
     }
 }

@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.event;
+package org.activiti.runtime.api.event.impl;
 
-public interface RuntimeEvent<ENTITY_TYPE, EVENT_TYPE extends Enum<?>> {
+import org.activiti.runtime.api.event.BPMNActivityEvent;
+import org.activiti.runtime.api.model.BPMNActivity;
 
-    String getId();
+public abstract class CloudBPMNActivityEventImpl extends CloudRuntimeEventImpl<BPMNActivity, BPMNActivityEvent.ActivityEvents> {
 
-    ENTITY_TYPE getEntity();
+    public CloudBPMNActivityEventImpl() {
+    }
 
-    Long getTimestamp();
-
-    EVENT_TYPE getEventType();
-
+    public CloudBPMNActivityEventImpl(BPMNActivity entity) {
+        super(entity);
+    }
 }

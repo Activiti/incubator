@@ -16,14 +16,6 @@
 
 package org.activiti.runtime.api.event;
 
-public interface RuntimeEvent<ENTITY_TYPE, EVENT_TYPE extends Enum<?>> {
-
-    String getId();
-
-    ENTITY_TYPE getEntity();
-
-    Long getTimestamp();
-
-    EVENT_TYPE getEventType();
+public interface CloudBPMNActivityStartedEvent extends CloudBPMNActivityEvent {
 
 }
