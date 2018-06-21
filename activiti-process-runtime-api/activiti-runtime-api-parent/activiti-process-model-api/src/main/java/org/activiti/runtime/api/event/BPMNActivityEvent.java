@@ -1,7 +1,6 @@
 package org.activiti.runtime.api.event;
 
 import org.activiti.runtime.api.model.BPMNActivity;
-import org.activiti.runtime.api.model.VariableInstance;
 
 public interface BPMNActivityEvent extends RuntimeEvent<BPMNActivity, BPMNActivityEvent.ActivityEvents> {
 
@@ -14,6 +13,4 @@ public interface BPMNActivityEvent extends RuntimeEvent<BPMNActivity, BPMNActivi
         ACTIVITY_COMPLETED
 
     }
-
-
 }
