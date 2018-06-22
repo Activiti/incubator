@@ -18,13 +18,17 @@ package org.activiti.runtime.api.event.impl;
 
 import org.activiti.runtime.api.event.ProcessCancelledEvent;
 import org.activiti.runtime.api.event.ProcessRuntimeEvent;
-import org.activiti.runtime.api.model.FluentProcessInstance;
+import org.activiti.runtime.api.model.ProcessInstance;
 
-public class ProcessCancelledImpl extends RuntimeEventImpl<FluentProcessInstance, ProcessRuntimeEvent.ProcessEvents>
+public class ProcessCancelledImpl extends RuntimeEventImpl<ProcessInstance, ProcessRuntimeEvent.ProcessEvents>
         implements ProcessCancelledEvent {
 
-    public ProcessCancelledImpl(FluentProcessInstance entity) {
+    private String cause;
+
+    public ProcessCancelledImpl(ProcessInstance entity,
+                                String cause) {
         super(entity);
+        this.cause = cause;
     }
 
     @Override
@@ -32,4 +36,8 @@ public class ProcessCancelledImpl extends RuntimeEventImpl<FluentProcessInstance
         return ProcessEvents.PROCESS_CANCELLED;
     }
 
+    @Override
+    public String getCause() {
+        return cause;
+    }
 }

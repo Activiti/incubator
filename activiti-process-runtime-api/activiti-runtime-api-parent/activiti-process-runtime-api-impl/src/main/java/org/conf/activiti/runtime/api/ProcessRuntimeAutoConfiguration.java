@@ -27,9 +27,11 @@ import org.activiti.runtime.api.conf.ProcessRuntimeConfiguration;
 import org.activiti.runtime.api.conf.impl.ProcessRuntimeConfigurationImpl;
 import org.activiti.runtime.api.event.impl.ToAPIProcessCreatedEventConverter;
 import org.activiti.runtime.api.event.impl.ToAPIProcessStartedEventConverter;
+import org.activiti.runtime.api.event.impl.ToProcessCancelledConverter;
 import org.activiti.runtime.api.event.impl.ToProcessCompletedConverter;
 import org.activiti.runtime.api.event.impl.ToProcessResumedConverter;
 import org.activiti.runtime.api.event.impl.ToProcessSuspendedConverter;
+import org.activiti.runtime.api.event.internal.ProcessCancelledEventListenerDelegate;
 import org.activiti.runtime.api.event.internal.ProcessCompletedListenerDelegate;
 import org.activiti.runtime.api.event.internal.ProcessCreatedEventListenerDelegate;
 import org.activiti.runtime.api.event.internal.ProcessResumedEventListenerDelegate;
@@ -164,5 +166,13 @@ public class ProcessRuntimeAutoConfiguration {
         return () -> runtimeService.addEventListener(new ProcessCompletedListenerDelegate(getInitializedListeners(eventListeners),
                                                                                           converter),
                                                      ActivitiEventType.PROCESS_COMPLETED);
+    }
+
+    @Bean
+    public InitializingBean registerProcessCancelledListenerDelegate(RuntimeService runtimeService,
+                                                                        @Autowired(required = false) List<ProcessRuntimeEventListener> eventListeners) {
+        return () -> runtimeService.addEventListener(new ProcessCancelledEventListenerDelegate(getInitializedListeners(eventListeners),
+                                                                                               new ToProcessCancelledConverter()),
+                                                     ActivitiEventType.PROCESS_CANCELLED);
     }
 }
