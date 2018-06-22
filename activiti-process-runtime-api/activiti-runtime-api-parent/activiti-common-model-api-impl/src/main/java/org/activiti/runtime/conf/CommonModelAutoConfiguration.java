@@ -27,8 +27,10 @@ import org.activiti.runtime.api.model.VariableInstance;
 import org.activiti.runtime.api.model.impl.VariableInstanceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
+@PropertySource("classpath:conf/rest-jackson-configuration.properties") //load default jackson configuration
 public class CommonModelAutoConfiguration {
 
     //this bean will be automatically injected inside boot's ObjectMapper
