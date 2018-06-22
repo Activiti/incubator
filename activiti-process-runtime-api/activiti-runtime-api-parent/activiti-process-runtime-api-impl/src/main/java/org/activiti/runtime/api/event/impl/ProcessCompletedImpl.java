@@ -14,24 +14,22 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.conf.impl;
+package org.activiti.runtime.api.event.impl;
 
-import java.util.Collections;
-import java.util.List;
+import org.activiti.runtime.api.event.ProcessCompletedEvent;
+import org.activiti.runtime.api.event.ProcessRuntimeEvent;
+import org.activiti.runtime.api.model.FluentProcessInstance;
 
-import org.activiti.runtime.api.conf.TaskRuntimeConfiguration;
-import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
+public class ProcessCompletedImpl extends RuntimeEventImpl<FluentProcessInstance, ProcessRuntimeEvent.ProcessEvents>
+        implements ProcessCompletedEvent {
 
-public class TaskRuntimeConfigurationImpl implements TaskRuntimeConfiguration {
-
-    private List<TaskRuntimeEventListener> eventListeners;
-
-    public TaskRuntimeConfigurationImpl(List<TaskRuntimeEventListener> eventListeners) {
-        this.eventListeners = eventListeners;
+    public ProcessCompletedImpl(FluentProcessInstance entity) {
+        super(entity);
     }
 
     @Override
-    public List<TaskRuntimeEventListener> eventListeners() {
-        return Collections.unmodifiableList(eventListeners);
+    public ProcessEvents getEventType() {
+        return ProcessEvents.PROCESS_COMPLETED;
     }
+
 }

@@ -27,8 +27,10 @@ import org.activiti.runtime.api.conf.ProcessRuntimeConfiguration;
 import org.activiti.runtime.api.conf.impl.ProcessRuntimeConfigurationImpl;
 import org.activiti.runtime.api.event.impl.ToAPIProcessCreatedEventConverter;
 import org.activiti.runtime.api.event.impl.ToAPIProcessStartedEventConverter;
+import org.activiti.runtime.api.event.impl.ToProcessCompletedConverter;
 import org.activiti.runtime.api.event.impl.ToProcessResumedConverter;
 import org.activiti.runtime.api.event.impl.ToProcessSuspendedConverter;
+import org.activiti.runtime.api.event.internal.ProcessCompletedListenerDelegate;
 import org.activiti.runtime.api.event.internal.ProcessCreatedEventListenerDelegate;
 import org.activiti.runtime.api.event.internal.ProcessResumedEventListenerDelegate;
 import org.activiti.runtime.api.event.internal.ProcessStartedEventListenerDelegate;
@@ -148,5 +150,19 @@ public class ProcessRuntimeAutoConfiguration {
         return () -> runtimeService.addEventListener(new ProcessResumedEventListenerDelegate(getInitializedListeners(eventListeners),
                                                                                              converter),
                                                      ActivitiEventType.ENTITY_ACTIVATED);
+    }
+
+    @Bean
+    public ToProcessCompletedConverter processCompletedConverter(APIProcessInstanceConverter processInstanceConverter) {
+        return new ToProcessCompletedConverter(processInstanceConverter);
+    }
+
+    @Bean
+    public InitializingBean registerProcessCompletedListenerDelegate(RuntimeService runtimeService,
+                                                                        @Autowired(required = false) List<ProcessRuntimeEventListener> eventListeners,
+                                                                        ToProcessCompletedConverter converter) {
+        return () -> runtimeService.addEventListener(new ProcessCompletedListenerDelegate(getInitializedListeners(eventListeners),
+                                                                                          converter),
+                                                     ActivitiEventType.PROCESS_COMPLETED);
     }
 }
