@@ -28,8 +28,10 @@ import org.activiti.runtime.api.event.impl.ToAPITaskAssignedEventConverter;
 import org.activiti.runtime.api.event.impl.ToAPITaskCandidateGroupAddedEventConverter;
 import org.activiti.runtime.api.event.impl.ToAPITaskCandidateUserAddedEventConverter;
 import org.activiti.runtime.api.event.impl.ToAPITaskCreatedEventConverter;
+import org.activiti.runtime.api.event.impl.ToTaskCancelledConverter;
 import org.activiti.runtime.api.event.impl.ToTaskCompletedConverter;
 import org.activiti.runtime.api.event.internal.TaskAssignedEventListenerDelegate;
+import org.activiti.runtime.api.event.internal.TaskCancelledListenerDelegate;
 import org.activiti.runtime.api.event.internal.TaskCandidateGroupAddedEventListenerDelegate;
 import org.activiti.runtime.api.event.internal.TaskCandidateUserAddedEventListenerDelegate;
 import org.activiti.runtime.api.event.internal.TaskCompletedListenerDelegate;
@@ -98,6 +100,15 @@ public class TaskRuntimeAutoConfiguration {
         return () -> runtimeService.addEventListener(new TaskCompletedListenerDelegate(getInitializedTaskRuntimeEventListeners(taskRuntimeEventListeners),
                                                                                        new ToTaskCompletedConverter(taskConverter)),
                                                      ActivitiEventType.TASK_COMPLETED);
+    }
+
+    @Bean
+    public InitializingBean registerTaskCancelledEventListener(RuntimeService runtimeService,
+                                                               @Autowired(required = false) List<TaskRuntimeEventListener> taskRuntimeEventListeners,
+                                                               APITaskConverter taskConverter) {
+        return () -> runtimeService.addEventListener(new TaskCancelledListenerDelegate(getInitializedTaskRuntimeEventListeners(taskRuntimeEventListeners),
+                                                                                       new ToTaskCancelledConverter(taskConverter)),
+                                                     ActivitiEventType.ENTITY_DELETED);
     }
 
     @Bean

@@ -55,6 +55,11 @@ public class AssignTaskListener implements TaskRuntimeEventListener {
     }
 
     @Override
+    public void onTaskCancelled(TaskCancelled event) {
+
+    }
+
+    @Override
     public void onTaskCandidateUserAdded(TaskCandidateUserAddedEvent event) {
 
     }
