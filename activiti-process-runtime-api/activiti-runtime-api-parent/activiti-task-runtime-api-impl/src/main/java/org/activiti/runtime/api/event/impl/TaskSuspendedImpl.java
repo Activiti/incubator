@@ -16,22 +16,21 @@
 
 package org.activiti.runtime.api.event.impl;
 
-import org.activiti.runtime.api.event.TaskCancelled;
 import org.activiti.runtime.api.event.TaskRuntimeEvent;
-import org.activiti.runtime.api.model.Task;
+import org.activiti.runtime.api.event.TaskSuspendedEvent;
+import org.activiti.runtime.api.model.FluentTask;
 
-public class TaskCancelledImpl extends RuntimeEventImpl<Task, TaskRuntimeEvent.TaskEvents> implements TaskCancelled {
+public class TaskSuspendedImpl extends RuntimeEventImpl<FluentTask, TaskRuntimeEvent.TaskEvents> implements TaskSuspendedEvent {
 
-    public TaskCancelledImpl() {
+    public TaskSuspendedImpl() {
     }
 
-    public TaskCancelledImpl(Task entity) {
+    public TaskSuspendedImpl(FluentTask entity) {
         super(entity);
     }
 
     @Override
-    public TaskRuntimeEvent.TaskEvents getEventType() {
-        return TaskRuntimeEvent.TaskEvents.TASK_CANCELLED;
+    public TaskEvents getEventType() {
+        return TaskEvents.TASK_SUSPENDED;
     }
-
 }

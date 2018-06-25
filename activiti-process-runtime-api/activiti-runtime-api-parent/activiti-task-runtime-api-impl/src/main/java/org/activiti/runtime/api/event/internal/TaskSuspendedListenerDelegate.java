@@ -18,31 +18,31 @@ package org.activiti.runtime.api.event.internal;
 
 import java.util.List;
 
-import org.activiti.engine.delegate.event.ActivitiActivityCancelledEvent;
+import org.activiti.engine.delegate.event.ActivitiEntityEvent;
 import org.activiti.engine.delegate.event.ActivitiEvent;
 import org.activiti.engine.delegate.event.ActivitiEventListener;
-import org.activiti.runtime.api.event.impl.ToTaskCancelledConverter;
+import org.activiti.runtime.api.event.impl.ToTaskSuspendedConverter;
 import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
 
-public class TaskCancelledListenerDelegate implements ActivitiEventListener {
+public class TaskSuspendedListenerDelegate implements ActivitiEventListener {
 
     private final List<TaskRuntimeEventListener> taskRuntimeEventListeners;
 
-    private final ToTaskCancelledConverter toTaskCancelledConverter;
+    private final ToTaskSuspendedConverter taskSuspendedConverter;
 
-    public TaskCancelledListenerDelegate(List<TaskRuntimeEventListener> taskRuntimeEventListeners,
-                                         ToTaskCancelledConverter toTaskCancelledConverter) {
+    public TaskSuspendedListenerDelegate(List<TaskRuntimeEventListener> taskRuntimeEventListeners,
+                                         ToTaskSuspendedConverter taskSuspendedConverter) {
         this.taskRuntimeEventListeners = taskRuntimeEventListeners;
-        this.toTaskCancelledConverter = toTaskCancelledConverter;
+        this.taskSuspendedConverter = taskSuspendedConverter;
     }
 
     @Override
     public void onEvent(ActivitiEvent event) {
-        if (event instanceof ActivitiActivityCancelledEvent) {
-            toTaskCancelledConverter.from((ActivitiActivityCancelledEvent) event)
+        if (event instanceof ActivitiEntityEvent) {
+            taskSuspendedConverter.from((ActivitiEntityEvent) event)
                     .ifPresent(convertedEvent -> {
                         for (TaskRuntimeEventListener listener : taskRuntimeEventListeners) {
-                            listener.onTaskCancelled(convertedEvent);
+                            listener.onTaskSuspended(convertedEvent);
                         }
                     });
         }

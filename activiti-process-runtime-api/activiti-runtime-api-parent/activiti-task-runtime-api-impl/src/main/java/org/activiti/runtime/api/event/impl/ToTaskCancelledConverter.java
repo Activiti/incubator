@@ -16,33 +16,38 @@
 
 package org.activiti.runtime.api.event.impl;
 
+import java.util.List;
 import java.util.Optional;
 
-import org.activiti.engine.delegate.event.ActivitiEntityEvent;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.delegate.event.ActivitiActivityCancelledEvent;
 import org.activiti.engine.task.Task;
 import org.activiti.runtime.api.event.TaskCancelled;
 import org.activiti.runtime.api.model.impl.APITaskConverter;
 
-public class ToTaskCancelledConverter implements EventConverter<TaskCancelled, ActivitiEntityEvent> {
+public class ToTaskCancelledConverter implements EventConverter<TaskCancelled, ActivitiActivityCancelledEvent> {
 
     private APITaskConverter taskConverter;
 
-    public ToTaskCancelledConverter(APITaskConverter taskConverter) {
+    private TaskService taskService;
+
+    public ToTaskCancelledConverter(APITaskConverter taskConverter,
+                                    TaskService taskService) {
         this.taskConverter = taskConverter;
+        this.taskService = taskService;
     }
 
     @Override
-    public Optional<TaskCancelled> from(ActivitiEntityEvent internalEvent) {
+    public Optional<TaskCancelled> from(ActivitiActivityCancelledEvent internalEvent) {
+        List<Task> tasks = taskService.createTaskQuery()
+                .processInstanceId(internalEvent.getProcessInstanceId())
+                .taskDefinitionKey(internalEvent.getActivityId())
+                .taskName(internalEvent.getActivityName())
+                .list();
         TaskCancelled event = null;
-        if (isTaskEvent(internalEvent)) {
-            event = new TaskCancelledImpl(taskConverter.from((Task) internalEvent.getEntity()));
+        if (!tasks.isEmpty()) {
+            event = new TaskCancelledImpl(taskConverter.from(tasks.get(0)));
         }
         return Optional.ofNullable(event);
     }
-
-
-    private boolean isTaskEvent(ActivitiEntityEvent activitiEvent) {
-        return activitiEvent.getEntity() instanceof Task;
-    }
-
 }
