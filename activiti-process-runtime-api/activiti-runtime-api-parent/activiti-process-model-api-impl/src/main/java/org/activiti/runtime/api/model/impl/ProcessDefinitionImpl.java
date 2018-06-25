@@ -16,6 +16,8 @@
 
 package org.activiti.runtime.api.model.impl;
 
+import java.util.Objects;
+
 import org.activiti.runtime.api.model.ProcessDefinition;
 
 public class ProcessDefinitionImpl implements ProcessDefinition {
@@ -70,4 +72,33 @@ public class ProcessDefinitionImpl implements ProcessDefinition {
         this.version = version;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ProcessDefinitionImpl that = (ProcessDefinitionImpl) o;
+        return version == that.version &&
+                Objects.equals(id,
+                               that.id) &&
+                Objects.equals(name,
+                               that.name) &&
+                Objects.equals(description,
+                               that.description) &&
+                Objects.equals(key,
+                               that.key);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id,
+                            name,
+                            description,
+                            version,
+                            key);
+    }
 }

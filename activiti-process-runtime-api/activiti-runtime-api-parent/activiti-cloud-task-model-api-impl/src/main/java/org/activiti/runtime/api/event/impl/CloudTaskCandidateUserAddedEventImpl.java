@@ -30,9 +30,16 @@ public class CloudTaskCandidateUserAddedEventImpl extends CloudRuntimeEventImpl<
         super(entity);
     }
 
+    public CloudTaskCandidateUserAddedEventImpl(String id,
+                                                Long timestamp,
+                                                TaskCandidateUser entity) {
+        super(id,
+              timestamp,
+              entity);
+    }
+
     @Override
     public TaskCandidateUserEvent.TaskCandidateUserEvents getEventType() {
         return TaskCandidateUserEvent.TaskCandidateUserEvents.TASK_CANDIDATE_USER_ADDED;
     }
-
 }

@@ -30,6 +30,14 @@ public class CloudTaskCompletedEventImpl extends CloudRuntimeEventImpl<Task, Tas
         super(entity);
     }
 
+    public CloudTaskCompletedEventImpl(String id,
+                                       Long timestamp,
+                                       Task entity) {
+        super(id,
+              timestamp,
+              entity);
+    }
+
     @Override
     public TaskEvents getEventType() {
         return TaskEvents.TASK_COMPLETED;

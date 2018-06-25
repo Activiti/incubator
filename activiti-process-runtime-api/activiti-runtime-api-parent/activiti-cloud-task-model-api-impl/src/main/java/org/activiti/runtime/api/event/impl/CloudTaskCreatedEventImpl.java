@@ -30,6 +30,14 @@ public class CloudTaskCreatedEventImpl extends CloudRuntimeEventImpl<Task, TaskR
         super(entity);
     }
 
+    public CloudTaskCreatedEventImpl(String id,
+                                     Long timestamp,
+                                     Task entity) {
+        super(id,
+              timestamp,
+              entity);
+    }
+
     @Override
     public TaskRuntimeEvent.TaskEvents getEventType() {
         return TaskRuntimeEvent.TaskEvents.TASK_CREATED;

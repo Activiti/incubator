@@ -27,4 +27,12 @@ public abstract class CloudVariableEventImpl extends CloudRuntimeEventImpl<Varia
     public CloudVariableEventImpl(VariableInstance entity) {
         super(entity);
     }
+
+    public CloudVariableEventImpl(String id,
+                                  Long timestamp,
+                                  VariableInstance entity) {
+        super(id,
+              timestamp,
+              entity);
+    }
 }

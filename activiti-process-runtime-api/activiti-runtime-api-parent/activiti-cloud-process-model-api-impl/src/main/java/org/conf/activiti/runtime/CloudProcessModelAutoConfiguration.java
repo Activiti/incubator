@@ -20,7 +20,12 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.jsontype.NamedType;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import org.activiti.runtime.api.event.BPMNActivityEvent;
+import org.activiti.runtime.api.event.CloudBPMNActivityCancelledEvent;
 import org.activiti.runtime.api.event.ProcessRuntimeEvent;
+import org.activiti.runtime.api.event.impl.CloudBPMNActivityCancelledEventImpl;
+import org.activiti.runtime.api.event.impl.CloudBPMNActivityCompletedEventImpl;
+import org.activiti.runtime.api.event.impl.CloudBPMNActivityStartedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudProcessCancelledEventImpl;
 import org.activiti.runtime.api.event.impl.CloudProcessCompletedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudProcessCreatedEventImpl;
@@ -38,6 +43,12 @@ public class CloudProcessModelAutoConfiguration {
     public Module customizeCloudProcessModelObjectMapper() {
         SimpleModule module = new SimpleModule("mapProcessRuntimeEvents",
                                                Version.unknownVersion());
+        module.registerSubtypes(new NamedType(CloudBPMNActivityStartedEventImpl.class,
+                                              BPMNActivityEvent.ActivityEvents.ACTIVITY_STARTED.name()));
+        module.registerSubtypes(new NamedType(CloudBPMNActivityCompletedEventImpl.class,
+                                              BPMNActivityEvent.ActivityEvents.ACTIVITY_COMPLETED.name()));
+        module.registerSubtypes(new NamedType(CloudBPMNActivityCancelledEventImpl.class,
+                                              BPMNActivityEvent.ActivityEvents.ACTIVITY_CANCELLED.name()));
         module.registerSubtypes(new NamedType(CloudProcessStartedEventImpl.class,
                                               ProcessRuntimeEvent.ProcessEvents.PROCESS_STARTED.name()));
         module.registerSubtypes(new NamedType(CloudProcessCreatedEventImpl.class,

@@ -40,9 +40,9 @@ public class FluentTaskImpl extends TaskImpl implements FluentTask {
                           String id,
                           String name,
                           TaskStatus status) {
-        super(status,
+        super(id,
               name,
-              id);
+              status);
         this.taskService = taskService;
         this.variableInstanceConverter = variableInstanceConverter;
         this.taskConverter = taskConverter;

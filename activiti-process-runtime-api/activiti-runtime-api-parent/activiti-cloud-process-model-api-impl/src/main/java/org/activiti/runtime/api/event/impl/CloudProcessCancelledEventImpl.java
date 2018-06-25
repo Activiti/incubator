@@ -37,6 +37,14 @@ public class CloudProcessCancelledEventImpl extends CloudRuntimeEventImpl<Proces
         this.cause = cause;
     }
 
+    public CloudProcessCancelledEventImpl(String id,
+                                          Long timestamp,
+                                          ProcessInstance processInstance) {
+        super(id,
+              timestamp,
+              processInstance);
+    }
+
     @Override
     public ProcessEvents getEventType() {
         return ProcessEvents.PROCESS_CANCELLED;

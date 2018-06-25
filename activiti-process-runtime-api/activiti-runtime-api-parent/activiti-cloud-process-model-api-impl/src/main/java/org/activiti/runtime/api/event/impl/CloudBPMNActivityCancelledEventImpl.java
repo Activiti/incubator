@@ -31,6 +31,14 @@ public class CloudBPMNActivityCancelledEventImpl extends CloudBPMNActivityEventI
         super(entity);
     }
 
+    public CloudBPMNActivityCancelledEventImpl(String id,
+                                               Long timestamp,
+                                               BPMNActivity entity) {
+        super(id,
+              timestamp,
+              entity);
+    }
+
     @Override
     public BPMNActivityEvent.ActivityEvents getEventType() {
         return BPMNActivityEvent.ActivityEvents.ACTIVITY_CANCELLED;

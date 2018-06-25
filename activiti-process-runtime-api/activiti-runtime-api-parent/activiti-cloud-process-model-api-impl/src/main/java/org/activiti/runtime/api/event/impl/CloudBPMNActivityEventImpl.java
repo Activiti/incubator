@@ -21,10 +21,37 @@ import org.activiti.runtime.api.model.BPMNActivity;
 
 public abstract class CloudBPMNActivityEventImpl extends CloudRuntimeEventImpl<BPMNActivity, BPMNActivityEvent.ActivityEvents> {
 
+    private String processDefinitionId;
+    private String processInstanceId;
+
     public CloudBPMNActivityEventImpl() {
     }
 
     public CloudBPMNActivityEventImpl(BPMNActivity entity) {
         super(entity);
+    }
+
+    public CloudBPMNActivityEventImpl(String id,
+                                      Long timestamp,
+                                      BPMNActivity entity) {
+        super(id,
+              timestamp,
+              entity);
+    }
+
+    public String getProcessDefinitionId() {
+        return processDefinitionId;
+    }
+
+    public void setProcessDefinitionId(String processDefinitionId) {
+        this.processDefinitionId = processDefinitionId;
+    }
+
+    public String getProcessInstanceId() {
+        return processInstanceId;
+    }
+
+    public void setProcessInstanceId(String processInstanceId) {
+        this.processInstanceId = processInstanceId;
     }
 }

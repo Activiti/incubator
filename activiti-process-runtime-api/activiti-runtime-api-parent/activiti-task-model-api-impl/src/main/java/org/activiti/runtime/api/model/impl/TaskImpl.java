@@ -40,13 +40,14 @@ public class TaskImpl implements Task {
     public TaskImpl() {
     }
 
-    public TaskImpl(Task.TaskStatus status,
+    public TaskImpl(String id,
                     String name,
-                    String id) {
-        this.status = status;
-        this.name = name;
+                    Task.TaskStatus status) {
         this.id = id;
+        this.name = name;
+        this.status = status;
     }
+
 
     public String getId() {
         return id;

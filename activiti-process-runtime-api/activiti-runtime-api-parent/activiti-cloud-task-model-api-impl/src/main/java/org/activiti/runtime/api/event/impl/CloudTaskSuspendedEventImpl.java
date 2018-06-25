@@ -30,6 +30,14 @@ public class CloudTaskSuspendedEventImpl extends CloudRuntimeEventImpl<Task, Tas
         super(entity);
     }
 
+    public CloudTaskSuspendedEventImpl(String id,
+                                       Long timestamp,
+                                       Task entity) {
+        super(id,
+              timestamp,
+              entity);
+    }
+
     @Override
     public TaskEvents getEventType() {
         return TaskEvents.TASK_SUSPENDED;

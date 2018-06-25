@@ -37,7 +37,29 @@ public class CloudProcessStartedEventImpl extends CloudRuntimeEventImpl<ProcessI
     }
 
     public CloudProcessStartedEventImpl(ProcessInstance processInstance) {
-        this(processInstance, null, null);
+        this(processInstance,
+             null,
+             null);
+    }
+
+    public CloudProcessStartedEventImpl(String id,
+                                        Long timestamp,
+                                        ProcessInstance entity) {
+        super(id,
+              timestamp,
+              entity);
+    }
+
+    public CloudProcessStartedEventImpl(String id,
+                                        Long timestamp,
+                                        ProcessInstance entity,
+                                        String nestedProcessDefinitionId,
+                                        String nestedProcessInstanceId) {
+        super(id,
+              timestamp,
+              entity);
+        this.nestedProcessDefinitionId = nestedProcessDefinitionId;
+        this.nestedProcessInstanceId = nestedProcessInstanceId;
     }
 
     @Override

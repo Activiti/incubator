@@ -22,11 +22,20 @@ import org.activiti.runtime.api.model.BPMNActivity;
 
 public class CloudBPMNActivityStartedEventImpl extends CloudBPMNActivityEventImpl implements CloudBPMNActivityStartedEvent {
 
+
     public CloudBPMNActivityStartedEventImpl() {
     }
 
     public CloudBPMNActivityStartedEventImpl(BPMNActivity entity) {
         super(entity);
+    }
+
+    public CloudBPMNActivityStartedEventImpl(String id,
+                                             Long timestamp,
+                                             BPMNActivity entity) {
+        super(id,
+              timestamp,
+              entity);
     }
 
     @Override

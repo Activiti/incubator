@@ -26,8 +26,16 @@ public class CloudTaskAssignedEventImpl extends CloudRuntimeEventImpl<Task, Task
     public CloudTaskAssignedEventImpl() {
     }
 
-    public CloudTaskAssignedEventImpl(Task entity) {
-        super(entity);
+    public CloudTaskAssignedEventImpl(Task task) {
+        super(task);
+    }
+
+    public CloudTaskAssignedEventImpl(String id,
+                                      Long timestamp,
+                                      Task task) {
+        super(id,
+              timestamp,
+              task);
     }
 
     @Override

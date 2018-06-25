@@ -1,5 +1,7 @@
 package org.activiti.runtime.api.model.impl;
 
+import java.util.Objects;
+
 import org.activiti.runtime.api.model.BPMNActivity;
 
 public class BPMNActivityImpl implements BPMNActivity {
@@ -40,5 +42,30 @@ public class BPMNActivityImpl implements BPMNActivity {
 
     public void setActivityType(String activityType) {
         this.activityType = activityType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        BPMNActivityImpl that = (BPMNActivityImpl) o;
+        return Objects.equals(activityId,
+                              that.activityId) &&
+                Objects.equals(activityName,
+                               that.activityName) &&
+                Objects.equals(activityType,
+                               that.activityType);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(activityId,
+                            activityName,
+                            activityType);
     }
 }

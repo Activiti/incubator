@@ -29,9 +29,16 @@ public class CloudVariableUpdatedEventImpl extends CloudVariableEventImpl implem
         super(entity);
     }
 
+    public CloudVariableUpdatedEventImpl(String id,
+                                         Long timestamp,
+                                         VariableInstance entity) {
+        super(id,
+              timestamp,
+              entity);
+    }
+
     @Override
     public VariableEvent.VariableEvents getEventType() {
         return VariableEvent.VariableEvents.VARIABLE_UPDATED;
     }
-
 }

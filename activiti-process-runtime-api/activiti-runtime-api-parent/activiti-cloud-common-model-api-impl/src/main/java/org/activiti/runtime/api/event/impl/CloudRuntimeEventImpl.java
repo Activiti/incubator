@@ -35,6 +35,14 @@ public abstract class CloudRuntimeEventImpl< ENTITY_TYPE, EVENT_TYPE extends Enu
         super(entity);
     }
 
+    public CloudRuntimeEventImpl(String id,
+                                 Long timestamp,
+                                 ENTITY_TYPE entity) {
+        super(id,
+              timestamp,
+              entity);
+    }
+
     @Override
     public String getAppName() {
         return appName;

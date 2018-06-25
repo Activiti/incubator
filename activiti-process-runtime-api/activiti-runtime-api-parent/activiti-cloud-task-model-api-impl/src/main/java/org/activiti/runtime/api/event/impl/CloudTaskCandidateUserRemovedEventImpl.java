@@ -30,9 +30,16 @@ public class CloudTaskCandidateUserRemovedEventImpl extends CloudRuntimeEventImp
         super(entity);
     }
 
+    public CloudTaskCandidateUserRemovedEventImpl(String id,
+                                                  Long timestamp,
+                                                  TaskCandidateUser entity) {
+        super(id,
+              timestamp,
+              entity);
+    }
+
     @Override
     public TaskCandidateUserEvents getEventType() {
         return TaskCandidateUserEvents.TASK_CANDIDATE_USER_REMOVED;
     }
-
 }

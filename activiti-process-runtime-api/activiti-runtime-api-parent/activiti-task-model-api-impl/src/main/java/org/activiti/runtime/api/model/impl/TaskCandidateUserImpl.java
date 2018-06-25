@@ -16,6 +16,8 @@
 
 package org.activiti.runtime.api.model.impl;
 
+import java.util.Objects;
+
 import org.activiti.runtime.api.model.TaskCandidateUser;
 
 public class TaskCandidateUserImpl implements TaskCandidateUser {
@@ -42,4 +44,25 @@ public class TaskCandidateUserImpl implements TaskCandidateUser {
         return taskId;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        TaskCandidateUserImpl that = (TaskCandidateUserImpl) o;
+        return Objects.equals(userId,
+                              that.userId) &&
+                Objects.equals(taskId,
+                               that.taskId);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(userId,
+                            taskId);
+    }
 }

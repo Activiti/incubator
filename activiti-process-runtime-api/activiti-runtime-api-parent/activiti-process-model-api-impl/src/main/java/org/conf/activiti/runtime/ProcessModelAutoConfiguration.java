@@ -23,8 +23,10 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import org.activiti.runtime.api.model.BPMNActivity;
 import org.activiti.runtime.api.model.ProcessDefinition;
 import org.activiti.runtime.api.model.ProcessInstance;
+import org.activiti.runtime.api.model.impl.BPMNActivityImpl;
 import org.activiti.runtime.api.model.impl.ProcessDefinitionImpl;
 import org.activiti.runtime.api.model.impl.ProcessInstanceImpl;
 import org.springframework.context.annotation.Bean;
@@ -38,16 +40,19 @@ public class ProcessModelAutoConfiguration {
     public Module customizeProcessModelObjectMapper() {
         SimpleModule module = new SimpleModule("mapProcessModelInterfaces",
                                                Version.unknownVersion());
-        SimpleAbstractTypeResolver resolver = new SimpleAbstractTypeResolver(){
+        SimpleAbstractTypeResolver resolver = new SimpleAbstractTypeResolver() {
             //this is a workaround for https://github.com/FasterXML/jackson-databind/issues/2019
             //once version 2.9.6 is related we can remove this @override method
             @Override
             public JavaType resolveAbstractType(DeserializationConfig config,
                                                 BeanDescription typeDesc) {
-                return findTypeMapping(config, typeDesc.getType());
+                return findTypeMapping(config,
+                                       typeDesc.getType());
             }
         };
 
+        resolver.addMapping(BPMNActivity.class,
+                            BPMNActivityImpl.class);
         resolver.addMapping(ProcessInstance.class,
                             ProcessInstanceImpl.class);
         resolver.addMapping(ProcessDefinition.class,
@@ -56,5 +61,4 @@ public class ProcessModelAutoConfiguration {
         module.setAbstractTypes(resolver);
         return module;
     }
-
 }

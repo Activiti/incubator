@@ -30,6 +30,14 @@ public class CloudTaskCandidateGroupAddedEventImpl extends CloudRuntimeEventImpl
         super(entity);
     }
 
+    public CloudTaskCandidateGroupAddedEventImpl(String id,
+                                                 Long timestamp,
+                                                 TaskCandidateGroup entity) {
+        super(id,
+              timestamp,
+              entity);
+    }
+
     @Override
     public TaskCandidateGroupEvent.TaskCandidateGroupEvents getEventType() {
         return TaskCandidateGroupEvent.TaskCandidateGroupEvents.TASK_CANDIDATE_GROUP_ADDED;

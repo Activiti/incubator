@@ -23,6 +23,8 @@ import org.activiti.runtime.api.model.Task;
 public class CloudTaskCancelledEventImpl extends CloudRuntimeEventImpl<Task, TaskRuntimeEvent.TaskEvents>
         implements CloudTaskCancelledEvent {
 
+    private String cause;
+
     public CloudTaskCancelledEventImpl() {
     }
 
@@ -30,8 +32,30 @@ public class CloudTaskCancelledEventImpl extends CloudRuntimeEventImpl<Task, Tas
         super(entity);
     }
 
+    public CloudTaskCancelledEventImpl(Task entity,
+                                       String cause) {
+        super(entity);
+        this.cause = cause;
+    }
+
+    public CloudTaskCancelledEventImpl(String id,
+                                       Long timestamp,
+                                       Task entity) {
+        super(id,
+              timestamp,
+              entity);
+    }
+
     @Override
     public TaskEvents getEventType() {
         return TaskEvents.TASK_CANCELLED;
+    }
+
+    public String getCause() {
+        return cause;
+    }
+
+    public void setCause(String cause) {
+        this.cause = cause;
     }
 }

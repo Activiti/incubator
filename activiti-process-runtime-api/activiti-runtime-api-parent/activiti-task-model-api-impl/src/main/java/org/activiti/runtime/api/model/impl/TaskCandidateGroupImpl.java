@@ -16,6 +16,8 @@
 
 package org.activiti.runtime.api.model.impl;
 
+import java.util.Objects;
+
 import org.activiti.runtime.api.model.TaskCandidateGroup;
 
 public class TaskCandidateGroupImpl implements TaskCandidateGroup {
@@ -42,4 +44,25 @@ public class TaskCandidateGroupImpl implements TaskCandidateGroup {
         return taskId;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        TaskCandidateGroupImpl that = (TaskCandidateGroupImpl) o;
+        return Objects.equals(groupId,
+                              that.groupId) &&
+                Objects.equals(taskId,
+                               that.taskId);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(groupId,
+                            taskId);
+    }
 }

@@ -29,9 +29,16 @@ public class CloudProcessSuspendedEventImpl extends CloudRuntimeEventImpl<Proces
         super(processInstance);
     }
 
+    public CloudProcessSuspendedEventImpl(String id,
+                                          Long timestamp,
+                                          ProcessInstance entity) {
+        super(id,
+              timestamp,
+              entity);
+    }
+
     @Override
     public ProcessEvents getEventType() {
         return ProcessEvents.PROCESS_SUSPENDED;
     }
-
 }

@@ -29,9 +29,16 @@ public class CloudProcessCompletedEventImpl extends CloudRuntimeEventImpl<Proces
         super(processInstance);
     }
 
+    public CloudProcessCompletedEventImpl(String id,
+                                          Long timestamp,
+                                          ProcessInstance entity) {
+        super(id,
+              timestamp,
+              entity);
+    }
+
     @Override
     public ProcessRuntimeEvent.ProcessEvents getEventType() {
         return ProcessRuntimeEvent.ProcessEvents.PROCESS_COMPLETED;
     }
-
 }

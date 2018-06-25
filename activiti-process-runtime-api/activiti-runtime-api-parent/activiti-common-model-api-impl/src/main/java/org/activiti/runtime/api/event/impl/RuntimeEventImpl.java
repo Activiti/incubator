@@ -23,8 +23,8 @@ import org.activiti.runtime.api.event.RuntimeEvent;
 public abstract class RuntimeEventImpl<ENTITY_TYPE, EVENT_TYPE extends Enum<?>> implements RuntimeEvent<ENTITY_TYPE, EVENT_TYPE> {
 
     private String id;
-    private ENTITY_TYPE entity;
     private Long timestamp;
+    private ENTITY_TYPE entity;
 
     public RuntimeEventImpl() {
         id = UUID.randomUUID().toString();
@@ -33,6 +33,14 @@ public abstract class RuntimeEventImpl<ENTITY_TYPE, EVENT_TYPE extends Enum<?>> 
 
     public RuntimeEventImpl(ENTITY_TYPE entity) {
         this();
+        this.entity = entity;
+    }
+
+    public RuntimeEventImpl(String id,
+                            Long timestamp,
+                            ENTITY_TYPE entity) {
+        this.id = id;
+        this.timestamp = timestamp;
         this.entity = entity;
     }
 
