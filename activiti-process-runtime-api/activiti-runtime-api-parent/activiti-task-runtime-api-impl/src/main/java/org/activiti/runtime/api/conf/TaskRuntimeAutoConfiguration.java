@@ -24,12 +24,12 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.delegate.event.ActivitiEventType;
 import org.activiti.runtime.api.TaskRuntime;
 import org.activiti.runtime.api.conf.impl.TaskRuntimeConfigurationImpl;
-import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
 import org.activiti.runtime.api.event.TaskActivated;
 import org.activiti.runtime.api.event.TaskAssigned;
 import org.activiti.runtime.api.event.TaskCancelled;
 import org.activiti.runtime.api.event.TaskCandidateGroupAdded;
 import org.activiti.runtime.api.event.TaskCandidateUserAdded;
+import org.activiti.runtime.api.event.TaskCandidateUserRemoved;
 import org.activiti.runtime.api.event.TaskCompleted;
 import org.activiti.runtime.api.event.TaskCreated;
 import org.activiti.runtime.api.event.TaskSuspended;
@@ -39,6 +39,7 @@ import org.activiti.runtime.api.event.impl.ToAPITaskCandidateUserAddedEventConve
 import org.activiti.runtime.api.event.impl.ToAPITaskCreatedEventConverter;
 import org.activiti.runtime.api.event.impl.ToTaskActivatedConverter;
 import org.activiti.runtime.api.event.impl.ToTaskCancelledConverter;
+import org.activiti.runtime.api.event.impl.ToTaskCandidateUserRemovedConverter;
 import org.activiti.runtime.api.event.impl.ToTaskCompletedConverter;
 import org.activiti.runtime.api.event.impl.ToTaskSuspendedConverter;
 import org.activiti.runtime.api.event.internal.TaskActivatedListenerDelegate;
@@ -46,9 +47,11 @@ import org.activiti.runtime.api.event.internal.TaskAssignedListenerDelegate;
 import org.activiti.runtime.api.event.internal.TaskCancelledListenerDelegate;
 import org.activiti.runtime.api.event.internal.TaskCandidateGroupAddedListenerDelegate;
 import org.activiti.runtime.api.event.internal.TaskCandidateUserAddedListenerDelegate;
+import org.activiti.runtime.api.event.internal.TaskCandidateUserRemovedListenerDelegate;
 import org.activiti.runtime.api.event.internal.TaskCompletedListenerDelegate;
 import org.activiti.runtime.api.event.internal.TaskCreatedListenerDelegate;
 import org.activiti.runtime.api.event.internal.TaskSuspendedListenerDelegate;
+import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
 import org.activiti.runtime.api.impl.TaskRuntimeImpl;
 import org.activiti.runtime.api.model.impl.APITaskCandidateGroupConverter;
 import org.activiti.runtime.api.model.impl.APITaskCandidateUserConverter;
@@ -170,6 +173,15 @@ public class TaskRuntimeAutoConfiguration {
         return () -> runtimeService.addEventListener(new TaskCandidateUserAddedListenerDelegate(getInitializedTaskRuntimeEventListeners(listeners),
                                                                                                 taskCandidateUserAddedEventConverter),
                                                      ActivitiEventType.ENTITY_CREATED);
+    }
+
+    @Bean
+    public InitializingBean registerTaskCandidateUserRemovedEventListener(RuntimeService runtimeService,
+                                                                          @Autowired(required = false) List<TaskRuntimeEventListener<TaskCandidateUserRemoved>> listeners,
+                                                                          APITaskCandidateUserConverter taskCandidateUserConverter) {
+        return () -> runtimeService.addEventListener(new TaskCandidateUserRemovedListenerDelegate(getInitializedTaskRuntimeEventListeners(listeners),
+                                                                                                  new ToTaskCandidateUserRemovedConverter(taskCandidateUserConverter)),
+                                                     ActivitiEventType.ENTITY_DELETED);
     }
 
     @Bean
