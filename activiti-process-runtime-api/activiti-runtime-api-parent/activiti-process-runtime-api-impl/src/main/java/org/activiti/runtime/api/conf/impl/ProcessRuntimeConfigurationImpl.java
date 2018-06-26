@@ -24,14 +24,14 @@ import org.activiti.runtime.api.event.listener.ProcessRuntimeEventListener;
 
 public class ProcessRuntimeConfigurationImpl implements ProcessRuntimeConfiguration {
 
-    private List<ProcessRuntimeEventListener> eventListeners;
+    private List<ProcessRuntimeEventListener<?>> eventListeners;
 
-    public ProcessRuntimeConfigurationImpl(List<ProcessRuntimeEventListener> eventListeners) {
+    public ProcessRuntimeConfigurationImpl(List<ProcessRuntimeEventListener<?>> eventListeners) {
         this.eventListeners = eventListeners;
     }
 
     @Override
-    public List<ProcessRuntimeEventListener> eventListeners() {
+    public List<ProcessRuntimeEventListener<?>> eventListeners() {
         return Collections.unmodifiableList(eventListeners);
     }
 }

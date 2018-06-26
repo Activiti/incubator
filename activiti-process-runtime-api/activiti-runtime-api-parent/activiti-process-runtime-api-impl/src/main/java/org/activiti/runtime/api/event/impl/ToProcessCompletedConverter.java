@@ -20,10 +20,10 @@ import java.util.Optional;
 
 import org.activiti.engine.delegate.event.ActivitiEntityEvent;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
-import org.activiti.runtime.api.event.ProcessCompletedEvent;
+import org.activiti.runtime.api.event.ProcessCompleted;
 import org.activiti.runtime.api.model.impl.APIProcessInstanceConverter;
 
-public class ToProcessCompletedConverter implements EventConverter<ProcessCompletedEvent, ActivitiEntityEvent> {
+public class ToProcessCompletedConverter implements EventConverter<ProcessCompleted, ActivitiEntityEvent> {
 
     private APIProcessInstanceConverter processInstanceConverter;
 
@@ -32,7 +32,7 @@ public class ToProcessCompletedConverter implements EventConverter<ProcessComple
     }
 
     @Override
-    public Optional<ProcessCompletedEvent> from(ActivitiEntityEvent internalEvent) {
+    public Optional<ProcessCompleted> from(ActivitiEntityEvent internalEvent) {
         return Optional.of(new ProcessCompletedImpl(processInstanceConverter.from(((ExecutionEntity) internalEvent.getEntity()).getProcessInstance())));
     }
 }

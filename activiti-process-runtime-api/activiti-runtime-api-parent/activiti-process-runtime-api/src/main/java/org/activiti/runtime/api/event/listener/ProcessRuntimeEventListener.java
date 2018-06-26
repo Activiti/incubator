@@ -16,26 +16,10 @@
 
 package org.activiti.runtime.api.event.listener;
 
-import org.activiti.runtime.api.event.ProcessCancelledEvent;
-import org.activiti.runtime.api.event.ProcessCompletedEvent;
-import org.activiti.runtime.api.event.ProcessCreatedEvent;
-import org.activiti.runtime.api.event.ProcessResumedEvent;
-import org.activiti.runtime.api.event.ProcessStartedEvent;
-import org.activiti.runtime.api.event.ProcessSuspendedEvent;
+import org.activiti.runtime.api.event.RuntimeEvent;
 
-public interface ProcessRuntimeEventListener {
+public interface ProcessRuntimeEventListener<E extends RuntimeEvent<?, ?>> {
 
-    void onProcessCreated(ProcessCreatedEvent event);
-
-    void onProcessStarted(ProcessStartedEvent event);
-
-    void onProcessSuspended(ProcessSuspendedEvent event);
-
-    void onProcessResumed(ProcessResumedEvent event);
-
-    void onProcessCompleted(ProcessCompletedEvent event);
-
-    void onProcessCancelled(ProcessCancelledEvent event);
-
+    void onEvent(E event);
 
 }

@@ -17,11 +17,11 @@
 package org.activiti.runtime.api.event.impl;
 
 import org.activiti.runtime.api.event.ProcessRuntimeEvent;
-import org.activiti.runtime.api.event.ProcessStartedEvent;
+import org.activiti.runtime.api.event.ProcessStarted;
 import org.activiti.runtime.api.model.FluentProcessInstance;
 
 public class ProcessStartedEventImpl extends RuntimeEventImpl<FluentProcessInstance, ProcessRuntimeEvent.ProcessEvents>
-        implements ProcessStartedEvent {
+        implements ProcessStarted {
 
     private String nestedProcessDefinitionId;
     private String nestedProcessInstanceId;

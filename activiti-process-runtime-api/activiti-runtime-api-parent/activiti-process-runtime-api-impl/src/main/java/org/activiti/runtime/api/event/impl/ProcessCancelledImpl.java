@@ -16,12 +16,12 @@
 
 package org.activiti.runtime.api.event.impl;
 
-import org.activiti.runtime.api.event.ProcessCancelledEvent;
+import org.activiti.runtime.api.event.ProcessCancelled;
 import org.activiti.runtime.api.event.ProcessRuntimeEvent;
 import org.activiti.runtime.api.model.ProcessInstance;
 
 public class ProcessCancelledImpl extends RuntimeEventImpl<ProcessInstance, ProcessRuntimeEvent.ProcessEvents>
-        implements ProcessCancelledEvent {
+        implements ProcessCancelled {
 
     private String cause;
 

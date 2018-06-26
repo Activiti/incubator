@@ -23,7 +23,7 @@ import org.activiti.runtime.api.event.listener.ProcessRuntimeEventListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DummyProcessStartedEventListener implements ProcessRuntimeEventListener {
+public class DummyProcessStartedEventListener implements ProcessRuntimeEventListener<ProcessStarted> {
 
     private List<String> startedProcesses = new ArrayList<>();
 
@@ -36,33 +36,8 @@ public class DummyProcessStartedEventListener implements ProcessRuntimeEventList
     }
 
     @Override
-    public void onProcessCreated(ProcessCreatedEvent event) {
-
-    }
-
-    @Override
-    public void onProcessStarted(ProcessStartedEvent event) {
+    public void onEvent(ProcessStarted event) {
         startedProcesses.add(event.getEntity().getId());
-    }
-
-    @Override
-    public void onProcessSuspended(ProcessSuspendedEvent event) {
-
-    }
-
-    @Override
-    public void onProcessResumed(ProcessResumedEvent event) {
-
-    }
-
-    @Override
-    public void onProcessCompleted(ProcessCompletedEvent event) {
-
-    }
-
-    @Override
-    public void onProcessCancelled(ProcessCancelledEvent event) {
-
     }
 
 }

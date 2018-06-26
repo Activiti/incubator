@@ -18,31 +18,32 @@ package org.activiti.runtime.api.event.internal;
 
 import java.util.List;
 
-import org.activiti.engine.delegate.event.ActivitiEntityEvent;
+import org.activiti.engine.delegate.event.ActivitiCancelledEvent;
 import org.activiti.engine.delegate.event.ActivitiEvent;
 import org.activiti.engine.delegate.event.ActivitiEventListener;
-import org.activiti.runtime.api.event.impl.ToProcessSuspendedConverter;
+import org.activiti.runtime.api.event.ProcessCancelled;
+import org.activiti.runtime.api.event.impl.ToProcessCancelledConverter;
 import org.activiti.runtime.api.event.listener.ProcessRuntimeEventListener;
 
-public class ProcessSuspendedEventListenerDelegate implements ActivitiEventListener {
+public class ProcessCancelledListenerDelegate implements ActivitiEventListener {
 
-    private List<ProcessRuntimeEventListener> processRuntimeEventListeners;
+    private List<ProcessRuntimeEventListener<ProcessCancelled>> processRuntimeEventListeners;
 
-    private ToProcessSuspendedConverter processSuspendedConverter;
+    private ToProcessCancelledConverter processCancelledConverter;
 
-    public ProcessSuspendedEventListenerDelegate(List<ProcessRuntimeEventListener> processRuntimeEventListeners,
-                                                 ToProcessSuspendedConverter processSuspendedConverter) {
-        this.processRuntimeEventListeners = processRuntimeEventListeners;
-        this.processSuspendedConverter = processSuspendedConverter;
+    public ProcessCancelledListenerDelegate(List<ProcessRuntimeEventListener<ProcessCancelled>> listeners,
+                                            ToProcessCancelledConverter processCancelledConverter) {
+        this.processRuntimeEventListeners = listeners;
+        this.processCancelledConverter = processCancelledConverter;
     }
 
     @Override
     public void onEvent(ActivitiEvent event) {
-        if (event instanceof ActivitiEntityEvent) {
-            processSuspendedConverter.from((ActivitiEntityEvent) event)
+        if (event instanceof ActivitiCancelledEvent) {
+            processCancelledConverter.from((ActivitiCancelledEvent) event)
                     .ifPresent(convertedEvent -> {
-                        for (ProcessRuntimeEventListener listener : processRuntimeEventListeners) {
-                            listener.onProcessSuspended(convertedEvent);
+                        for (ProcessRuntimeEventListener<ProcessCancelled> listener : processRuntimeEventListeners) {
+                            listener.onEvent(convertedEvent);
                         }
                     });
         }

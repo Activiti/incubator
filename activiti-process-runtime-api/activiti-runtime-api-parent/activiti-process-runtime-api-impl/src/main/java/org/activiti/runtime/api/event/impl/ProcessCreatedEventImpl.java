@@ -16,12 +16,12 @@
 
 package org.activiti.runtime.api.event.impl;
 
-import org.activiti.runtime.api.event.ProcessCreatedEvent;
+import org.activiti.runtime.api.event.ProcessCreated;
 import org.activiti.runtime.api.event.ProcessRuntimeEvent;
 import org.activiti.runtime.api.model.FluentProcessInstance;
 
 public class ProcessCreatedEventImpl extends RuntimeEventImpl<FluentProcessInstance, ProcessRuntimeEvent.ProcessEvents>
-        implements ProcessCreatedEvent {
+        implements ProcessCreated {
 
     public ProcessCreatedEventImpl(FluentProcessInstance entity) {
         super(entity);

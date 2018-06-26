@@ -21,18 +21,19 @@ import java.util.List;
 import org.activiti.engine.delegate.event.ActivitiEntityEvent;
 import org.activiti.engine.delegate.event.ActivitiEvent;
 import org.activiti.engine.delegate.event.ActivitiEventListener;
+import org.activiti.runtime.api.event.ProcessResumed;
 import org.activiti.runtime.api.event.impl.ToProcessResumedConverter;
 import org.activiti.runtime.api.event.listener.ProcessRuntimeEventListener;
 
 public class ProcessResumedEventListenerDelegate implements ActivitiEventListener {
 
-    private List<ProcessRuntimeEventListener> processRuntimeEventListeners;
+    private List<ProcessRuntimeEventListener<ProcessResumed>> processRuntimeEventListeners;
 
     private ToProcessResumedConverter processResumedConverter;
 
-    public ProcessResumedEventListenerDelegate(List<ProcessRuntimeEventListener> processRuntimeEventListeners,
+    public ProcessResumedEventListenerDelegate(List<ProcessRuntimeEventListener<ProcessResumed>> listeners,
                                                ToProcessResumedConverter processResumedConverter) {
-        this.processRuntimeEventListeners = processRuntimeEventListeners;
+        this.processRuntimeEventListeners = listeners;
         this.processResumedConverter = processResumedConverter;
     }
 
@@ -41,8 +42,8 @@ public class ProcessResumedEventListenerDelegate implements ActivitiEventListene
         if (event instanceof ActivitiEntityEvent) {
             processResumedConverter.from((ActivitiEntityEvent) event)
                     .ifPresent(convertedEvent -> {
-                        for (ProcessRuntimeEventListener listener : processRuntimeEventListeners) {
-                            listener.onProcessResumed(convertedEvent);
+                        for (ProcessRuntimeEventListener<ProcessResumed> listener : processRuntimeEventListeners) {
+                            listener.onEvent(convertedEvent);
                         }
                     });
         }

@@ -17,11 +17,11 @@
 package org.activiti.runtime.api.event.impl;
 
 import org.activiti.runtime.api.event.ProcessRuntimeEvent;
-import org.activiti.runtime.api.event.ProcessSuspendedEvent;
+import org.activiti.runtime.api.event.ProcessSuspended;
 import org.activiti.runtime.api.model.FluentProcessInstance;
 
 public class ProcessSuspendedEventImpl extends RuntimeEventImpl<FluentProcessInstance, ProcessRuntimeEvent.ProcessEvents>
-        implements ProcessSuspendedEvent {
+        implements ProcessSuspended {
 
     public ProcessSuspendedEventImpl(FluentProcessInstance entity) {
         super(entity);

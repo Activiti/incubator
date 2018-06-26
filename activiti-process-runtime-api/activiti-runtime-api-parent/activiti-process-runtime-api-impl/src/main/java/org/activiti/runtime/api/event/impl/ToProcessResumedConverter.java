@@ -20,12 +20,12 @@ import java.util.Optional;
 
 import org.activiti.engine.delegate.event.ActivitiEntityEvent;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
-import org.activiti.runtime.api.event.ProcessResumedEvent;
+import org.activiti.runtime.api.event.ProcessResumed;
 import org.activiti.runtime.api.model.impl.APIProcessInstanceConverter;
 
 import static org.activiti.runtime.api.event.impl.ActivitiEntityEventHelper.isProcessInstanceEntity;
 
-public class ToProcessResumedConverter implements EventConverter<ProcessResumedEvent, ActivitiEntityEvent>{
+public class ToProcessResumedConverter implements EventConverter<ProcessResumed, ActivitiEntityEvent>{
 
     private final APIProcessInstanceConverter processInstanceConverter;
 
@@ -34,7 +34,7 @@ public class ToProcessResumedConverter implements EventConverter<ProcessResumedE
     }
 
     @Override
-    public Optional<ProcessResumedEvent> from(ActivitiEntityEvent internalEvent) {
+    public Optional<ProcessResumed> from(ActivitiEntityEvent internalEvent) {
         Object entity = internalEvent.getEntity();
 
         ProcessResumedEventImpl event = null;

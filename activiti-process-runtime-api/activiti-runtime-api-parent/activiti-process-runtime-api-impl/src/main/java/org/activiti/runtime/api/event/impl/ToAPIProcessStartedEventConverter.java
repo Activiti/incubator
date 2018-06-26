@@ -20,10 +20,10 @@ import java.util.Optional;
 
 import org.activiti.engine.delegate.event.ActivitiProcessStartedEvent;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
-import org.activiti.runtime.api.event.ProcessStartedEvent;
+import org.activiti.runtime.api.event.ProcessStarted;
 import org.activiti.runtime.api.model.impl.APIProcessInstanceConverter;
 
-public class ToAPIProcessStartedEventConverter implements EventConverter<ProcessStartedEvent, ActivitiProcessStartedEvent> {
+public class ToAPIProcessStartedEventConverter implements EventConverter<ProcessStarted, ActivitiProcessStartedEvent> {
 
     private final APIProcessInstanceConverter processInstanceConverter;
 
@@ -32,7 +32,7 @@ public class ToAPIProcessStartedEventConverter implements EventConverter<Process
     }
 
     @Override
-    public Optional<ProcessStartedEvent> from(ActivitiProcessStartedEvent internalEvent) {
+    public Optional<ProcessStarted> from(ActivitiProcessStartedEvent internalEvent) {
         ExecutionEntity entity = (ExecutionEntity)
                 internalEvent.getEntity();
         ProcessStartedEventImpl processStartedEvent = new ProcessStartedEventImpl(

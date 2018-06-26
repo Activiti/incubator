@@ -16,12 +16,12 @@
 
 package org.activiti.runtime.api.event.impl;
 
-import org.activiti.runtime.api.event.ProcessResumedEvent;
+import org.activiti.runtime.api.event.ProcessResumed;
 import org.activiti.runtime.api.event.ProcessRuntimeEvent;
 import org.activiti.runtime.api.model.FluentProcessInstance;
 
 public class ProcessResumedEventImpl extends RuntimeEventImpl<FluentProcessInstance, ProcessRuntimeEvent.ProcessEvents>
-        implements ProcessResumedEvent {
+        implements ProcessResumed {
 
     public ProcessResumedEventImpl(FluentProcessInstance entity) {
         super(entity);

@@ -22,6 +22,6 @@ import org.activiti.runtime.api.event.listener.ProcessRuntimeEventListener;
 
 public interface ProcessRuntimeConfiguration {
 
-    List<ProcessRuntimeEventListener> eventListeners();
+    List<ProcessRuntimeEventListener<?>> eventListeners();
 
 }

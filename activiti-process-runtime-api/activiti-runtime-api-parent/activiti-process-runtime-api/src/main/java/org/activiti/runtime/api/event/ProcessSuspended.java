@@ -18,6 +18,6 @@ package org.activiti.runtime.api.event;
 
 import org.activiti.runtime.api.model.FluentProcessInstance;
 
-public interface ProcessSuspendedEvent extends ProcessRuntimeEvent<FluentProcessInstance> {
+public interface ProcessSuspended extends ProcessRuntimeEvent<FluentProcessInstance> {
 
 }
