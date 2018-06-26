@@ -50,6 +50,11 @@ public class AssignTaskListener implements TaskRuntimeEventListener {
     }
 
     @Override
+    public void onTaskActivated(TaskActivated event) {
+
+    }
+
+    @Override
     public void onTaskCompleted(TaskCompletedEvent event) {
 
     }

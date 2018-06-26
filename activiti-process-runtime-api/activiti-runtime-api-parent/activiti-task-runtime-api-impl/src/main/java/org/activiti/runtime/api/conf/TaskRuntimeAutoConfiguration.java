@@ -28,9 +28,11 @@ import org.activiti.runtime.api.event.impl.ToAPITaskAssignedEventConverter;
 import org.activiti.runtime.api.event.impl.ToAPITaskCandidateGroupAddedEventConverter;
 import org.activiti.runtime.api.event.impl.ToAPITaskCandidateUserAddedEventConverter;
 import org.activiti.runtime.api.event.impl.ToAPITaskCreatedEventConverter;
+import org.activiti.runtime.api.event.impl.ToTaskActivatedConverter;
 import org.activiti.runtime.api.event.impl.ToTaskCancelledConverter;
 import org.activiti.runtime.api.event.impl.ToTaskCompletedConverter;
 import org.activiti.runtime.api.event.impl.ToTaskSuspendedConverter;
+import org.activiti.runtime.api.event.internal.TaskActivatedListenerDelegate;
 import org.activiti.runtime.api.event.internal.TaskAssignedEventListenerDelegate;
 import org.activiti.runtime.api.event.internal.TaskCancelledListenerDelegate;
 import org.activiti.runtime.api.event.internal.TaskCandidateGroupAddedEventListenerDelegate;
@@ -122,6 +124,15 @@ public class TaskRuntimeAutoConfiguration {
         return () -> runtimeService.addEventListener(new TaskSuspendedListenerDelegate(getInitializedTaskRuntimeEventListeners(taskRuntimeEventListeners),
                                                                                        new ToTaskSuspendedConverter(taskConverter)),
                                                      ActivitiEventType.ENTITY_SUSPENDED);
+    }
+
+    @Bean
+    public InitializingBean registerTaskActivatedListener(RuntimeService runtimeService,
+                                                               @Autowired(required = false) List<TaskRuntimeEventListener> taskRuntimeEventListeners,
+                                                               APITaskConverter taskConverter) {
+        return () -> runtimeService.addEventListener(new TaskActivatedListenerDelegate(getInitializedTaskRuntimeEventListeners(taskRuntimeEventListeners),
+                                                                                       new ToTaskActivatedConverter(taskConverter)),
+                                                     ActivitiEventType.ENTITY_ACTIVATED);
     }
 
     @Bean

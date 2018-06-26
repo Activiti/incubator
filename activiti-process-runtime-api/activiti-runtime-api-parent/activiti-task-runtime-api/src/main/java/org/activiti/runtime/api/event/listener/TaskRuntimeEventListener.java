@@ -16,6 +16,7 @@
 
 package org.activiti.runtime.api.event.listener;
 
+import org.activiti.runtime.api.event.TaskActivated;
 import org.activiti.runtime.api.event.TaskAssignedEvent;
 import org.activiti.runtime.api.event.TaskCancelled;
 import org.activiti.runtime.api.event.TaskCandidateGroupAddedEvent;
@@ -31,6 +32,8 @@ public interface TaskRuntimeEventListener {
     void onTaskAssigned(TaskAssignedEvent event);
 
     void onTaskSuspended(TaskSuspendedEvent event);
+
+    void onTaskActivated(TaskActivated event);
 
     void onTaskCompleted(TaskCompletedEvent event);
 
