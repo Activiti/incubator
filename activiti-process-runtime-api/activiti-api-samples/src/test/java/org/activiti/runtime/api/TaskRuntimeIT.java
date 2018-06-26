@@ -18,8 +18,8 @@ package org.activiti.runtime.api;
 
 import java.util.List;
 
-import org.activiti.runtime.api.event.AssignTaskListener;
 import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
+import org.activiti.runtime.api.event.OnTaskAssignedListener;
 import org.activiti.runtime.api.model.FluentTask;
 import org.activiti.runtime.api.model.ProcessInstance;
 import org.activiti.runtime.api.model.Task;
@@ -48,12 +48,12 @@ public class TaskRuntimeIT {
     private ProcessRuntime processRuntime;
 
     @Autowired
-    private AssignTaskListener assignTaskListener;
+    private OnTaskAssignedListener assignTaskListener;
 
     @Test
     public void shouldReturnRegisteredEventListeners() {
         //when
-        List<TaskRuntimeEventListener> eventListeners = taskRuntime.configuration().eventListeners();
+        List<TaskRuntimeEventListener<?>> eventListeners = taskRuntime.configuration().eventListeners();
 
         //then
         assertThat(eventListeners).contains(assignTaskListener);
@@ -72,10 +72,12 @@ public class TaskRuntimeIT {
         //then
         assertThat(tasks).isNotNull();
         assertThat(tasks.getContent())
-                .extracting(Task::getName, Task::getProcessInstanceId)
+                .extracting(Task::getName,
+                            Task::getProcessInstanceId)
                 .contains(tuple("Perform action",
                                 firstSimpleProcess.getId()),
-                          tuple("Perform action", secondSimpleProcess.getId()));
+                          tuple("Perform action",
+                                secondSimpleProcess.getId()));
     }
 
     @Test
@@ -84,14 +86,16 @@ public class TaskRuntimeIT {
         ProcessInstance processInstance = processRuntime
                 .processDefinitionByKey("SimpleProcess")
                 .startProcessWith()
-                .variable("processVariable", "myProcVar")
+                .variable("processVariable",
+                          "myProcVar")
                 .doIt();
         FluentTask currentTask = taskRuntime.tasks(Pageable.of(0,
                                                                MAX_ITEMS)).getContent().stream()
                 .filter(task -> task.getProcessInstanceId().equals(processInstance.getId()))
                 .findFirst().orElse(null);
         assertThat(currentTask).isNotNull();
-        currentTask.variable("processVariableFromTask", "myProcVarFromTask");
+        currentTask.variable("processVariableFromTask",
+                             "myProcVarFromTask");
 
         //when
         List<VariableInstance> variables = currentTask.variables();
@@ -122,14 +126,16 @@ public class TaskRuntimeIT {
         ProcessInstance processInstance = processRuntime
                 .processDefinitionByKey("SimpleProcess")
                 .startProcessWith()
-                .variable("processVariable", "myProcVar")
+                .variable("processVariable",
+                          "myProcVar")
                 .doIt();
         FluentTask currentTask = taskRuntime.tasks(Pageable.of(0,
                                                                MAX_ITEMS)).getContent().stream()
                 .filter(task -> task.getProcessInstanceId().equals(processInstance.getId()))
                 .findFirst().orElse(null);
         assertThat(currentTask).isNotNull();
-        currentTask.localVariable("taskVariable", "myTaskVar");
+        currentTask.localVariable("taskVariable",
+                                  "myTaskVar");
 
         //when
         List<VariableInstance> localVariables = currentTask.localVariables();
@@ -207,8 +213,10 @@ public class TaskRuntimeIT {
         //when
         currentTask
                 .completeWith()
-                .variable("bookRef", "abc")
-                .variable("position", 10)
+                .variable("bookRef",
+                          "abc")
+                .variable("position",
+                          10)
                 .doIt();
 
         //then

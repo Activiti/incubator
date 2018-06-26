@@ -20,57 +20,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
-import org.activiti.runtime.api.model.FluentTask;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.test.context.TestComponent;
 
-@Component
-public class AssignTaskListener implements TaskRuntimeEventListener {
-
-    public String getUsername() {
-        return "listenerUser";
-    }
+@TestComponent
+public class OnTaskAssignedListener implements TaskRuntimeEventListener<TaskAssigned> {
 
     private Map<String, String> assignedTasks = new HashMap<>();
 
     @Override
-    public void onTaskCreated(TaskCreatedEvent event) {
-        FluentTask task = event.getEntity();
-        task.claim(getUsername());
-
-    }
-
-    @Override
-    public void onTaskAssigned(TaskAssignedEvent event) {
+    public void onEvent(TaskAssigned event) {
         assignedTasks.put(event.getEntity().getId(), event.getEntity().getAssignee());
-    }
-
-    @Override
-    public void onTaskSuspended(TaskSuspendedEvent event) {
-
-    }
-
-    @Override
-    public void onTaskActivated(TaskActivated event) {
-
-    }
-
-    @Override
-    public void onTaskCompleted(TaskCompletedEvent event) {
-
-    }
-
-    @Override
-    public void onTaskCancelled(TaskCancelled event) {
-
-    }
-
-    @Override
-    public void onTaskCandidateUserAdded(TaskCandidateUserAddedEvent event) {
-
-    }
-
-    @Override
-    public void onTaskCandidateGroupAdded(TaskCandidateGroupAddedEvent event) {
 
     }
 

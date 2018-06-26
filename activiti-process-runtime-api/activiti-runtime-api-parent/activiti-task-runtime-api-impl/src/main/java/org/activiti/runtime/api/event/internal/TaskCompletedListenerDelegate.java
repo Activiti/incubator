@@ -21,18 +21,19 @@ import java.util.List;
 import org.activiti.engine.delegate.event.ActivitiEntityEvent;
 import org.activiti.engine.delegate.event.ActivitiEvent;
 import org.activiti.engine.delegate.event.ActivitiEventListener;
+import org.activiti.runtime.api.event.TaskCompleted;
 import org.activiti.runtime.api.event.impl.ToTaskCompletedConverter;
 import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
 
 public class TaskCompletedListenerDelegate implements ActivitiEventListener {
 
-    private List<TaskRuntimeEventListener> taskRuntimeEventListeners;
+    private List<TaskRuntimeEventListener<TaskCompleted>> listeners;
 
     private ToTaskCompletedConverter taskCompletedConverter;
 
-    public TaskCompletedListenerDelegate(List<TaskRuntimeEventListener> taskRuntimeEventListeners,
+    public TaskCompletedListenerDelegate(List<TaskRuntimeEventListener<TaskCompleted>> listeners,
                                          ToTaskCompletedConverter taskCompletedConverter) {
-        this.taskRuntimeEventListeners = taskRuntimeEventListeners;
+        this.listeners = listeners;
         this.taskCompletedConverter = taskCompletedConverter;
     }
 
@@ -41,8 +42,8 @@ public class TaskCompletedListenerDelegate implements ActivitiEventListener {
         if (event instanceof ActivitiEntityEvent) {
             taskCompletedConverter.from((ActivitiEntityEvent) event)
                     .ifPresent(convertedEvent -> {
-                        for (TaskRuntimeEventListener listener : taskRuntimeEventListeners) {
-                            listener.onTaskCompleted(convertedEvent);
+                        for (TaskRuntimeEventListener<TaskCompleted> listener : listeners) {
+                            listener.onEvent(convertedEvent);
                         }
                     });
         }

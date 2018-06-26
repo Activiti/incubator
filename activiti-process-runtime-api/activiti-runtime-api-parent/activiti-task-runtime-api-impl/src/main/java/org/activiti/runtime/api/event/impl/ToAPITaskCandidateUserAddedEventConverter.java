@@ -20,12 +20,12 @@ import java.util.Optional;
 
 import org.activiti.engine.delegate.event.ActivitiEntityEvent;
 import org.activiti.engine.task.IdentityLink;
-import org.activiti.runtime.api.event.TaskCandidateUserAddedEvent;
+import org.activiti.runtime.api.event.TaskCandidateUserAdded;
 import org.activiti.runtime.api.model.impl.APITaskCandidateUserConverter;
 
 import static org.activiti.engine.task.IdentityLinkType.CANDIDATE;
 
-public class ToAPITaskCandidateUserAddedEventConverter implements EventConverter<TaskCandidateUserAddedEvent, ActivitiEntityEvent> {
+public class ToAPITaskCandidateUserAddedEventConverter implements EventConverter<TaskCandidateUserAdded, ActivitiEntityEvent> {
 
     private APITaskCandidateUserConverter converter;
 
@@ -34,7 +34,7 @@ public class ToAPITaskCandidateUserAddedEventConverter implements EventConverter
     }
 
     @Override
-    public Optional<TaskCandidateUserAddedEvent> from(ActivitiEntityEvent internalEvent) {
+    public Optional<TaskCandidateUserAdded> from(ActivitiEntityEvent internalEvent) {
         TaskCandidateUserAddedEventImpl event = null;
         if (internalEvent.getEntity() instanceof IdentityLink) {
             IdentityLink entity = (IdentityLink) internalEvent.getEntity();

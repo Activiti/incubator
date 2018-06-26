@@ -16,7 +16,8 @@
 
 package org.activiti.runtime.api;
 
-import org.activiti.runtime.api.event.AssignTaskListener;
+import org.activiti.runtime.api.event.OnTaskAssignedListener;
+import org.activiti.runtime.api.event.OnTaskCreatedListener;
 import org.activiti.runtime.api.model.FluentTask;
 import org.activiti.runtime.api.model.ProcessInstance;
 import org.activiti.runtime.api.model.Task;
@@ -41,11 +42,14 @@ public class TaskRuntimeListenersIT {
     private TaskRuntime taskRuntime;
 
     @Autowired
-    private AssignTaskListener assignTaskListener;
+    private OnTaskAssignedListener onTaskAssignedListener;
+
+    @Autowired
+    private OnTaskCreatedListener onTaskCreatedListener;
 
     @Before
     public void setUp() {
-        assignTaskListener.clear();
+        onTaskAssignedListener.clear();
     }
 
     @Test
@@ -59,7 +63,7 @@ public class TaskRuntimeListenersIT {
         Task currentTask = getCurrentTask(processInstance);
 
         assertThat(currentTask).isNotNull();
-        assertThat(currentTask.getAssignee()).isEqualTo(assignTaskListener.getUsername());
+        assertThat(currentTask.getAssignee()).isEqualTo(onTaskCreatedListener.getListenerUser());
     }
 
     @Test
@@ -73,7 +77,7 @@ public class TaskRuntimeListenersIT {
         FluentTask currentTask = getCurrentTask(processInstance);
         currentTask.claim("jack");
 
-        assertThat(assignTaskListener.getAssignedTasks()).containsEntry(currentTask.getId(), "jack");
+        assertThat(onTaskAssignedListener.getAssignedTasks()).containsEntry(currentTask.getId(), "jack");
     }
 
     private FluentTask getCurrentTask(ProcessInstance processInstance) {

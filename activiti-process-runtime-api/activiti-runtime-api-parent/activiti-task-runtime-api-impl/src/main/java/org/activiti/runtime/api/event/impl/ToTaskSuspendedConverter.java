@@ -20,10 +20,10 @@ import java.util.Optional;
 
 import org.activiti.engine.delegate.event.ActivitiEntityEvent;
 import org.activiti.engine.task.Task;
-import org.activiti.runtime.api.event.TaskSuspendedEvent;
+import org.activiti.runtime.api.event.TaskSuspended;
 import org.activiti.runtime.api.model.impl.APITaskConverter;
 
-public class ToTaskSuspendedConverter implements EventConverter<TaskSuspendedEvent, ActivitiEntityEvent> {
+public class ToTaskSuspendedConverter implements EventConverter<TaskSuspended, ActivitiEntityEvent> {
 
     private APITaskConverter taskConverter;
 
@@ -32,8 +32,8 @@ public class ToTaskSuspendedConverter implements EventConverter<TaskSuspendedEve
     }
 
     @Override
-    public Optional<TaskSuspendedEvent> from(ActivitiEntityEvent internalEvent) {
-        TaskSuspendedEvent event = null;
+    public Optional<TaskSuspended> from(ActivitiEntityEvent internalEvent) {
+        TaskSuspended event = null;
         if (isTaskEvent(internalEvent)) {
             event = new TaskSuspendedImpl(taskConverter.from((Task) internalEvent.getEntity()));
         }

@@ -21,30 +21,32 @@ import java.util.List;
 import org.activiti.engine.delegate.event.ActivitiEntityEvent;
 import org.activiti.engine.delegate.event.ActivitiEvent;
 import org.activiti.engine.delegate.event.ActivitiEventListener;
-import org.activiti.runtime.api.event.impl.ToAPITaskCandidateGroupAddedEventConverter;
+import org.activiti.runtime.api.event.TaskCandidateUserAdded;
+import org.activiti.runtime.api.event.impl.ToAPITaskCandidateUserAddedEventConverter;
 import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
 
-public class TaskCandidateGroupAddedEventListenerDelegate implements ActivitiEventListener {
+public class TaskCandidateUserAddedListenerDelegate implements ActivitiEventListener {
 
-    private final List<TaskRuntimeEventListener> taskRuntimeEventListeners;
+    private final List<TaskRuntimeEventListener<TaskCandidateUserAdded>> listeners;
 
-    private final ToAPITaskCandidateGroupAddedEventConverter converter;
+    private final ToAPITaskCandidateUserAddedEventConverter converter;
 
-    public TaskCandidateGroupAddedEventListenerDelegate(List<TaskRuntimeEventListener> taskRuntimeEventListeners,
-                                                        ToAPITaskCandidateGroupAddedEventConverter converter) {
-        this.taskRuntimeEventListeners = taskRuntimeEventListeners;
+    public TaskCandidateUserAddedListenerDelegate(List<TaskRuntimeEventListener<TaskCandidateUserAdded>> listeners,
+                                                  ToAPITaskCandidateUserAddedEventConverter converter) {
+        this.listeners = listeners;
         this.converter = converter;
     }
 
     @Override
     public void onEvent(ActivitiEvent event) {
         if (event instanceof ActivitiEntityEvent) {
-            converter.from((ActivitiEntityEvent) event)
-                    .ifPresent(convertedEvent -> {
-                        for (TaskRuntimeEventListener listener : taskRuntimeEventListeners) {
-                            listener.onTaskCandidateGroupAdded(convertedEvent);
+            converter.from((ActivitiEntityEvent) event).ifPresent(
+                    convertedEvent -> {
+                        for (TaskRuntimeEventListener<TaskCandidateUserAdded> listener : listeners) {
+                            listener.onEvent(convertedEvent);
                         }
-                    });
+                    }
+            );
         }
     }
 

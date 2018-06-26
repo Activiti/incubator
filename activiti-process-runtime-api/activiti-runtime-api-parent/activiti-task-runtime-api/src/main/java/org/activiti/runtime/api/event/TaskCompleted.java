@@ -16,6 +16,8 @@
 
 package org.activiti.runtime.api.event;
 
-public interface TaskCandidateUserAddedEvent extends TaskCandidateUserEvent {
+import org.activiti.runtime.api.model.FluentTask;
+
+public interface TaskCompleted extends TaskRuntimeEvent<FluentTask> {
 
 }

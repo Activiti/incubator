@@ -16,8 +16,18 @@
 
 package org.activiti.runtime.api.event;
 
-import org.activiti.runtime.api.model.FluentTask;
+import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
+import org.springframework.boot.test.context.TestComponent;
 
-public interface TaskSuspendedEvent extends TaskRuntimeEvent<FluentTask> {
+@TestComponent
+public class OnTaskCreatedListener implements TaskRuntimeEventListener<TaskCreated> {
 
+    @Override
+    public void onEvent(TaskCreated event) {
+        event.getEntity().claim(getListenerUser());
+    }
+
+    public String getListenerUser() {
+        return "listenerUser";
+    }
 }

@@ -22,6 +22,6 @@ import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
 
 public interface TaskRuntimeConfiguration {
 
-    List<TaskRuntimeEventListener> eventListeners();
+    List<TaskRuntimeEventListener<?>> eventListeners();
 
 }

@@ -21,18 +21,19 @@ import java.util.List;
 import org.activiti.engine.delegate.event.ActivitiActivityCancelledEvent;
 import org.activiti.engine.delegate.event.ActivitiEvent;
 import org.activiti.engine.delegate.event.ActivitiEventListener;
+import org.activiti.runtime.api.event.TaskCancelled;
 import org.activiti.runtime.api.event.impl.ToTaskCancelledConverter;
 import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
 
 public class TaskCancelledListenerDelegate implements ActivitiEventListener {
 
-    private final List<TaskRuntimeEventListener> taskRuntimeEventListeners;
+    private final List<TaskRuntimeEventListener<TaskCancelled>> listeners;
 
     private final ToTaskCancelledConverter toTaskCancelledConverter;
 
-    public TaskCancelledListenerDelegate(List<TaskRuntimeEventListener> taskRuntimeEventListeners,
+    public TaskCancelledListenerDelegate(List<TaskRuntimeEventListener<TaskCancelled>> listeners,
                                          ToTaskCancelledConverter toTaskCancelledConverter) {
-        this.taskRuntimeEventListeners = taskRuntimeEventListeners;
+        this.listeners = listeners;
         this.toTaskCancelledConverter = toTaskCancelledConverter;
     }
 
@@ -41,8 +42,8 @@ public class TaskCancelledListenerDelegate implements ActivitiEventListener {
         if (event instanceof ActivitiActivityCancelledEvent) {
             toTaskCancelledConverter.from((ActivitiActivityCancelledEvent) event)
                     .ifPresent(convertedEvent -> {
-                        for (TaskRuntimeEventListener listener : taskRuntimeEventListeners) {
-                            listener.onTaskCancelled(convertedEvent);
+                        for (TaskRuntimeEventListener<TaskCancelled> listener : listeners) {
+                            listener.onEvent(convertedEvent);
                         }
                     });
         }

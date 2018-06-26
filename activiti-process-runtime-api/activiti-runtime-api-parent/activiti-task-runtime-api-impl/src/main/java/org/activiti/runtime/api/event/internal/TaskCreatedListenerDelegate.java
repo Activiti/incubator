@@ -21,18 +21,19 @@ import java.util.List;
 import org.activiti.engine.delegate.event.ActivitiEntityEvent;
 import org.activiti.engine.delegate.event.ActivitiEvent;
 import org.activiti.engine.delegate.event.ActivitiEventListener;
+import org.activiti.runtime.api.event.TaskCreated;
 import org.activiti.runtime.api.event.impl.ToAPITaskCreatedEventConverter;
 import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
 
-public class TaskCreatedEventListenerDelegate implements ActivitiEventListener {
+public class TaskCreatedListenerDelegate implements ActivitiEventListener {
 
-    private List<TaskRuntimeEventListener> taskRuntimeEventListeners;
+    private List<TaskRuntimeEventListener<TaskCreated>> taskCreatedListeners;
 
     private ToAPITaskCreatedEventConverter taskCreatedEventConverter;
 
-    public TaskCreatedEventListenerDelegate(List<TaskRuntimeEventListener> taskRuntimeEventListeners,
-                                            ToAPITaskCreatedEventConverter taskCreatedEventConverter) {
-        this.taskRuntimeEventListeners = taskRuntimeEventListeners;
+    public TaskCreatedListenerDelegate(List<TaskRuntimeEventListener<TaskCreated>> taskCreatedListeners,
+                                       ToAPITaskCreatedEventConverter taskCreatedEventConverter) {
+        this.taskCreatedListeners = taskCreatedListeners;
         this.taskCreatedEventConverter = taskCreatedEventConverter;
     }
 
@@ -41,8 +42,8 @@ public class TaskCreatedEventListenerDelegate implements ActivitiEventListener {
         if (event instanceof ActivitiEntityEvent) {
             taskCreatedEventConverter.from((ActivitiEntityEvent) event)
                     .ifPresent(convertedEvent -> {
-                        for (TaskRuntimeEventListener listener : taskRuntimeEventListeners) {
-                            listener.onTaskCreated(convertedEvent);
+                        for (TaskRuntimeEventListener<TaskCreated> listener : taskCreatedListeners) {
+                            listener.onEvent(convertedEvent);
                         }
                     });
         }

@@ -24,14 +24,14 @@ import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
 
 public class TaskRuntimeConfigurationImpl implements TaskRuntimeConfiguration {
 
-    private List<TaskRuntimeEventListener> eventListeners;
+    private List<TaskRuntimeEventListener<?>> eventListeners;
 
-    public TaskRuntimeConfigurationImpl(List<TaskRuntimeEventListener> eventListeners) {
+    public TaskRuntimeConfigurationImpl(List<TaskRuntimeEventListener<?>> eventListeners) {
         this.eventListeners = eventListeners;
     }
 
     @Override
-    public List<TaskRuntimeEventListener> eventListeners() {
+    public List<TaskRuntimeEventListener<?>> eventListeners() {
         return Collections.unmodifiableList(eventListeners);
     }
 }

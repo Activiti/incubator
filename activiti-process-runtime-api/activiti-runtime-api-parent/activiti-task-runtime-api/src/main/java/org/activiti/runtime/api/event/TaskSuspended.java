@@ -18,6 +18,6 @@ package org.activiti.runtime.api.event;
 
 import org.activiti.runtime.api.model.FluentTask;
 
-public interface TaskAssignedEvent extends TaskRuntimeEvent<FluentTask> {
+public interface TaskSuspended extends TaskRuntimeEvent<FluentTask> {
 
 }

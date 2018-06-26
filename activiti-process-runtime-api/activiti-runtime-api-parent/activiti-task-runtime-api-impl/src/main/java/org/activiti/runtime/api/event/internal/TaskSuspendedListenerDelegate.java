@@ -21,18 +21,19 @@ import java.util.List;
 import org.activiti.engine.delegate.event.ActivitiEntityEvent;
 import org.activiti.engine.delegate.event.ActivitiEvent;
 import org.activiti.engine.delegate.event.ActivitiEventListener;
+import org.activiti.runtime.api.event.TaskSuspended;
 import org.activiti.runtime.api.event.impl.ToTaskSuspendedConverter;
 import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
 
 public class TaskSuspendedListenerDelegate implements ActivitiEventListener {
 
-    private final List<TaskRuntimeEventListener> taskRuntimeEventListeners;
+    private final List<TaskRuntimeEventListener<TaskSuspended>> listeners;
 
     private final ToTaskSuspendedConverter taskSuspendedConverter;
 
-    public TaskSuspendedListenerDelegate(List<TaskRuntimeEventListener> taskRuntimeEventListeners,
+    public TaskSuspendedListenerDelegate(List<TaskRuntimeEventListener<TaskSuspended>> listeners,
                                          ToTaskSuspendedConverter taskSuspendedConverter) {
-        this.taskRuntimeEventListeners = taskRuntimeEventListeners;
+        this.listeners = listeners;
         this.taskSuspendedConverter = taskSuspendedConverter;
     }
 
@@ -41,8 +42,8 @@ public class TaskSuspendedListenerDelegate implements ActivitiEventListener {
         if (event instanceof ActivitiEntityEvent) {
             taskSuspendedConverter.from((ActivitiEntityEvent) event)
                     .ifPresent(convertedEvent -> {
-                        for (TaskRuntimeEventListener listener : taskRuntimeEventListeners) {
-                            listener.onTaskSuspended(convertedEvent);
+                        for (TaskRuntimeEventListener<TaskSuspended> listener : listeners) {
+                            listener.onEvent(convertedEvent);
                         }
                     });
         }

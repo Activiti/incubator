@@ -16,12 +16,12 @@
 
 package org.activiti.runtime.api.event.impl;
 
-import org.activiti.runtime.api.event.TaskCandidateUserAddedEvent;
+import org.activiti.runtime.api.event.TaskCandidateUserAdded;
 import org.activiti.runtime.api.event.TaskCandidateUserEvent;
 import org.activiti.runtime.api.model.TaskCandidateUser;
 
 public class TaskCandidateUserAddedEventImpl extends RuntimeEventImpl<TaskCandidateUser, TaskCandidateUserEvent.TaskCandidateUserEvents>
-        implements TaskCandidateUserAddedEvent {
+        implements TaskCandidateUserAdded {
 
     public TaskCandidateUserAddedEventImpl() {
     }
