@@ -14,22 +14,10 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.event.impl;
+package org.activiti.runtime.api.event;
 
-import org.activiti.runtime.api.event.VariableCreated;
-import org.activiti.runtime.api.model.VariableInstance;
+public interface RuntimeEventListener<E extends RuntimeEvent<?, ?>> {
 
-public class VariableCreatedEventImpl extends VariableEventImpl implements VariableCreated {
+    void onEvent(E event);
 
-    public VariableCreatedEventImpl() {
-    }
-
-    public VariableCreatedEventImpl(VariableInstance entity) {
-        super(entity);
-    }
-
-    @Override
-    public VariableEvents getEventType() {
-        return VariableEvents.VARIABLE_CREATED;
-    }
 }

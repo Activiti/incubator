@@ -16,6 +16,6 @@
 
 package org.activiti.runtime.api.event;
 
-public interface VariableCreatedEvent extends VariableEvent {
+public interface VariableCreated extends VariableEvent {
 
 }

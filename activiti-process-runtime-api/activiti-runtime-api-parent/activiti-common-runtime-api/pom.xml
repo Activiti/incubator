@@ -20,4 +20,12 @@
       </releases>
     </repository>
   </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.activiti</groupId>
+      <artifactId>activiti-common-model-api</artifactId>
+      <version>7-201803-EA-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
 </project>
