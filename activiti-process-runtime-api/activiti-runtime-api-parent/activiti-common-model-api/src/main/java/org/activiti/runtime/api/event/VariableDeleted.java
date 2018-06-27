@@ -16,6 +16,6 @@
 
 package org.activiti.runtime.api.event;
 
-public interface VariableDeletedEvent extends VariableEvent {
+public interface VariableDeleted extends VariableEvent {
 
 }

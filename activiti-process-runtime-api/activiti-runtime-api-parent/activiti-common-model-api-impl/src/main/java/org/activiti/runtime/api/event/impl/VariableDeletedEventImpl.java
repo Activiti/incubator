@@ -16,10 +16,10 @@
 
 package org.activiti.runtime.api.event.impl;
 
-import org.activiti.runtime.api.event.VariableDeletedEvent;
+import org.activiti.runtime.api.event.VariableDeleted;
 import org.activiti.runtime.api.model.VariableInstance;
 
-public class VariableDeletedEventImpl extends VariableEventImpl implements VariableDeletedEvent {
+public class VariableDeletedEventImpl extends VariableEventImpl implements VariableDeleted {
 
     public VariableDeletedEventImpl() {
     }

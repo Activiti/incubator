@@ -22,10 +22,13 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.delegate.event.ActivitiEventType;
 import org.activiti.runtime.api.event.RuntimeEventListener;
 import org.activiti.runtime.api.event.VariableCreated;
+import org.activiti.runtime.api.event.VariableDeleted;
 import org.activiti.runtime.api.event.VariableUpdated;
 import org.activiti.runtime.api.event.impl.ToVariableCreatedConverter;
+import org.activiti.runtime.api.event.impl.ToVariableDeletedConverter;
 import org.activiti.runtime.api.event.impl.ToVariableUpdatedConverter;
 import org.activiti.runtime.api.event.internal.VariableCreatedListenerDelegate;
+import org.activiti.runtime.api.event.internal.VariableDeletedListenerDelegate;
 import org.activiti.runtime.api.event.internal.VariableUpdatedListenerDelegate;
 import org.activiti.runtime.api.model.impl.APIVariableInstanceConverter;
 import org.springframework.beans.factory.InitializingBean;
@@ -52,6 +55,12 @@ public class CommonRuntimeAutoConfiguration {
     public InitializingBean registerVariableUpdatedListenerDelegate(RuntimeService runtimeService,
                                                                     @Autowired(required = false) List<RuntimeEventListener<VariableUpdated>> listeners){
         return () -> runtimeService.addEventListener(new VariableUpdatedListenerDelegate(listeners, new ToVariableUpdatedConverter()), ActivitiEventType.VARIABLE_UPDATED);
+    }
+
+    @Bean
+    public InitializingBean registerVariableDeletedListenerDelegate(RuntimeService runtimeService,
+                                                                    @Autowired(required = false) List<RuntimeEventListener<VariableDeleted>> listeners){
+        return () -> runtimeService.addEventListener(new VariableDeletedListenerDelegate(listeners, new ToVariableDeletedConverter()), ActivitiEventType.VARIABLE_DELETED);
     }
 
 }
