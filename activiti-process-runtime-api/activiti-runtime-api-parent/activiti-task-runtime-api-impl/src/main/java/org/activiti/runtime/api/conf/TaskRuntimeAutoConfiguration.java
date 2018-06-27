@@ -28,6 +28,7 @@ import org.activiti.runtime.api.event.TaskActivated;
 import org.activiti.runtime.api.event.TaskAssigned;
 import org.activiti.runtime.api.event.TaskCancelled;
 import org.activiti.runtime.api.event.TaskCandidateGroupAdded;
+import org.activiti.runtime.api.event.TaskCandidateGroupRemoved;
 import org.activiti.runtime.api.event.TaskCandidateUserAdded;
 import org.activiti.runtime.api.event.TaskCandidateUserRemoved;
 import org.activiti.runtime.api.event.TaskCompleted;
@@ -39,6 +40,7 @@ import org.activiti.runtime.api.event.impl.ToAPITaskCandidateUserAddedEventConve
 import org.activiti.runtime.api.event.impl.ToAPITaskCreatedEventConverter;
 import org.activiti.runtime.api.event.impl.ToTaskActivatedConverter;
 import org.activiti.runtime.api.event.impl.ToTaskCancelledConverter;
+import org.activiti.runtime.api.event.impl.ToTaskCandidateGroupRemovedConverter;
 import org.activiti.runtime.api.event.impl.ToTaskCandidateUserRemovedConverter;
 import org.activiti.runtime.api.event.impl.ToTaskCompletedConverter;
 import org.activiti.runtime.api.event.impl.ToTaskSuspendedConverter;
@@ -46,6 +48,7 @@ import org.activiti.runtime.api.event.internal.TaskActivatedListenerDelegate;
 import org.activiti.runtime.api.event.internal.TaskAssignedListenerDelegate;
 import org.activiti.runtime.api.event.internal.TaskCancelledListenerDelegate;
 import org.activiti.runtime.api.event.internal.TaskCandidateGroupAddedListenerDelegate;
+import org.activiti.runtime.api.event.internal.TaskCandidateGroupRemovedListenerDelegate;
 import org.activiti.runtime.api.event.internal.TaskCandidateUserAddedListenerDelegate;
 import org.activiti.runtime.api.event.internal.TaskCandidateUserRemovedListenerDelegate;
 import org.activiti.runtime.api.event.internal.TaskCompletedListenerDelegate;
@@ -201,5 +204,14 @@ public class TaskRuntimeAutoConfiguration {
         return () -> runtimeService.addEventListener(new TaskCandidateGroupAddedListenerDelegate(getInitializedTaskRuntimeEventListeners(listeners),
                                                                                                  taskCandidateGroupAddedEventConverter),
                                                      ActivitiEventType.ENTITY_CREATED);
+    }
+
+    @Bean
+    public InitializingBean registerTaskCandidateGroupRemovedEventListener(RuntimeService runtimeService,
+                                                                         @Autowired(required = false) List<TaskRuntimeEventListener<TaskCandidateGroupRemoved>> listeners,
+                                                                         APITaskCandidateGroupConverter taskCandidateGroupConverter) {
+        return () -> runtimeService.addEventListener(new TaskCandidateGroupRemovedListenerDelegate(getInitializedTaskRuntimeEventListeners(listeners),
+                                                                                                   new ToTaskCandidateGroupRemovedConverter(taskCandidateGroupConverter)),
+                                                     ActivitiEventType.ENTITY_DELETED);
     }
 }
