@@ -16,10 +16,10 @@
 
 package org.activiti.runtime.api.event.impl;
 
-import org.activiti.runtime.api.event.VariableUpdatedEvent;
+import org.activiti.runtime.api.event.VariableUpdated;
 import org.activiti.runtime.api.model.VariableInstance;
 
-public class VariableUpdatedEventImpl extends VariableEventImpl implements VariableUpdatedEvent {
+public class VariableUpdatedEventImpl extends VariableEventImpl implements VariableUpdated {
 
     public VariableUpdatedEventImpl() {
     }

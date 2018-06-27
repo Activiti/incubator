@@ -22,8 +22,11 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.delegate.event.ActivitiEventType;
 import org.activiti.runtime.api.event.RuntimeEventListener;
 import org.activiti.runtime.api.event.VariableCreated;
+import org.activiti.runtime.api.event.VariableUpdated;
 import org.activiti.runtime.api.event.impl.ToVariableCreatedConverter;
+import org.activiti.runtime.api.event.impl.ToVariableUpdatedConverter;
 import org.activiti.runtime.api.event.internal.VariableCreatedListenerDelegate;
+import org.activiti.runtime.api.event.internal.VariableUpdatedListenerDelegate;
 import org.activiti.runtime.api.model.impl.APIVariableInstanceConverter;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +46,12 @@ public class CommonRuntimeAutoConfiguration {
     public InitializingBean registerVariableCreatedListenerDelegate(RuntimeService runtimeService,
                                                                     @Autowired(required = false) List<RuntimeEventListener<VariableCreated>> listeners){
         return () -> runtimeService.addEventListener(new VariableCreatedListenerDelegate(listeners, new ToVariableCreatedConverter()), ActivitiEventType.VARIABLE_CREATED);
+    }
+
+    @Bean
+    public InitializingBean registerVariableUpdatedListenerDelegate(RuntimeService runtimeService,
+                                                                    @Autowired(required = false) List<RuntimeEventListener<VariableUpdated>> listeners){
+        return () -> runtimeService.addEventListener(new VariableUpdatedListenerDelegate(listeners, new ToVariableUpdatedConverter()), ActivitiEventType.VARIABLE_UPDATED);
     }
 
 }
