@@ -7,4 +7,8 @@ public interface BPMNActivity {
     String getActivityName();
 
     String getActivityType();
+
+    String getProcessInstanceId();
+
+    String getProcessDefinitionId();
 }

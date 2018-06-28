@@ -22,7 +22,12 @@ import org.activiti.runtime.api.model.BPMNActivity;
 public class ToActivityConverter {
 
     public BPMNActivity from(ActivitiActivityEvent internalEvent) {
-        return new BPMNActivityImpl(internalEvent.getActivityId(), internalEvent.getActivityName(), internalEvent.getActivityType());
+        BPMNActivityImpl activity = new BPMNActivityImpl(internalEvent.getActivityId(),
+                                                             internalEvent.getActivityName(),
+                                                             internalEvent.getActivityType());
+        activity.setProcessDefinitionId(internalEvent.getProcessDefinitionId());
+        activity.setProcessInstanceId(internalEvent.getProcessInstanceId());
+        return activity;
     }
 
 }

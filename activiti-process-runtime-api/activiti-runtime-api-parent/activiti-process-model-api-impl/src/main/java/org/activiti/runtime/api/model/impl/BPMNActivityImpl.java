@@ -5,9 +5,12 @@ import java.util.Objects;
 import org.activiti.runtime.api.model.BPMNActivity;
 
 public class BPMNActivityImpl implements BPMNActivity {
+
     private String activityDefinitionId;
     private String activityName;
     private String activityType;
+    private String processInstanceId;
+    private String processDefinitionId;
 
     public BPMNActivityImpl() {
     }
@@ -42,6 +45,24 @@ public class BPMNActivityImpl implements BPMNActivity {
 
     public void setActivityType(String activityType) {
         this.activityType = activityType;
+    }
+
+    @Override
+    public String getProcessInstanceId() {
+        return processInstanceId;
+    }
+
+    public void setProcessInstanceId(String processInstanceId) {
+        this.processInstanceId = processInstanceId;
+    }
+
+    @Override
+    public String getProcessDefinitionId() {
+        return processDefinitionId;
+    }
+
+    public void setProcessDefinitionId(String processDefinitionId) {
+        this.processDefinitionId = processDefinitionId;
     }
 
     @Override
