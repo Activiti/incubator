@@ -2,7 +2,7 @@ package org.activiti.runtime.api.model;
 
 public interface BPMNActivity {
 
-    String getActivityId();
+    String getActivityDefinitionId();
 
     String getActivityName();
 

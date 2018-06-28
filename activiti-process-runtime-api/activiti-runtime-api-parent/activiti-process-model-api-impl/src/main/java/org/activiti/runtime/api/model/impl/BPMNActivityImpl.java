@@ -5,27 +5,27 @@ import java.util.Objects;
 import org.activiti.runtime.api.model.BPMNActivity;
 
 public class BPMNActivityImpl implements BPMNActivity {
-    private String activityId;
+    private String activityDefinitionId;
     private String activityName;
     private String activityType;
 
     public BPMNActivityImpl() {
     }
 
-    public BPMNActivityImpl(String activityId,
+    public BPMNActivityImpl(String activityDefinitionId,
                             String activityName,
                             String activityType) {
-        this.activityId = activityId;
+        this.activityDefinitionId = activityDefinitionId;
         this.activityName = activityName;
         this.activityType = activityType;
     }
 
-    public String getActivityId() {
-        return activityId;
+    public String getActivityDefinitionId() {
+        return activityDefinitionId;
     }
 
-    public void setActivityId(String activityId) {
-        this.activityId = activityId;
+    public void setActivityDefinitionId(String activityDefinitionId) {
+        this.activityDefinitionId = activityDefinitionId;
     }
 
     public String getActivityName() {
@@ -53,8 +53,8 @@ public class BPMNActivityImpl implements BPMNActivity {
             return false;
         }
         BPMNActivityImpl that = (BPMNActivityImpl) o;
-        return Objects.equals(activityId,
-                              that.activityId) &&
+        return Objects.equals(activityDefinitionId,
+                              that.activityDefinitionId) &&
                 Objects.equals(activityName,
                                that.activityName) &&
                 Objects.equals(activityType,
@@ -64,7 +64,7 @@ public class BPMNActivityImpl implements BPMNActivity {
     @Override
     public int hashCode() {
 
-        return Objects.hash(activityId,
+        return Objects.hash(activityDefinitionId,
                             activityName,
                             activityType);
     }
