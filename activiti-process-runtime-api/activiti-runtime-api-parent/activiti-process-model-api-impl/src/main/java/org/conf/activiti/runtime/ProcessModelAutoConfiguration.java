@@ -26,9 +26,11 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.activiti.runtime.api.model.BPMNActivity;
 import org.activiti.runtime.api.model.ProcessDefinition;
 import org.activiti.runtime.api.model.ProcessInstance;
+import org.activiti.runtime.api.model.SequenceFlow;
 import org.activiti.runtime.api.model.impl.BPMNActivityImpl;
 import org.activiti.runtime.api.model.impl.ProcessDefinitionImpl;
 import org.activiti.runtime.api.model.impl.ProcessInstanceImpl;
+import org.activiti.runtime.api.model.impl.SequenceFlowImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -57,6 +59,8 @@ public class ProcessModelAutoConfiguration {
                             ProcessInstanceImpl.class);
         resolver.addMapping(ProcessDefinition.class,
                             ProcessDefinitionImpl.class);
+        resolver.addMapping(SequenceFlow.class,
+                            SequenceFlowImpl.class);
 
         module.setAbstractTypes(resolver);
         return module;

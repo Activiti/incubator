@@ -21,8 +21,8 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.jsontype.NamedType;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.activiti.runtime.api.event.BPMNActivityEvent;
-import org.activiti.runtime.api.event.CloudBPMNActivityCancelledEvent;
 import org.activiti.runtime.api.event.ProcessRuntimeEvent;
+import org.activiti.runtime.api.event.SequenceFlowEvent;
 import org.activiti.runtime.api.event.impl.CloudBPMNActivityCancelledEventImpl;
 import org.activiti.runtime.api.event.impl.CloudBPMNActivityCompletedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudBPMNActivityStartedEventImpl;
@@ -32,6 +32,7 @@ import org.activiti.runtime.api.event.impl.CloudProcessCreatedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudProcessResumedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudProcessStartedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudProcessSuspendedEventImpl;
+import org.activiti.runtime.api.event.impl.CloudSequenceFlowTakenImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -61,6 +62,8 @@ public class CloudProcessModelAutoConfiguration {
                                               ProcessRuntimeEvent.ProcessEvents.PROCESS_RESUMED.name()));
         module.registerSubtypes(new NamedType(CloudProcessCancelledEventImpl.class,
                                               ProcessRuntimeEvent.ProcessEvents.PROCESS_CANCELLED.name()));
+        module.registerSubtypes(new NamedType(CloudSequenceFlowTakenImpl.class,
+                                              SequenceFlowEvent.SequenceFlowEvents.SEQUENCE_FLOW_TAKEN.name()));
 
         return module;
     }

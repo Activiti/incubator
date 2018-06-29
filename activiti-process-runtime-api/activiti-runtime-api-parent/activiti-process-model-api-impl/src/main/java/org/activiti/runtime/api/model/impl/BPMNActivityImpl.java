@@ -79,7 +79,11 @@ public class BPMNActivityImpl implements BPMNActivity {
                 Objects.equals(activityName,
                                that.activityName) &&
                 Objects.equals(activityType,
-                               that.activityType);
+                               that.activityType) &&
+                Objects.equals(processInstanceId,
+                               that.processInstanceId) &&
+                Objects.equals(processDefinitionId,
+                               that.processDefinitionId);
     }
 
     @Override
@@ -87,6 +91,8 @@ public class BPMNActivityImpl implements BPMNActivity {
 
         return Objects.hash(activityDefinitionId,
                             activityName,
-                            activityType);
+                            activityType,
+                            processInstanceId,
+                            processDefinitionId);
     }
 }
