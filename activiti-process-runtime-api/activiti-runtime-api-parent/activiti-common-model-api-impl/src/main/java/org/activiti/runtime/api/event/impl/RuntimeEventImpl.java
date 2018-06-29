@@ -24,6 +24,7 @@ public abstract class RuntimeEventImpl<ENTITY_TYPE, EVENT_TYPE extends Enum<?>> 
 
     private String id;
     private Long timestamp;
+
     private ENTITY_TYPE entity;
 
     public RuntimeEventImpl() {
