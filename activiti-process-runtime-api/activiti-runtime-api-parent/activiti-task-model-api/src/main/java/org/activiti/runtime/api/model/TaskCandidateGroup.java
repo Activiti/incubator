@@ -16,10 +16,8 @@
 
 package org.activiti.runtime.api.model;
 
-public interface TaskCandidateGroup {
+public interface TaskCandidateGroup extends TaskCandidate {
 
     String getGroupId();
-
-    String getTaskId();
 
 }

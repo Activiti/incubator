@@ -16,19 +16,15 @@
 
 package org.activiti.runtime.api.model;
 
-public interface SequenceFlow {
+public interface SequenceFlow extends BPMNElement {
 
-    String getProcessInstanceId();
-
-    String getProcessDefinitionId();
-
-    String getSourceActivityDefinitionId();
+    String getSourceActivityElementId();
 
     String getSourceActivityName();
 
     String getSourceActivityType();
 
-    String getTargetActivityDefinitionId();
+    String getTargetActivityElementId();
 
     String getTargetActivityName();
 

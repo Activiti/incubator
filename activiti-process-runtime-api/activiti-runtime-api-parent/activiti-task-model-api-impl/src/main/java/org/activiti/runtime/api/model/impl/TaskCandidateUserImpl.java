@@ -20,28 +20,22 @@ import java.util.Objects;
 
 import org.activiti.runtime.api.model.TaskCandidateUser;
 
-public class TaskCandidateUserImpl implements TaskCandidateUser {
+public class TaskCandidateUserImpl extends TaskCandidateImpl implements TaskCandidateUser {
 
     private String userId;
-    private String taskId;
 
     public TaskCandidateUserImpl(){
 
     }
 
     public TaskCandidateUserImpl(String userId, String taskId){
+        super(taskId);
         this.userId = userId;
-        this.taskId = taskId;
     }
 
     @Override
     public String getUserId() {
         return userId;
-    }
-
-    @Override
-    public String getTaskId() {
-        return taskId;
     }
 
     @Override
@@ -54,15 +48,12 @@ public class TaskCandidateUserImpl implements TaskCandidateUser {
         }
         TaskCandidateUserImpl that = (TaskCandidateUserImpl) o;
         return Objects.equals(userId,
-                              that.userId) &&
-                Objects.equals(taskId,
-                               that.taskId);
+                              that.userId);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(userId,
-                            taskId);
+        return Objects.hash(userId);
     }
 }

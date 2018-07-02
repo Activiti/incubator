@@ -18,47 +18,27 @@ package org.activiti.runtime.api.model.impl;
 
 import org.activiti.runtime.api.model.SequenceFlow;
 
-public class SequenceFlowImpl implements SequenceFlow {
+public class SequenceFlowImpl extends BPMNElementImpl implements SequenceFlow {
 
-    private String processInstanceId;
-    private String processDefinitionId;
-    private String sourceActivityDefinitionId;
+    private String sourceActivityElementId;
     private String sourceActivityName;
     private String sourceActivityType;
-    private String targetActivityDefinitionId;
+    private String targetActivityElementId;
     private String targetActivityName;
     private String targetActivityType;
 
     public SequenceFlowImpl() {
     }
 
-    public SequenceFlowImpl(String sourceActivityDefinitionId,
-                            String targetActivityDefinitionId) {
-        this.sourceActivityDefinitionId = sourceActivityDefinitionId;
-        this.targetActivityDefinitionId = targetActivityDefinitionId;
+    public SequenceFlowImpl(String sourceActivityElementId,
+                            String targetActivityElementId) {
+        this.sourceActivityElementId = sourceActivityElementId;
+        this.targetActivityElementId = targetActivityElementId;
     }
 
     @Override
-    public String getProcessInstanceId() {
-        return processInstanceId;
-    }
-
-    public void setProcessInstanceId(String processInstanceId) {
-        this.processInstanceId = processInstanceId;
-    }
-
-    @Override
-    public String getProcessDefinitionId() {
-        return processDefinitionId;
-    }
-
-    public void setProcessDefinitionId(String processDefinitionId) {
-        this.processDefinitionId = processDefinitionId;
-    }
-
-    @Override
-    public String getSourceActivityDefinitionId() {
-        return sourceActivityDefinitionId;
+    public String getSourceActivityElementId() {
+        return sourceActivityElementId;
     }
 
     @Override
@@ -80,8 +60,8 @@ public class SequenceFlowImpl implements SequenceFlow {
     }
 
     @Override
-    public String getTargetActivityDefinitionId() {
-        return targetActivityDefinitionId;
+    public String getTargetActivityElementId() {
+        return targetActivityElementId;
     }
 
     @Override

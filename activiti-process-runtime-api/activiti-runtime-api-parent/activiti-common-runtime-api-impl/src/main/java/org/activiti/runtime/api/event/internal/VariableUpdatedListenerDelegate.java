@@ -21,17 +21,17 @@ import java.util.List;
 import org.activiti.engine.delegate.event.ActivitiEvent;
 import org.activiti.engine.delegate.event.ActivitiEventListener;
 import org.activiti.engine.delegate.event.ActivitiVariableEvent;
-import org.activiti.runtime.api.event.RuntimeEventListener;
+import org.activiti.runtime.api.event.VariableEventListener;
 import org.activiti.runtime.api.event.VariableUpdated;
 import org.activiti.runtime.api.event.impl.ToVariableUpdatedConverter;
 
 public class VariableUpdatedListenerDelegate implements ActivitiEventListener {
 
-    private final List<RuntimeEventListener<VariableUpdated>> listeners;
+    private final List<VariableEventListener<VariableUpdated>> listeners;
 
     private final ToVariableUpdatedConverter converter;
 
-    public VariableUpdatedListenerDelegate(List<RuntimeEventListener<VariableUpdated>> listeners,
+    public VariableUpdatedListenerDelegate(List<VariableEventListener<VariableUpdated>> listeners,
                                            ToVariableUpdatedConverter converter) {
         this.listeners = listeners;
         this.converter = converter;
@@ -42,7 +42,7 @@ public class VariableUpdatedListenerDelegate implements ActivitiEventListener {
         if (event instanceof ActivitiVariableEvent) {
             converter.from((ActivitiVariableEvent) event)
                     .ifPresent(convertedEvent -> {
-                        for (RuntimeEventListener<VariableUpdated> listener : listeners) {
+                        for (VariableEventListener<VariableUpdated> listener : listeners) {
                             listener.onEvent(convertedEvent);
                         }
                     });

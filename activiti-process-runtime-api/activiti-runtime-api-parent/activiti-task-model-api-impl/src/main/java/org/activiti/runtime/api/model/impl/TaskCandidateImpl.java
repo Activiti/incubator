@@ -18,24 +18,22 @@ package org.activiti.runtime.api.model.impl;
 
 import java.util.Objects;
 
-import org.activiti.runtime.api.model.TaskCandidateGroup;
+import org.activiti.runtime.api.model.TaskCandidate;
 
-public class TaskCandidateGroupImpl extends TaskCandidateImpl implements TaskCandidateGroup {
+public abstract class TaskCandidateImpl implements TaskCandidate {
 
-    private String groupId;
+    private String taskId;
 
-    public TaskCandidateGroupImpl(){
+    public TaskCandidateImpl() {
     }
 
-    public TaskCandidateGroupImpl(String groupId, String taskId){
-        super(taskId);
-        this.groupId = groupId;
+    public TaskCandidateImpl(String taskId) {
+        this.taskId = taskId;
     }
-
 
     @Override
-    public String getGroupId() {
-        return groupId;
+    public String getTaskId() {
+        return taskId;
     }
 
     @Override
@@ -46,14 +44,14 @@ public class TaskCandidateGroupImpl extends TaskCandidateImpl implements TaskCan
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        TaskCandidateGroupImpl that = (TaskCandidateGroupImpl) o;
-        return Objects.equals(groupId,
-                              that.groupId);
+        TaskCandidateImpl that = (TaskCandidateImpl) o;
+        return Objects.equals(taskId,
+                              that.taskId);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(groupId);
+        return Objects.hash(taskId);
     }
 }
