@@ -42,7 +42,6 @@ public class ToTaskCancelledConverter implements EventConverter<TaskCancelled, A
         List<Task> tasks = taskService.createTaskQuery()
                 .processInstanceId(internalEvent.getProcessInstanceId())
                 .taskDefinitionKey(internalEvent.getActivityId())
-                .taskName(internalEvent.getActivityName())
                 .list();
         TaskCancelled event = null;
         if (!tasks.isEmpty()) {
