@@ -14,17 +14,10 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.conf;
+package org.activiti.runtime.api.event;
 
-import java.util.List;
+public interface VariableEventListener<E extends RuntimeEvent<?, ?>> {
 
-import org.activiti.runtime.api.event.VariableEventListener;
-import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
-
-public interface TaskRuntimeConfiguration {
-
-    List<TaskRuntimeEventListener<?>> taskRuntimeEventListeners();
-
-    List<VariableEventListener<?>> variableEventListeners();
+    void onEvent(E event);
 
 }

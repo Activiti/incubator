@@ -18,10 +18,13 @@ package org.activiti.runtime.api.conf;
 
 import java.util.List;
 
+import org.activiti.runtime.api.event.VariableEventListener;
 import org.activiti.runtime.api.event.listener.ProcessRuntimeEventListener;
 
 public interface ProcessRuntimeConfiguration {
 
-    List<ProcessRuntimeEventListener<?>> eventListeners();
+    List<ProcessRuntimeEventListener<?>> eventProcessRuntimeListeners();
+
+    List<VariableEventListener<?>> variableEventListeners();
 
 }

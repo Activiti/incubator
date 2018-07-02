@@ -35,6 +35,7 @@ import org.activiti.runtime.api.event.ProcessResumed;
 import org.activiti.runtime.api.event.ProcessStarted;
 import org.activiti.runtime.api.event.ProcessSuspended;
 import org.activiti.runtime.api.event.SequenceFlowTaken;
+import org.activiti.runtime.api.event.VariableEventListener;
 import org.activiti.runtime.api.event.impl.ToAPIProcessCreatedEventConverter;
 import org.activiti.runtime.api.event.impl.ToAPIProcessStartedEventConverter;
 import org.activiti.runtime.api.event.impl.ToActivityCancelledConverter;
@@ -109,8 +110,9 @@ public class ProcessRuntimeAutoConfiguration {
     }
 
     @Bean
-    public ProcessRuntimeConfiguration processRuntimeConfiguration(@Autowired(required = false) List<ProcessRuntimeEventListener<?>> eventListeners) {
-        return new ProcessRuntimeConfigurationImpl(getInitializedListeners(eventListeners));
+    public ProcessRuntimeConfiguration processRuntimeConfiguration(@Autowired(required = false) List<ProcessRuntimeEventListener<?>> processRuntimeEventListeners,
+                                                                   @Autowired(required = false)List<VariableEventListener<?>> variableEventListeners) {
+        return new ProcessRuntimeConfigurationImpl(getInitializedListeners(processRuntimeEventListeners), getInitializedListeners(variableEventListeners));
     }
 
     @Bean

@@ -4,31 +4,21 @@ import java.util.Objects;
 
 import org.activiti.runtime.api.model.BPMNActivity;
 
-public class BPMNActivityImpl implements BPMNActivity {
+public class BPMNActivityImpl extends BPMNElementImpl implements BPMNActivity {
 
-    private String activityDefinitionId;
     private String activityName;
     private String activityType;
-    private String processInstanceId;
-    private String processDefinitionId;
+    private String elementId;
 
     public BPMNActivityImpl() {
     }
 
-    public BPMNActivityImpl(String activityDefinitionId,
+    public BPMNActivityImpl(String elementId,
                             String activityName,
                             String activityType) {
-        this.activityDefinitionId = activityDefinitionId;
+        this.elementId = elementId;
         this.activityName = activityName;
         this.activityType = activityType;
-    }
-
-    public String getActivityDefinitionId() {
-        return activityDefinitionId;
-    }
-
-    public void setActivityDefinitionId(String activityDefinitionId) {
-        this.activityDefinitionId = activityDefinitionId;
     }
 
     public String getActivityName() {
@@ -47,22 +37,8 @@ public class BPMNActivityImpl implements BPMNActivity {
         this.activityType = activityType;
     }
 
-    @Override
-    public String getProcessInstanceId() {
-        return processInstanceId;
-    }
-
-    public void setProcessInstanceId(String processInstanceId) {
-        this.processInstanceId = processInstanceId;
-    }
-
-    @Override
-    public String getProcessDefinitionId() {
-        return processDefinitionId;
-    }
-
-    public void setProcessDefinitionId(String processDefinitionId) {
-        this.processDefinitionId = processDefinitionId;
+    public String getElementId() {
+        return elementId;
     }
 
     @Override
@@ -74,25 +50,19 @@ public class BPMNActivityImpl implements BPMNActivity {
             return false;
         }
         BPMNActivityImpl that = (BPMNActivityImpl) o;
-        return Objects.equals(activityDefinitionId,
-                              that.activityDefinitionId) &&
+        return Objects.equals(elementId,
+                              that.elementId) &&
                 Objects.equals(activityName,
                                that.activityName) &&
                 Objects.equals(activityType,
-                               that.activityType) &&
-                Objects.equals(processInstanceId,
-                               that.processInstanceId) &&
-                Objects.equals(processDefinitionId,
-                               that.processDefinitionId);
+                               that.activityType);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(activityDefinitionId,
+        return Objects.hash(elementId,
                             activityName,
-                            activityType,
-                            processInstanceId,
-                            processDefinitionId);
+                            activityType);
     }
 }

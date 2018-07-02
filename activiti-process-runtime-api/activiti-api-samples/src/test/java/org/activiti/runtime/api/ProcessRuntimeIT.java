@@ -55,7 +55,7 @@ public class ProcessRuntimeIT {
     @Test
     public void shouldReturnRegisteredEventListeners() {
         //when
-        List<ProcessRuntimeEventListener<?>> eventListeners = processRuntime.configuration().eventListeners();
+        List<ProcessRuntimeEventListener<?>> eventListeners = processRuntime.configuration().eventProcessRuntimeListeners();
 
         //then
         assertThat(eventListeners).contains(dummyProcessStartedEventListener);

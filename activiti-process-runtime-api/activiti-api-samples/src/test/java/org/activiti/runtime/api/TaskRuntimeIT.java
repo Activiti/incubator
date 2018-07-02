@@ -53,7 +53,7 @@ public class TaskRuntimeIT {
     @Test
     public void shouldReturnRegisteredEventListeners() {
         //when
-        List<TaskRuntimeEventListener<?>> eventListeners = taskRuntime.configuration().eventListeners();
+        List<TaskRuntimeEventListener<?>> eventListeners = taskRuntime.configuration().taskRuntimeEventListeners();
 
         //then
         assertThat(eventListeners).contains(assignTaskListener);

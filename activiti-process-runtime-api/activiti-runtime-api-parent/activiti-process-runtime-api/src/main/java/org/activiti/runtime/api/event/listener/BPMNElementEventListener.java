@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.event;
+package org.activiti.runtime.api.event.listener;
 
-public interface RuntimeEventListener<E extends RuntimeEvent<?, ?>> {
+import org.activiti.runtime.api.event.RuntimeEvent;
+import org.activiti.runtime.api.model.BPMNElement;
 
-    void onEvent(E event);
+public interface BPMNElementEventListener<E extends RuntimeEvent<? extends BPMNElement, ?>> extends ProcessRuntimeEventListener<E> {
 
 }

@@ -14,17 +14,11 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.conf;
+package org.activiti.runtime.api.model;
 
-import java.util.List;
+public interface BPMNElement {
 
-import org.activiti.runtime.api.event.VariableEventListener;
-import org.activiti.runtime.api.event.listener.TaskRuntimeEventListener;
+    String getProcessInstanceId();
 
-public interface TaskRuntimeConfiguration {
-
-    List<TaskRuntimeEventListener<?>> taskRuntimeEventListeners();
-
-    List<VariableEventListener<?>> variableEventListeners();
-
+    String getProcessDefinitionId();
 }

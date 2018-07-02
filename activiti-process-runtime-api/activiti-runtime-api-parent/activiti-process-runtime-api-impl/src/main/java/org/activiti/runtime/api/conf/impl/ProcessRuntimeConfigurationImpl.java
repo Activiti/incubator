@@ -20,18 +20,27 @@ import java.util.Collections;
 import java.util.List;
 
 import org.activiti.runtime.api.conf.ProcessRuntimeConfiguration;
+import org.activiti.runtime.api.event.VariableEventListener;
 import org.activiti.runtime.api.event.listener.ProcessRuntimeEventListener;
 
 public class ProcessRuntimeConfigurationImpl implements ProcessRuntimeConfiguration {
 
-    private List<ProcessRuntimeEventListener<?>> eventListeners;
+    private List<ProcessRuntimeEventListener<?>> processRuntimeEventListeners;
+    private final List<VariableEventListener<?>> variableEventListeners;
 
-    public ProcessRuntimeConfigurationImpl(List<ProcessRuntimeEventListener<?>> eventListeners) {
-        this.eventListeners = eventListeners;
+    public ProcessRuntimeConfigurationImpl(List<ProcessRuntimeEventListener<?>> processRuntimeEventListeners,
+                                           List<VariableEventListener<?>> variableEventListeners) {
+        this.processRuntimeEventListeners = processRuntimeEventListeners;
+        this.variableEventListeners = variableEventListeners;
     }
 
     @Override
-    public List<ProcessRuntimeEventListener<?>> eventListeners() {
-        return Collections.unmodifiableList(eventListeners);
+    public List<ProcessRuntimeEventListener<?>> eventProcessRuntimeListeners() {
+        return Collections.unmodifiableList(processRuntimeEventListeners);
+    }
+
+    @Override
+    public List<VariableEventListener<?>> variableEventListeners() {
+        return Collections.unmodifiableList(variableEventListeners);
     }
 }
