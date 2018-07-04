@@ -22,7 +22,7 @@ import java.util.Map;
 
 import org.activiti.engine.delegate.DelegateExecution;
 
-public class ExecutionContextImpl implements ExecutionContext {
+public class ExecutionContextImpl implements IntegrationContext {
 
     private Map<String, Object> inboundVariables;
     private Map<String, Object> outBoundVariables = new HashMap<>();

@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 public class SimpleConnector implements Connector {
 
     @Override
-    public ExecutionContext execute(ExecutionContext executionContext) {
+    public IntegrationContext execute(IntegrationContext executionContext) {
         executionContext.addOutBoundVariable("connectorVar", "Set from connector");
         return executionContext;
     }

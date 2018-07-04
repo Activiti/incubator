@@ -18,6 +18,6 @@ package org.activiti.runtime.api.connector;
 
 public interface Connector {
 
-    ExecutionContext execute(ExecutionContext executionContext);
+    IntegrationContext execute(IntegrationContext executionContext);
 
 }

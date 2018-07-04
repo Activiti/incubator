@@ -18,7 +18,7 @@ package org.activiti.runtime.api.connector;
 
 import java.util.Map;
 
-public interface ExecutionContext {
+public interface IntegrationContext {
 
     String getProcessInstanceId();
 
