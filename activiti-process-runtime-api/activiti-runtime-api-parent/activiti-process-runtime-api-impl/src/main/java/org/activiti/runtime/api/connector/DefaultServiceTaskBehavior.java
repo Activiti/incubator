@@ -19,21 +19,25 @@ package org.activiti.runtime.api.connector;
 import org.activiti.bpmn.model.ServiceTask;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.impl.bpmn.behavior.AbstractBpmnActivityBehavior;
+import org.activiti.runtime.api.model.IntegrationContext;
 import org.springframework.context.ApplicationContext;
 
 public class DefaultServiceTaskBehavior extends AbstractBpmnActivityBehavior {
 
     private final ApplicationContext applicationContext;
+    private final IntegrationContextBuilder integrationContextBuilder;
 
-    public DefaultServiceTaskBehavior(ApplicationContext applicationContext) {
+    public DefaultServiceTaskBehavior(ApplicationContext applicationContext,
+                                      IntegrationContextBuilder integrationContextBuilder) {
         this.applicationContext = applicationContext;
+        this.integrationContextBuilder = integrationContextBuilder;
     }
 
     @Override
     public void execute(DelegateExecution execution) {
         Connector connector = applicationContext.getBean(getServiceTaskImplementation(execution),
                                                          Connector.class);
-        ExecutionContextImpl context = new ExecutionContextImpl(execution);
+        IntegrationContext context = integrationContextBuilder.from(execution);
         connector.execute(context);
         execution.setVariables(context.getOutBoundVariables());
 

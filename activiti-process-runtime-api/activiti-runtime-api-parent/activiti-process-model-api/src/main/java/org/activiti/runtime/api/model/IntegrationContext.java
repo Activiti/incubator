@@ -14,12 +14,28 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.connector;
+package org.activiti.runtime.api.model;
 
-import org.activiti.runtime.api.model.IntegrationContext;
+import java.util.Map;
 
-public interface Connector {
+public interface IntegrationContext {
 
-    IntegrationContext execute(IntegrationContext executionContext);
+    String getId();
+
+    String getProcessInstanceId();
+
+    String getProcessDefinitionId();
+
+    String getConnectorType();
+
+    String getActivityElementId();
+
+    Map<String, Object> getInBoundVariables();
+
+    Map<String, Object> getOutBoundVariables();
+
+    void addOutBoundVariable(String name, Object value);
+
+    void addOutBoundVariables(Map<String, Object> variables);
 
 }

@@ -16,6 +16,7 @@
 
 package org.activiti.runtime.api.connector;
 
+import org.activiti.runtime.api.model.IntegrationContext;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -14,12 +14,24 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.connector;
+package org.activiti.runtime.api.event.impl;
 
+import org.activiti.runtime.api.event.CloudIntegrationRequested;
+import org.activiti.runtime.api.event.IntegrationEvent;
 import org.activiti.runtime.api.model.IntegrationContext;
 
-public interface Connector {
+public class CloudIntegrationRequestedImpl extends CloudRuntimeEventImpl<IntegrationContext, IntegrationEvent.IntegrationEvents>
+        implements CloudIntegrationRequested {
 
-    IntegrationContext execute(IntegrationContext executionContext);
+    public CloudIntegrationRequestedImpl() {
+    }
 
+    public CloudIntegrationRequestedImpl(IntegrationContext entity) {
+        super(entity);
+    }
+
+    @Override
+    public IntegrationEvent.IntegrationEvents getEventType() {
+        return IntegrationEvent.IntegrationEvents.INTEGRATION_REQUESTED;
+    }
 }

@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.connector;
+package org.activiti.runtime.api.model;
 
-import org.activiti.runtime.api.model.IntegrationContext;
+public interface IntegrationRequest extends CloudRuntimeEntity {
 
-public interface Connector {
-
-    IntegrationContext execute(IntegrationContext executionContext);
+    IntegrationContext getIntegrationContext();
 
 }

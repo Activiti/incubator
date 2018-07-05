@@ -14,12 +14,8 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.connector;
+package org.activiti.runtime.api.event;
 
-import org.activiti.runtime.api.model.IntegrationContext;
-
-public interface Connector {
-
-    IntegrationContext execute(IntegrationContext executionContext);
+public interface CloudIntegrationResultReceived extends CloudIntegrationEvent {
 
 }

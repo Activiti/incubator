@@ -14,24 +14,8 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.connector;
+package org.activiti.runtime.api.event;
 
-import java.util.Map;
-
-public interface IntegrationContext {
-
-    String getProcessInstanceId();
-
-    String getProcessDefinitionId();
-
-    String getFlowNodeId();
-
-    Map<String, Object> getInBoundVariables();
-
-    Map<String, Object> getOutBoundVariables();
-
-    void addOutBoundVariable(String name, Object value);
-
-    void addOutBoundVariables(Map<String, Object> variables);
+public interface CloudIntegrationRequested extends CloudIntegrationEvent {
 
 }

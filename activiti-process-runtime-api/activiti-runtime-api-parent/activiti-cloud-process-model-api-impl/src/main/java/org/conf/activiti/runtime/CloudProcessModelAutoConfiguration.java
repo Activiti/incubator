@@ -17,15 +17,22 @@
 package org.conf.activiti.runtime;
 
 import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.BeanDescription;
+import com.fasterxml.jackson.databind.DeserializationConfig;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.jsontype.NamedType;
+import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.activiti.runtime.api.event.BPMNActivityEvent;
+import org.activiti.runtime.api.event.IntegrationEvent;
 import org.activiti.runtime.api.event.ProcessRuntimeEvent;
 import org.activiti.runtime.api.event.SequenceFlowEvent;
 import org.activiti.runtime.api.event.impl.CloudBPMNActivityCancelledEventImpl;
 import org.activiti.runtime.api.event.impl.CloudBPMNActivityCompletedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudBPMNActivityStartedEventImpl;
+import org.activiti.runtime.api.event.impl.CloudIntegrationRequestedImpl;
+import org.activiti.runtime.api.event.impl.CloudIntegrationResultReceivedImpl;
 import org.activiti.runtime.api.event.impl.CloudProcessCancelledEventImpl;
 import org.activiti.runtime.api.event.impl.CloudProcessCompletedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudProcessCreatedEventImpl;
@@ -33,6 +40,8 @@ import org.activiti.runtime.api.event.impl.CloudProcessResumedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudProcessStartedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudProcessSuspendedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudSequenceFlowTakenImpl;
+import org.activiti.runtime.api.model.IntegrationRequest;
+import org.activiti.runtime.api.model.impl.IntegrationRequestImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -64,6 +73,25 @@ public class CloudProcessModelAutoConfiguration {
                                               ProcessRuntimeEvent.ProcessEvents.PROCESS_CANCELLED.name()));
         module.registerSubtypes(new NamedType(CloudSequenceFlowTakenImpl.class,
                                               SequenceFlowEvent.SequenceFlowEvents.SEQUENCE_FLOW_TAKEN.name()));
+
+        module.registerSubtypes(new NamedType(CloudIntegrationRequestedImpl.class,
+                                              IntegrationEvent.IntegrationEvents.INTEGRATION_REQUESTED.name()));
+        module.registerSubtypes(new NamedType(CloudIntegrationResultReceivedImpl.class,
+                                              IntegrationEvent.IntegrationEvents.INTEGRATION_RESULT_RECEIVED.name()));
+
+        SimpleAbstractTypeResolver resolver = new SimpleAbstractTypeResolver() {
+            //this is a workaround for https://github.com/FasterXML/jackson-databind/issues/2019
+            //once version 2.9.6 is related we can remove this @override method
+            @Override
+            public JavaType resolveAbstractType(DeserializationConfig config,
+                                                BeanDescription typeDesc) {
+                return findTypeMapping(config,
+                                       typeDesc.getType());
+            }
+        };
+
+        resolver.addMapping(IntegrationRequest.class, IntegrationRequestImpl.class);
+        module.setAbstractTypes(resolver);
 
         return module;
     }

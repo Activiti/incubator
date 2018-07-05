@@ -16,25 +16,31 @@
 
 package org.activiti.runtime.api.connector;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.activiti.engine.delegate.DelegateExecution;
+import org.activiti.runtime.api.model.IntegrationContext;
 
-public class ExecutionContextImpl implements IntegrationContext {
+public class IntegrationContextImpl implements IntegrationContext {
 
-    private Map<String, Object> inboundVariables;
+    private String id;
+    private Map<String, Object> inboundVariables = new HashMap<>();
     private Map<String, Object> outBoundVariables = new HashMap<>();
     private String processInstanceId;
     private String processDefinitionId;
-    private String flowNodeId;
+    private String activityElementId;
+    private String connectorType;
 
-    public ExecutionContextImpl(DelegateExecution execution) {
-        this.inboundVariables = execution.getVariables();
-        this.processInstanceId = execution.getProcessInstanceId();
-        this.processDefinitionId = execution.getProcessDefinitionId();
-        this.flowNodeId = execution.getCurrentActivityId();
+    public IntegrationContextImpl() {
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
@@ -42,24 +48,49 @@ public class ExecutionContextImpl implements IntegrationContext {
         return processInstanceId;
     }
 
+    public void setProcessInstanceId(String processInstanceId) {
+        this.processInstanceId = processInstanceId;
+    }
+
     @Override
     public String getProcessDefinitionId() {
         return processDefinitionId;
     }
 
+    public void setProcessDefinitionId(String processDefinitionId) {
+        this.processDefinitionId = processDefinitionId;
+    }
+
     @Override
-    public String getFlowNodeId() {
-        return flowNodeId;
+    public String getActivityElementId() {
+        return activityElementId;
+    }
+
+    public void setActivityElementId(String activityElementId) {
+        this.activityElementId = activityElementId;
+    }
+
+    @Override
+    public String getConnectorType() {
+        return connectorType;
+    }
+
+    public void setConnectorType(String connectorType) {
+        this.connectorType = connectorType;
     }
 
     @Override
     public Map<String, Object> getInBoundVariables() {
-        return Collections.unmodifiableMap(inboundVariables);
+        return inboundVariables;
+    }
+
+    public void setInboundVariables(Map<String, Object> inboundVariables) {
+        this.inboundVariables = inboundVariables;
     }
 
     @Override
     public Map<String, Object> getOutBoundVariables() {
-        return Collections.unmodifiableMap(outBoundVariables);
+        return outBoundVariables;
     }
 
     @Override
@@ -72,4 +103,5 @@ public class ExecutionContextImpl implements IntegrationContext {
     public void addOutBoundVariables(Map<String, Object> variables) {
         outBoundVariables.putAll(variables);
     }
+
 }

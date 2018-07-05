@@ -14,12 +14,17 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.connector;
+package org.activiti.runtime.api.event;
 
 import org.activiti.runtime.api.model.IntegrationContext;
 
-public interface Connector {
+public interface IntegrationEvent extends RuntimeEvent<IntegrationContext, IntegrationEvent.IntegrationEvents>{
 
-    IntegrationContext execute(IntegrationContext executionContext);
+    enum IntegrationEvents {
+
+        INTEGRATION_REQUESTED,
+
+        INTEGRATION_RESULT_RECEIVED
+    }
 
 }
