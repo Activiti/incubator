@@ -41,7 +41,9 @@ import org.activiti.runtime.api.event.impl.CloudProcessStartedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudProcessSuspendedEventImpl;
 import org.activiti.runtime.api.event.impl.CloudSequenceFlowTakenImpl;
 import org.activiti.runtime.api.model.IntegrationRequest;
+import org.activiti.runtime.api.model.IntegrationResult;
 import org.activiti.runtime.api.model.impl.IntegrationRequestImpl;
+import org.activiti.runtime.api.model.impl.IntegrationResultImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -91,6 +93,7 @@ public class CloudProcessModelAutoConfiguration {
         };
 
         resolver.addMapping(IntegrationRequest.class, IntegrationRequestImpl.class);
+        resolver.addMapping(IntegrationResult.class, IntegrationResultImpl.class);
         module.setAbstractTypes(resolver);
 
         return module;
