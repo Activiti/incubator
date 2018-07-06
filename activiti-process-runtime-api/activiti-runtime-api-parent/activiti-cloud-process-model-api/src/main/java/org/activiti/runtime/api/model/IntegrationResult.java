@@ -20,4 +20,6 @@ public interface IntegrationResult extends CloudRuntimeEntity {
 
     IntegrationContext getIntegrationContext();
 
+    IntegrationRequest getIntegrationRequest();
+
 }

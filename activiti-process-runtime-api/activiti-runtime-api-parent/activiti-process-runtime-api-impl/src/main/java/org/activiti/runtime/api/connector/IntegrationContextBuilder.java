@@ -16,8 +16,6 @@
 
 package org.activiti.runtime.api.connector;
 
-import java.util.UUID;
-
 import org.activiti.bpmn.model.ServiceTask;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.impl.persistence.entity.integration.IntegrationContextEntity;
@@ -34,7 +32,6 @@ public class IntegrationContextBuilder {
 
     public IntegrationContext from(DelegateExecution execution) {
         IntegrationContextImpl integrationContext = buildFromExecution(execution);
-        integrationContext.setId(UUID.randomUUID().toString());
         return integrationContext;
     }
 
@@ -44,7 +41,7 @@ public class IntegrationContextBuilder {
         integrationContext.setProcessDefinitionId(execution.getProcessDefinitionId());
         integrationContext.setActivityElementId(execution.getCurrentActivityId());
         integrationContext.setConnectorType(((ServiceTask) execution.getCurrentFlowElement()).getImplementation());
-        integrationContext.setInboundVariables(execution.getVariables());
+        integrationContext.setInBoundVariables(execution.getVariables());
         return integrationContext;
     }
 }

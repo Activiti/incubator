@@ -18,6 +18,7 @@ package org.activiti.runtime.api.model.impl;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.activiti.runtime.api.model.IntegrationContext;
 
@@ -32,6 +33,7 @@ public class IntegrationContextImpl implements IntegrationContext {
     private String connectorType;
 
     public IntegrationContextImpl() {
+        this.id = UUID.randomUUID().toString();
     }
 
     @Override
@@ -84,7 +86,7 @@ public class IntegrationContextImpl implements IntegrationContext {
         return inboundVariables;
     }
 
-    public void setInboundVariables(Map<String, Object> inboundVariables) {
+    public void setInBoundVariables(Map<String, Object> inboundVariables) {
         this.inboundVariables = inboundVariables;
     }
 
