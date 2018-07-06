@@ -17,6 +17,7 @@
 package org.activiti.runtime.api.model.impl;
 
 import org.activiti.engine.TaskService;
+import org.activiti.engine.impl.persistence.entity.TaskEntity;
 import org.activiti.runtime.api.model.FluentTask;
 
 public class APITaskConverter extends ListConverter<org.activiti.engine.task.Task, FluentTask> implements ModelConverter<org.activiti.engine.task.Task, FluentTask> {
@@ -53,7 +54,10 @@ public class APITaskConverter extends ListConverter<org.activiti.engine.task.Tas
     }
 
     private FluentTask.TaskStatus calculateStatus(org.activiti.engine.task.Task source) {
-        if (source.isSuspended()) {
+        if (source instanceof TaskEntity &&
+                (((TaskEntity) source).isDeleted() || ((TaskEntity) source).isCanceled())) {
+            return FluentTask.TaskStatus.CANCELLED;
+        } else if (source.isSuspended()) {
             return FluentTask.TaskStatus.SUSPENDED;
         } else if (source.getAssignee() != null && !source.getAssignee().isEmpty()) {
             return FluentTask.TaskStatus.ASSIGNED;
