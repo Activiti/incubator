@@ -24,10 +24,12 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.activiti.runtime.api.model.BPMNActivity;
+import org.activiti.runtime.api.model.IntegrationContext;
 import org.activiti.runtime.api.model.ProcessDefinition;
 import org.activiti.runtime.api.model.ProcessInstance;
 import org.activiti.runtime.api.model.SequenceFlow;
 import org.activiti.runtime.api.model.impl.BPMNActivityImpl;
+import org.activiti.runtime.api.model.impl.IntegrationContextImpl;
 import org.activiti.runtime.api.model.impl.ProcessDefinitionImpl;
 import org.activiti.runtime.api.model.impl.ProcessInstanceImpl;
 import org.activiti.runtime.api.model.impl.SequenceFlowImpl;
@@ -61,6 +63,9 @@ public class ProcessModelAutoConfiguration {
                             ProcessDefinitionImpl.class);
         resolver.addMapping(SequenceFlow.class,
                             SequenceFlowImpl.class);
+
+        resolver.addMapping(IntegrationContext.class,
+                            IntegrationContextImpl.class);
 
         module.setAbstractTypes(resolver);
         return module;

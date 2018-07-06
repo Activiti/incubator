@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.activiti.runtime.api.connector;
+package org.activiti.runtime.api.model.impl;
 
 import java.util.HashMap;
 import java.util.Map;
